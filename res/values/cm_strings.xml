@@ -863,7 +863,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="accessibility_home_button_answers_call_prerefence_title">Home button answers call</string>
 
     <!-- Delete apn confirmation dialog message -->
-    <!-- <string name="confirm_delete_apn">The APN will be deleted.</string> -->
+    <!-- string name="confirm_delete_apn">The APN will be deleted.</string-->
 
     <!-- Status bar -->
     <string name="status_bar_title">Status bar</string>
