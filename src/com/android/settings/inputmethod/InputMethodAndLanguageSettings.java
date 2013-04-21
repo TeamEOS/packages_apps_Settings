@@ -188,8 +188,10 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
 		if (!hasStylus()) {
 			final PreferenceCategory mPointerSettings = (PreferenceCategory) getPreferenceScreen()
 					.findPreference("pointer_settings_category");
-			mPointerSettings
-					.removePreference(findPreference(KEY_STYLUS_GESTURES));
+			if (mPointerSettings != null) {
+				mPointerSettings
+						.removePreference(findPreference(KEY_STYLUS_GESTURES));
+			}
 		}
     }
 
