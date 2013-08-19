@@ -97,6 +97,12 @@
 
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="adaptive_backlight"
+            android:summary="@string/adaptive_backlight_summary"
+            android:title="@string/adaptive_backlight_title" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="color_enhancement"
             android:summary="@string/color_enhancement_summary"
             android:title="@string/color_enhancement_title" />
