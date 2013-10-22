@@ -1000,4 +1000,11 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
 
     <!-- CFX Strings -->
     <string name="header_category_cfx">CFX</string>
+    <!-- Network Stats -->
+    <string name="cfx_interface_statusbar_network_stats_title">Network stats</string>
+    <string name="cfx_interface_statusbar_network_stats_visible_title">Show network stats</string>
+    <string name="cfx_interface_statusbar_network_stats_refresh_title">Refresh interval</string>
+    <string name="cfx_interface_statusbar_network_stats_color_title">Text color</string>
+    <string name="cfx_interface_statusbar_network_stats_default_color_title">Restore default color</string>
+    <string name="cfx_interface_statusbar_network_stats_Summary">Shows current upload and download rate</string>
 </resources>

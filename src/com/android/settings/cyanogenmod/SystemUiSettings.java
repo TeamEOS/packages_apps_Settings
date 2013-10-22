@@ -16,136 +16,95 @@
 
 package com.android.settings.cyanogenmod;
 
+import org.codefirex.utils.CFXConstants;
+
 import android.content.ContentResolver;
-import android.content.res.Resources;
+import android.content.Context;
 import android.os.Bundle;
-import android.os.RemoteException;
+import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.WindowManagerGlobal;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.Utils;
 
-public class SystemUiSettings extends SettingsPreferenceFragment  implements
-        Preference.OnPreferenceChangeListener {
-    private static final String TAG = "SystemSettings";
+public class SystemUiSettings extends SettingsPreferenceFragment implements
+		Preference.OnPreferenceChangeListener {
+	private static final String TAG = "SystemSettings";
+	private static final String NET_VISIBLE = "cfx_netstats_visible";
+	private static final String NET_INTERVAL = "cfx_netstats_refresh_interval";
 
-    private static final String KEY_EXPANDED_DESKTOP = "expanded_desktop";
-    private static final String KEY_EXPANDED_DESKTOP_NO_NAVBAR = "expanded_desktop_no_navbar";
-    private static final String CATEGORY_NAVBAR = "navigation_bar";
-    private static final String KEY_PIE_CONTROL = "pie_control";
-    private static final String KEY_SCREEN_GESTURE_SETTINGS = "touch_screen_gesture_settings";
+	ContentResolver mResolver;
+	Context mContext;
 
-    private PreferenceScreen mPieControl;
-    private ListPreference mExpandedDesktopPref;
-    private CheckBoxPreference mExpandedDesktopNoNavbarPref;
+	private CheckBoxPreference mVisible;
+	private ListPreference mInterval;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		addPreferencesFromResource(R.xml.system_ui_settings);
 
-        addPreferencesFromResource(R.xml.system_ui_settings);
-//        PreferenceScreen prefScreen = getPreferenceScreen();
-//
-//        mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
-//
-//        // Expanded desktop
-//        mExpandedDesktopPref = (ListPreference) findPreference(KEY_EXPANDED_DESKTOP);
-//        mExpandedDesktopNoNavbarPref =
-//                (CheckBoxPreference) findPreference(KEY_EXPANDED_DESKTOP_NO_NAVBAR);
-//
-//        Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
-//                getPreferenceScreen(), KEY_SCREEN_GESTURE_SETTINGS);
-//
-//        int expandedDesktopValue = Settings.System.getInt(getContentResolver(),
-//                Settings.System.EXPANDED_DESKTOP_STYLE, 0);
-//
-//        try {
-//            boolean hasNavBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar();
-//
-//            // Hide no-op "Status bar visible" mode on devices without navigation bar
-//            if (hasNavBar) {
-//                mExpandedDesktopPref.setOnPreferenceChangeListener(this);
-//                mExpandedDesktopPref.setValue(String.valueOf(expandedDesktopValue));
-//                updateExpandedDesktop(expandedDesktopValue);
-//                prefScreen.removePreference(mExpandedDesktopNoNavbarPref);
-//            } else {
-//                mExpandedDesktopNoNavbarPref.setOnPreferenceChangeListener(this);
-//                mExpandedDesktopNoNavbarPref.setChecked(expandedDesktopValue > 0);
-//                prefScreen.removePreference(mExpandedDesktopPref);
-//            }
-//
-//            // Hide navigation bar category on devices without navigation bar
-//            if (!hasNavBar) {
-//                prefScreen.removePreference(findPreference(CATEGORY_NAVBAR));
-//                mPieControl = null;
-//            }
-//        } catch (RemoteException e) {
-//            Log.e(TAG, "Error getting navigation bar status");
-//        }
-    }
+		mContext = (Context) getActivity();
+		mResolver = getActivity().getContentResolver();
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //updatePieControlSummary();
-    }
+		mVisible = (CheckBoxPreference) findPreference(NET_VISIBLE);
+		mVisible.setChecked(Settings.System.getBoolean(mResolver,
+				CFXConstants.STATUS_BAR_NETWORK_STATS, false));
+		mVisible.setOnPreferenceChangeListener(this);
 
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
-//        if (preference == mExpandedDesktopPref) {
-//            int expandedDesktopValue = Integer.valueOf((String) objValue);
-//            updateExpandedDesktop(expandedDesktopValue);
-//            return true;
-//        } else if (preference == mExpandedDesktopNoNavbarPref) {
-//            boolean value = (Boolean) objValue;
-//            updateExpandedDesktop(value ? 2 : 0);
-//            return true;
-//        }
-//
-        return false;
-    }
-//
-//    private void updatePieControlSummary() {
-//        if (mPieControl != null) {
-//            boolean enabled = Settings.System.getInt(getContentResolver(),
-//                Settings.System.PIE_CONTROLS, 0) != 0;
-//
-//            if (enabled) {
-//                mPieControl.setSummary(R.string.pie_control_enabled);
-//            } else {
-//                mPieControl.setSummary(R.string.pie_control_disabled);
-//            }
-//        }
-//    }
-//
-//    private void updateExpandedDesktop(int value) {
-//        ContentResolver cr = getContentResolver();
-//        Resources res = getResources();
-//        int summary = -1;
-//
-//        Settings.System.putInt(cr, Settings.System.EXPANDED_DESKTOP_STYLE, value);
-//
-//        if (value == 0) {
-//            // Expanded desktop deactivated
-//            Settings.System.putInt(cr, Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 0);
-//            Settings.System.putInt(cr, Settings.System.EXPANDED_DESKTOP_STATE, 0);
-//            summary = R.string.expanded_desktop_disabled;
-//        } else if (value == 1) {
-//            Settings.System.putInt(cr, Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 1);
-//            summary = R.string.expanded_desktop_status_bar;
-//        } else if (value == 2) {
-//            Settings.System.putInt(cr, Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 1);
-//            summary = R.string.expanded_desktop_no_status_bar;
-//        }
-//
-//        if (mExpandedDesktopPref != null && summary != -1) {
-//            mExpandedDesktopPref.setSummary(res.getString(summary));
-//        }
-//    }
+		mInterval = (ListPreference) findPreference(NET_INTERVAL);
+		Long currentVal = Settings.System.getLong(mResolver,
+				CFXConstants.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL, 500);
+		mInterval.setValue(String.valueOf(currentVal));
+		mInterval.setOnPreferenceChangeListener(this);
+		updateIntervalSummary();
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		if (preference.equals(mVisible)) {
+			Settings.System.putBoolean(mResolver,
+					CFXConstants.STATUS_BAR_NETWORK_STATS,
+					((Boolean) newValue).booleanValue());
+			return true;
+		}
+		if (preference.equals(mInterval)) {
+			Settings.System.putLong(mResolver,
+					CFXConstants.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL,
+					Long.parseLong(String.valueOf(newValue)));
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					updateIntervalSummary();
+				}
+			}, 100);
+			return true;
+		}
+		return false;
+	}
+
+	private void updateIntervalSummary() {
+		String[] entries = mContext.getResources().getStringArray(
+				R.array.netstats_entries);
+		String[] vals = mContext.getResources().getStringArray(
+				R.array.netstats_values);
+		String currentVal = mInterval.getValue();
+		String newEntry = "";
+		for (int i = 0; i < vals.length; i++) {
+			if (vals[i].equals(currentVal)) {
+				newEntry = entries[i];
+				break;
+			}
+		}
+		mInterval.setSummary(newEntry);
+	}
 }

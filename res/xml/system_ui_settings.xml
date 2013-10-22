@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012 The CyanogenMod Project
+<!--
+     Copyright (C) 2012 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,14 +15,33 @@
      limitations under the License.
 -->
 
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/system_interface_title"
-    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
+    android:title="@string/system_interface_title" >
 
-    <PreferenceScreen
-        android:key="quick_settings_panel"
-        android:fragment="com.android.settings.quicksettings.QuickSettings"
-        android:title="@string/quick_settings_panel_title" />
+    <PreferenceCategory
+        android:key="category_quick_settings"
+        android:title="@string/quick_settings_panel_title" >
+        <PreferenceScreen
+            android:fragment="com.android.settings.quicksettings.QuickSettings"
+            android:key="quick_settings_panel"
+            android:title="@string/quick_settings_panel_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="statusbar_network_indicator"
+        android:title="@string/cfx_interface_statusbar_network_stats_title" >
+        <CheckBoxPreference
+            android:key="cfx_netstats_visible"
+            android:title="@string/cfx_interface_statusbar_network_stats_visible_title" />
+
+        <ListPreference
+            android:defaultValue="500"
+            android:dependency="cfx_netstats_visible"
+            android:entries="@array/netstats_entries"
+            android:entryValues="@array/netstats_values"
+            android:key="cfx_netstats_refresh_interval"
+            android:title="@string/cfx_interface_statusbar_network_stats_refresh_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
