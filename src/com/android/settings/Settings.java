@@ -605,7 +605,7 @@ public class Settings extends PreferenceActivity
                         target.remove(i);
                     }
                 }
-			} else if (id == R.id.more_device_settings) {
+			} else if (id == R.id.legacy_device_settings) {
 				Header tmp = checkForDeviceSettings(header);
 				if (tmp.intent == null) {
 					target.remove(i);

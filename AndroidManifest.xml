@@ -76,7 +76,9 @@
             android:requiredForAllUsers="true"
             android:supportsRtl="true">
 
-        <!-- Settings -->
+    <uses-library android:name="org.cyanogenmod.hardware" required="false" />
+
+   <!-- Settings -->
 
         <activity android:name="Settings"
                 android:label="@string/settings_label_launcher"
