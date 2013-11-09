@@ -248,4 +248,13 @@
     <string name="eos_statusbar_doubletap_title">Status bar double tap action</string>
     <string name="eos_statusbar_doubletap_observed_uri">eos_statusbar_double_tap</string>
 
+    <!-- Display : Animation options -->
+    <string name="display_category_animation_options_title">Animation options</string>
+    <string name="system_power_crt_mode_title">CRT animation mode</string>
+    <string name="system_power_crt_mode_dialog_title">Show CRT animation</string>
+    <string name="system_power_crt_mode_off">Don\'t show</string>
+    <string name="system_power_crt_mode_horizontal">Portrait horizontal</string>
+    <string name="system_power_crt_mode_vertical">Portrait vertical</string>
+    <string name="system_power_crt_mode_both">Orientation dependent</string>
+
 </resources>

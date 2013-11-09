@@ -33,7 +33,6 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 
 import com.android.internal.view.RotationPolicy;
@@ -53,11 +52,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_LED = "notification_led";
     private static final String KEY_SCREEN_SAVER = "screensaver";
+    private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
     private CheckBoxPreference mAccelerometer;
     private WarnedListPreference mFontSizePref;
+    private ListPreference mCrtMode;
 
     private final Configuration mCurConfig = new Configuration();
 
@@ -115,6 +116,23 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mNotificationLed = (PreferenceScreen) findPreference(KEY_NOTIFICATION_LED);
         if (!hasNotificationLed) {
             getPreferenceScreen().removePreference(mNotificationLed);
+        }
+
+        // respect device default configuration
+        // true fades while false animates
+        boolean electronBeamFadesConfig = getResources().getBoolean(
+                com.android.internal.R.bool.config_animateScreenLights);
+        mCrtMode = (ListPreference) getPreferenceScreen().findPreference(KEY_POWER_CRT_MODE);
+        if (mCrtMode != null) {
+            if (!electronBeamFadesConfig && mCrtMode != null) {
+                int crtMode = Settings.System.getInt(getContentResolver(),
+                        Settings.System.SYSTEM_POWER_CRT_MODE, 1);
+                mCrtMode.setValue(String.valueOf(crtMode));
+                mCrtMode.setSummary(mCrtMode.getEntry());
+                mCrtMode.setOnPreferenceChangeListener(this);
+            } else {
+                getPreferenceScreen().removePreference(mCrtMode);
+            }
         }
     }
 
@@ -300,7 +318,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (KEY_FONT_SIZE.equals(key)) {
             writeFontSizePreference(objValue);
         }
-
+        if (KEY_POWER_CRT_MODE.equals(key)) {
+            int value = Integer.parseInt((String) objValue);
+            int index = mCrtMode.findIndexOfValue((String) objValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.SYSTEM_POWER_CRT_MODE,
+                    value);
+            mCrtMode.setSummary(mCrtMode.getEntries()[index]);
+        }
         return true;
     }
 
