@@ -53,6 +53,7 @@ public class ButtonSettings extends ActionSettings implements
     private static final String NAVBAR_FORCE = "interface_force_navbar";
     private static final String KEY_POWER_END_CALL = "power_end_call";
     private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
+    private static final String KEY_BLUETOOTH_INPUT_SETTINGS = "bluetooth_input_settings";
 
     // category keys
     private static final String CATEGORY_BACK = "back_key";
@@ -223,6 +224,9 @@ public class ButtonSettings extends ActionSettings implements
 
         // let super know we can load ActionPreferences
         onPreferenceScreenLoaded();
+
+        Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
+                getPreferenceScreen(), KEY_BLUETOOTH_INPUT_SETTINGS);
     }
 
     @Override
