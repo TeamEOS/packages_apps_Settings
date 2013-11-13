@@ -69,6 +69,13 @@
         android:fragment="com.android.settings.HomeSettings"
         android:title="@string/home_settings" />
 
+    <!-- System UI -->
+    <header
+        android:id="@+id/system_settings"
+        android:icon="@drawable/ic_settings_system"
+        android:fragment="com.android.settings.cyanogenmod.SystemUiSettings"
+        android:title="@string/system_settings_title" />
+
     <!-- Sound -->
     <header
         android:id="@+id/sound_settings"

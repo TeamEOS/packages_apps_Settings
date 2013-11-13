@@ -1580,6 +1580,9 @@
             android:theme="@style/CryptKeeperBlankTheme"
         />
 
+        <!-- CyanogenMod activities Start -->
+        <activity android:name=".cyanogenmod.SystemUiSettings"/>
+
          <!-- "Blacklist settings" UI, used only on voice-capable phone devices. -->
         <activity android:name="Settings$BlacklistSettingsActivity"
                 android:theme="@android:style/Theme.Holo.DialogWhenLarge"
