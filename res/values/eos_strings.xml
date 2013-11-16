@@ -57,4 +57,6 @@
     <string name="mod_version">Eos version</string>
     <string name="mod_version_default">Unknown</string>
 
+    <!-- Font size sample text -->
+    <string name="font_size_sample">Font Size</string>
 </resources>
