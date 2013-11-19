@@ -17,6 +17,7 @@
 -keep class com.android.settings.cyanogenmod.*
 -keep class com.android.settings.blacklist.*
 -keep class com.android.settings.cfx.*
+-keep class com.android.settings.cyanogenmod.*Settings
 
 # Keep click responders
 -keepclassmembers class com.android.settings.inputmethod.UserDictionaryAddWordActivity {

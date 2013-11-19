@@ -270,4 +270,20 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="remove_blacklist_number_title">Remove number</string>
     <string name="remove_blacklist_entry">Do you want to remove this blacklist entry?</string>
     <string name="select_contact">Select contact</string>
+
+    <!-- Hardware keys -->
+    <string name="button_settings">Buttons</string>
+
+    <!-- Power menu enable disable -->
+    <string name="power_menu_title">Power menu</string>
+    <string name="power_menu_reboot_title">Reboot menu</string>
+    <string name="power_menu_screenshot_title">Screenshot</string>
+    <string name="power_menu_expanded_desktop">Expanded desktop</string>
+    <string name="expanded_desktop_disabled">Disabled</string>
+    <string name="expanded_desktop_status_bar">Status bar visible</string>
+    <string name="expanded_desktop_no_status_bar">Status bar hidden</string>
+    <string name="power_menu_profiles_title">Profile switcher</string>
+    <string name="power_menu_airplane_title">Airplane mode</string>
+    <string name="power_menu_user_title">User switcher</string>
+    <string name="power_menu_sound_title">Sound panel</string>
 </resources>
