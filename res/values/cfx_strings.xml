@@ -25,6 +25,9 @@
     <string name="battery">Battery</string>
 
     <string name="quick_settings_panel_summary">Set tiles and control panel behavior</string>
+    <!-- QuickSettings fliptiles -->
+    <string name="flip_qs_tiles_title">Flip tiles</string>
+    <string name="flip_qs_tiles_summary">Flips the tiles on touch</string>
 
     <!--Notification LED category header-->
     <string name="notification_led_category_title">Notification LED</string>

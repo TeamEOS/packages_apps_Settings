@@ -27,6 +27,11 @@
             android:entries="@array/quick_pulldown_entries"
             android:entryValues="@array/quick_pulldown_values"
             android:persistent="false" />
+
+        <CheckBoxPreference
+            android:key="flip_qs_tiles"
+            android:title="@string/flip_qs_tiles_title"
+            android:summary="@string/flip_qs_tiles_summary" /> 
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -56,7 +61,7 @@
 
         </PreferenceCategory>
 
-    <PreferenceCategory
+        <PreferenceCategory
         android:key="pref_dynamic_tiles"
         android:title="@string/title_dynamic_tiles" >
 
