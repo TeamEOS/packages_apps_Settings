@@ -23,6 +23,9 @@ import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -63,12 +66,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_LIGHTS = "lights_prefs";
     private static final String KEY_DISPLAY_COLOR = "color_calibration";
     private static final String KEY_DISPLAY_GAMMA = "gamma_tuning";
+    private static final String KEY_SCREEN_COLOR_SETTINGS = "screencolor_settings";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
     private CheckBoxPreference mAccelerometer;
     private WarnedListPreference mFontSizePref;
     private ListPreference mCrtMode;
+    private PreferenceScreen mScreenColorSettings;
 
     private final Configuration mCurConfig = new Configuration();
 
@@ -133,7 +138,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             advancedPrefs.removePreference(findPreference(KEY_DISPLAY_GAMMA));
         }
 
-
+        mScreenColorSettings = (PreferenceScreen) findPreference(KEY_SCREEN_COLOR_SETTINGS);
+        if (!isPostProcessingSupported()) {
+            getPreferenceScreen().removePreference(mScreenColorSettings);
+        }
 
         boolean hasNotificationLed = getResources().getBoolean(
                 com.android.internal.R.bool.config_intrusiveNotificationLed);
@@ -364,5 +372,16 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             }
         }
         return false;
+    }
+
+    private boolean isPostProcessingSupported() {
+        boolean ret = true;
+        final PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo("com.qualcomm.display", PackageManager.GET_META_DATA);
+        } catch (NameNotFoundException e) {
+            ret = false;
+        }
+        return ret;
     }
 }
