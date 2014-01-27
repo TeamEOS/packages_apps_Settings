@@ -997,4 +997,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <!-- Whether to display IME switcher notifcation -->
     <string name="ime_switcher_notify">Selector notification</string>
     <string name="ime_switcher_notify_summary">Display input method selector notification</string>
+
+    <!-- CFX Strings -->
+    <string name="header_category_cfx">CFX</string>
 </resources>
