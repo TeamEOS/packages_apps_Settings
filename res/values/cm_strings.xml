@@ -1000,6 +1000,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
 
     <!-- CFX Strings -->
     <string name="header_category_cfx">CFX</string>
+
     <!-- Network Stats -->
     <string name="cfx_interface_statusbar_network_stats_title">Network stats</string>
     <string name="cfx_interface_statusbar_network_stats_visible_title">Show network stats</string>
@@ -1007,4 +1008,36 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="cfx_interface_statusbar_network_stats_color_title">Text color</string>
     <string name="cfx_interface_statusbar_network_stats_default_color_title">Restore default color</string>
     <string name="cfx_interface_statusbar_network_stats_Summary">Shows current upload and download rate</string>
+
+    <!-- LCD Density Wizard -->
+    <string name="cfx_lcd_density_wizard_title">DPI Wizard</string>
+    <string name="cfx_lcd_density_wizard_summary">Wizard to guide you through changing the display density</string>
+    <string name="dpi">DPI</string>
+    <string name="reboot_reset_density">Resetting density</string>
+    <string name="lcd_density_wizard">LCD Density Wizard</string>
+    <string name="follow_through_title">Follow through!</string>
+    <string name="follow_through_summary">Make sure you follow the steps one-by-one and complete each step before proceeding</string>
+    <string name="stock_density_title">1. Restore LCD density to stock value</string>
+    <string name="stock_density_changed_summary">"Density set to: "</string>
+    <string name="reboot_title">2. Reboot</string>
+    <string name="reboot_summary">Come back here after the reboot and complete the rest of the steps</string>
+    <string name="clear_market_data_title">3. Clear Play Store data</string>
+    <string name="clear_market_data_cleared">Play Store data cleared</string>
+    <string name="open_market_title">4. Open Play Store and hit accept</string>
+    <string name="open_market_summary">Press back when done to return to wizard</string>
+    <string name="open_market_summary_could_not_open">"Couldn't open the Play Store! If you're sure it's installed, open it manually from the launcher."</string>
+    <string name="custom_density_title">5. Change density to whatever you like</string>
+    <string name="custom_density_summary">If you ever have compatibility issues with the Play Store, be sure to return here and repeat the process</string>
+    <string name="custom_density_summary_invalid">"INVALID DENSITY!"</string>
+    <string name="custom_density">custom</string>
+    <string name="set_custom_density_title">Set custom density</string>
+    <string name="set_custom_density_set">Set</string>
+    <string name="custom_density_dialog_title">"WARNING!"</string>
+    <string name="custom_density_dialog_summary">"Changing your LCD density can cause unexpected app behavior. If you encounter Play Store app incompatibility please return here and restart the process from step 1."</string>
+    <string name="custom_density_dialog_button_got">Got it</string>
+    <string name="custom_density_dialog_button_reboot">Hot Reboot</string>
+    <string name="lcd_density_stock_160">160 -- mdpi</string>
+    <string name="lcd_density_stock_240">240 -- hdpi</string>
+    <string name="lcd_density_stock_320">320 -- xhdpi</string>
+
 </resources>

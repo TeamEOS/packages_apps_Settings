@@ -20,6 +20,16 @@
     android:title="@string/system_interface_title" >
 
     <PreferenceCategory
+        android:key="category_density_wizard"
+        android:title="@string/cfx_lcd_density_wizard_title" >
+        <PreferenceScreen
+            android:key="lcd_density"
+            android:title="@string/cfx_lcd_density_wizard_title"
+            android:summary="@string/cfx_lcd_density_wizard_summary"
+            android:fragment="com.android.settings.cfx.DensityChanger" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="category_quick_settings"
         android:title="@string/quick_settings_panel_title" >
         <PreferenceScreen

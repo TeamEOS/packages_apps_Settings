@@ -573,6 +573,60 @@
 
     <string-array name="empty_array"/>
 
+
+    <!-- CFX arrays -->
+    <!-- LCD Density Wizard -->
+    <string-array name="lcd_density_entries" translatable="false">
+        <item>100</item>
+        <item>120</item>
+        <item>160</item>
+        <item>171</item>
+        <item>180</item>
+        <item>200</item>
+        <item>220</item>
+        <item>240</item>
+        <item>280</item>
+        <item>@string/custom_density</item>
+    </string-array>
+
+    <string-array name="lcd_density_stock_entries" translatable="false">
+        <item>@string/lcd_density_stock_160</item>
+        <item>@string/lcd_density_stock_240</item>
+        <item>@string/lcd_density_stock_320</item>
+    </string-array>
+
+    <string-array name="lcd_density_stock_values" translatable="false">
+        <item>160</item>
+        <item>240</item>
+        <item>320</item>
+    </string-array>
+    <!-- Display :  LCD Density Wizard **END** -->
+
+    <string-array name="volume_control_entries">
+        <item>Single</item>
+        <item>Expandable</item>
+        <item>Expanded</item>
+        <item>None</item>
+    </string-array>
+
+    <string-array name="volume_control_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="style_expanded_desktop_entries">
+        <item>Disabled</item>
+        <item>Statusbar doesn\'t hide</item>
+        <item>Hide statusbar</item>
+    </string-array>
+    <string-array name="style_expanded_desktop_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <string-array name="netstats_entries">
         <item>&#189; second</item>
         <item>1 second</item>
