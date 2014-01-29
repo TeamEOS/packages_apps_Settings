@@ -16,9 +16,13 @@
 
 package com.android.settings.cyanogenmod;
 
-import android.os.Bundle;
+
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.content.ContentResolver;
+import android.os.Bundle;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings;
 
 import com.android.settings.R;
