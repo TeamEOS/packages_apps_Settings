@@ -29,6 +29,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="cfx_systemui_navigation_bar"
+        android:title="@string/cfx_interface_navbar" >
+        <ListPreference
+            android:entries="@array/systemui_navbar_size_entries"
+            android:entryValues="@array/systemui_navbar_size_values"
+            android:key="cfx_interface_navbar_size"
+            android:title="@string/cfx_interface_navbar_size_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="statusbar_network_indicator"
         android:title="@string/cfx_interface_statusbar_network_stats_title" >
         <CheckBoxPreference
