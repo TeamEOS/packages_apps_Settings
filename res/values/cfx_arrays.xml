@@ -53,4 +53,28 @@
         <item>5000</item>
     </string-array>
 
+    <string-array name="systemui_navbar_size_entries">
+        <item>32dp</item>
+        <item>34dp</item>
+        <item>36dp</item>
+        <item>38dp</item>
+        <item>40dp</item>
+        <item>42dp</item>
+        <item>44dp</item>
+        <item>46dp</item>
+        <item>48dp</item>
+    </string-array>
+
+    <string-array name="systemui_navbar_size_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
 </resources>
