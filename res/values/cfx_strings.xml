@@ -15,10 +15,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">    
+    <!-- cfx settings headers  -->
+    <string name="interface_settings_title">Interface</string>
+    <string name="system_settings_title">System</string>
+
     <!--Notification LED category header-->
     <string name="notification_led_category_title">Notification LED</string>
-
  
     <!--Lights settings screen, notification light settings-->
     <string name="display_lights_settings_title">Display &amp; lights</string>
@@ -47,7 +50,21 @@
     <string name="pulse_speed_very_slow">Very slow</string>
 
     <!-- Navigation Bar -->
-     <string name="cfx_interface_navbar">Navigation Bar</string>
+    <string name="cfx_interface_navbar">Navigation Bar</string>
     <string name="cfx_interface_navbar_size_title">Bar size</string>
+
+    <!-- Power menu enable disable -->
+    <string name="power_menu_title">Power menu</string>
+    <string name="power_menu_summary">Add and remove controls</string>
+    <string name="power_menu_reboot_title">Reboot menu</string>
+    <string name="power_menu_screenshot_title">Screenshot</string>
+    <string name="power_menu_expanded_desktop">Expanded desktop</string>
+    <string name="expanded_desktop_disabled">Disabled</string>
+    <string name="expanded_desktop_status_bar">Status bar visible</string>
+    <string name="expanded_desktop_no_status_bar">Status bar hidden</string>
+    <string name="power_menu_profiles_title">Profile switcher</string>
+    <string name="power_menu_airplane_title">Airplane mode</string>
+    <string name="power_menu_user_title">User switcher</string>
+    <string name="power_menu_sound_title">Sound panel</string>
 
 </resources>

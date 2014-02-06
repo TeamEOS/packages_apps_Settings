@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The CyanogenMod project
+ * Copyright (C) 2014 CodefireX
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.cyanogenmod;
+package com.android.settings.cfx;
 
 import org.codefirex.utils.CFXConstants;
 import org.codefirex.utils.CFXUtils;
@@ -34,7 +34,7 @@ import android.provider.Settings;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
-public class SystemUiSettings extends SettingsPreferenceFragment implements
+public class InterfaceSettings extends SettingsPreferenceFragment implements
 		Preference.OnPreferenceChangeListener {
 	private static final String TAG = "SystemSettings";
 	private static final String NET_VISIBLE = "cfx_netstats_visible";
@@ -52,7 +52,7 @@ public class SystemUiSettings extends SettingsPreferenceFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.system_ui_settings);
+		addPreferencesFromResource(R.xml.interface_settings);
 
 		mContext = (Context) getActivity();
 		mResolver = getActivity().getContentResolver();
