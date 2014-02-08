@@ -19,6 +19,8 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/system_settings_title" >
 
+    <Preference android:key="cfx_device_settings"/>
+
     <PreferenceScreen
         android:fragment="com.android.settings.cfx.PowerMenu"
         android:key="power_menu"
