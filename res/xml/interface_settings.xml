@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2012 The CyanogenMod Project
+     Copyright (C) 2014 CodefireX
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -19,39 +19,22 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/interface_settings_title" >
 
-    <PreferenceCategory
-        android:key="category_quick_settings"
-        android:title="@string/quick_settings_panel_title" >
-        <PreferenceScreen
-            android:fragment="com.android.settings.quicksettings.QuickSettings"
-            android:key="quick_settings_panel"
-            android:title="@string/quick_settings_panel_title" />
-    </PreferenceCategory>
+    <PreferenceScreen
+        android:fragment="com.android.settings.quicksettings.QuickSettings"
+        android:key="quick_settings_panel"
+        android:summary="@string/quick_settings_panel_summary"
+        android:title="@string/quick_settings_panel_title" />
 
-    <PreferenceCategory
-        android:key="cfx_systemui_navigation_bar"
-        android:title="@string/cfx_interface_navbar" >
-        <ListPreference
-            android:entries="@array/systemui_navbar_size_entries"
-            android:entryValues="@array/systemui_navbar_size_values"
-            android:key="cfx_interface_navbar_size"
-            android:title="@string/cfx_interface_navbar_size_title" />
-    </PreferenceCategory>
+    <PreferenceScreen
+        android:fragment="com.android.settings.cfx.StatusbarSettings"
+        android:key="statusbar_settings"
+        android:summary="@string/statusbar_settings_summary"
+        android:title="@string/statusbar_settings_title" />
 
-    <PreferenceCategory
-        android:key="statusbar_network_indicator"
-        android:title="@string/cfx_interface_statusbar_network_stats_title" >
-        <CheckBoxPreference
-            android:key="cfx_netstats_visible"
-            android:title="@string/cfx_interface_statusbar_network_stats_visible_title" />
-
-        <ListPreference
-            android:defaultValue="500"
-            android:dependency="cfx_netstats_visible"
-            android:entries="@array/netstats_entries"
-            android:entryValues="@array/netstats_values"
-            android:key="cfx_netstats_refresh_interval"
-            android:title="@string/cfx_interface_statusbar_network_stats_refresh_title" />
-    </PreferenceCategory>
+    <PreferenceScreen
+        android:fragment="com.android.settings.cfx.NavigationSettings"
+        android:key="navigation_settings"
+        android:summary="@string/navigationbar_settings_summary"
+        android:title="@string/navigationbar_settings_title" />
 
 </PreferenceScreen>
