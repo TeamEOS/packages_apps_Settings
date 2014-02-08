@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
+     Copyright (C) 2014 CodefireX
 
-   Copyright 2013 The ParanoidAndroid Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
 
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
 -->
+
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">    
     <!-- cfx settings headers  -->
     <string name="interface_settings_title">Interface</string>
     <string name="system_settings_title">System</string>
+
+    <string name="statusbar_settings_title">Status bar</string>
+    <string name="statusbar_settings_summary"></string>
+
+    <string name="quick_settings_panel_summary">Set tiles and control panel behavior</string>
 
     <!--Notification LED category header-->
     <string name="notification_led_category_title">Notification LED</string>
@@ -50,8 +55,10 @@
     <string name="pulse_speed_very_slow">Very slow</string>
 
     <!-- Navigation Bar -->
-    <string name="cfx_interface_navbar">Navigation Bar</string>
     <string name="cfx_interface_navbar_size_title">Bar size</string>
+    <string name="cfx_systemui_navigation_bar_height">Height</string>
+    <string name="navigationbar_settings_title">Navigation bar</string>
+    <string name="navigationbar_settings_summary"></string>
 
     <!-- Power menu enable disable -->
     <string name="power_menu_title">Power menu</string>
