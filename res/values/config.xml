@@ -31,5 +31,25 @@
 
     <!-- Volume rocker support. Some devices do not have a volume rocker. -->
     <bool name="has_volume_rocker">true</bool>
+    
+    <!-- CFX Device settings app implementation -->
+
+    <!-- if your settings app has the following actions set
+         in the manifest, you do not need to set package or class
+         "com.cyanogenmod.action.LAUNCH_DEVICE_SETTINGS"
+         "org.teameos.action.LAUNCH_DEVICE_SETTINGS"
+         "com.cfx.action.LAUNCH_DEVICE_SETTINGS"
+         Otherwise, you MUST set both the package and fully qualified class name -->
+
+    <string name="config_device_settings_package"></string>
+    <string name="config_device_settings_class"></string>
+
+    <!-- By default, your application label will be used for preference title. 
+         You can override the title here -->
+    <string name="config_device_settings_title"></string>
+
+    <!-- By default, "Advanded device specific settings" will be preference summary
+         You can override the summary here -->
+    <string name="config_device_settings_summary"></string>
 
 </resources>
