@@ -35,12 +35,14 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 
 	private static final String NET_VISIBLE = "cfx_netstats_visible";
 	private static final String NET_INTERVAL = "cfx_netstats_refresh_interval";
+	private static final String WEATHER_DATE_VIEW = "cfx_weather_date_view";
 
 	ContentResolver mResolver;
 	Context mContext;
 
 	private CheckBoxPreference mVisible;
 	private ListPreference mInterval;
+	private CheckBoxPreference mWeatherDate;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,11 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 				CFXConstants.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL, 500);
 		mInterval.setValue(String.valueOf(currentVal));
 		mInterval.setOnPreferenceChangeListener(this);
+
+		mWeatherDate = (CheckBoxPreference) findPreference(WEATHER_DATE_VIEW);
+		mWeatherDate.setChecked(Settings.System.getBoolean(mResolver,
+				CFXConstants.SYSTEMUI_WEATHER_HEADER_VIEW, false));
+		mWeatherDate.setOnPreferenceChangeListener(this);
 
 		updateIntervalSummary();
 	}
@@ -81,6 +88,11 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 					updateIntervalSummary();
 				}
 			}, 100);
+			return true;
+		} else if (preference.equals(mWeatherDate)) {
+			Settings.System.putBoolean(mResolver,
+					CFXConstants.SYSTEMUI_WEATHER_HEADER_VIEW,
+					((Boolean) newValue).booleanValue());
 			return true;
 		}
 		return false;

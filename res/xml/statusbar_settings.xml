@@ -33,6 +33,20 @@
             android:entryValues="@array/netstats_values"
             android:key="cfx_netstats_refresh_interval"
             android:title="@string/cfx_interface_statusbar_network_stats_refresh_title" />
+    </PreferenceCategory>    
+    
+    <PreferenceCategory
+        android:key="statusbar_weather"
+        android:title="@string/cfx_interface_statusbar_weather_title" >
+        <Preference
+            style="?android:preferenceInformationStyle"
+            android:title="@string/dynamic_tiles_note_title"
+            android:summary="@string/cfx_weather_views_note_summary"
+            android:selectable="false" />
+        <CheckBoxPreference
+            android:key="cfx_weather_date_view"
+            android:title="@string/cfx_interface_statusbar_weather_date_view_title"
+            android:summary="@string/cfx_interface_statusbar_weather_date_view_summary" />
     </PreferenceCategory>
 
 </PreferenceScreen>
