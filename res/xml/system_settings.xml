@@ -33,4 +33,13 @@
         android:summary="@string/power_menu_summary"
         android:title="@string/power_menu_title" />
 
+    <Preference
+        android:key="cfx_weather"
+        android:title="@string/cfx_weather_settings" >
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="org.codefirex.cfxweather"
+            android:targetClass="org.codefirex.cfxweather.WeatherActivity" />
+    </Preference>
+
 </PreferenceScreen>
