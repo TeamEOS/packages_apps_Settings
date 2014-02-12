@@ -57,6 +57,11 @@
 
     </PreferenceCategory>
 
+        <PreferenceScreen
+                android:key="volume_steps"
+                android:fragment="com.android.settings.eos.VolumeSteps"
+                android:title="@string/volume_steps_title" />
+
     <PreferenceCategory
         android:key="sounds"
         android:title="@string/category_sounds">
