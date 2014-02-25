@@ -76,6 +76,13 @@
 
     <string name="device_settings_title_def">Device settings</string>
     <string name="device_settings_summary_def">Advanded device specific settings</string>
+    
+    <string name="display_power_title">Display &amp; power</string>
+    <string name="display_power_summary"></string>
+    <string name="battery_charging_title">Battery</string>
+    <string name="battery_disable_low_dialog_title">Disable low battery dialogs</string>
+    <string name="battery_disable_low_dialog_summary_enabled">Warning dialogs will not show</string>
+    <string name="battery_disable_low_dialog_summary_disabled">Warning dialogs will show</string>
 
     <!-- Weather -->
     <string name="cfx_weather_settings">Weather</string>
