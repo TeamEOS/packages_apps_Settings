@@ -43,7 +43,10 @@
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="org.codefirex.cfxweather"
-            android:targetClass="org.codefirex.cfxweather.WeatherActivity" />
+            android:targetClass="org.codefirex.cfxweather.WeatherActivity" >
+            <extra android:name="calling_package" android:value="com.android.settings" />
+            <extra android:name="needs_back_on_home" android:value="true" />
+        </intent>
     </Preference>
 
 </PreferenceScreen>
