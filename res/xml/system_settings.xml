@@ -32,6 +32,12 @@
         android:key="power_menu"
         android:summary="@string/power_menu_summary"
         android:title="@string/power_menu_title" />
+    
+    <PreferenceScreen
+        android:fragment="com.android.settings.cfx.DisplayPower"
+        android:key="display_power"
+        android:summary="@string/display_power_summary"
+        android:title="@string/display_power_title" />
 
     <Preference
         android:key="cfx_weather"
