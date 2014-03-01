@@ -29,9 +29,16 @@ import android.provider.Settings;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference;
 
 public class StatusbarSettings extends SettingsPreferenceFragment implements
 		Preference.OnPreferenceChangeListener {
+
+    private static final String STATUS_BAR_BATTERY = "status_bar_battery";
+    private static final String STATUS_BAR_SIGNAL = "status_bar_signal";
+    private static final String STATUS_BAR_BATTERY_SHOW_PERCENT = "status_bar_battery_show_percent";
+    private static final String STATUS_BAR_STYLE_HIDDEN = "4";
+    private static final String STATUS_BAR_STYLE_TEXT = "6";
 
 	private static final String NET_VISIBLE = "cfx_netstats_visible";
 	private static final String NET_INTERVAL = "cfx_netstats_refresh_interval";
@@ -43,6 +50,8 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 	private CheckBoxPreference mVisible;
 	private ListPreference mInterval;
 	private CheckBoxPreference mWeatherDate;
+    private ListPreference mStatusBarBattery;
+    private SystemSettingCheckBoxPreference mStatusBarBatteryShowPercent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,14 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 
 		mContext = (Context) getActivity();
 		mResolver = getActivity().getContentResolver();
+
+		mStatusBarBattery = (ListPreference) findPreference(STATUS_BAR_BATTERY);
+		mStatusBarBatteryShowPercent = (SystemSettingCheckBoxPreference) findPreference(STATUS_BAR_BATTERY_SHOW_PERCENT);
+		int batteryStyle = Settings.System.getInt(mResolver,
+				Settings.System.STATUS_BAR_BATTERY, 0);
+		mStatusBarBattery.setValue(String.valueOf(batteryStyle));
+		mStatusBarBattery.setSummary(mStatusBarBattery.getEntry());
+		mStatusBarBattery.setOnPreferenceChangeListener(this);
 
 		mVisible = (CheckBoxPreference) findPreference(NET_VISIBLE);
 		mVisible.setChecked(Settings.System.getBoolean(mResolver,
@@ -69,11 +86,20 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 		mWeatherDate.setOnPreferenceChangeListener(this);
 
 		updateIntervalSummary();
+		enableStatusBarBatteryDependents(mStatusBarBattery.getValue());
 	}
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		if (preference.equals(mVisible)) {
+		if (preference.equals(mStatusBarBattery)) {
+			int batteryStyle = Integer.valueOf((String) newValue);
+			int index = mStatusBarBattery.findIndexOfValue((String) newValue);
+			Settings.System.putInt(mResolver,
+					Settings.System.STATUS_BAR_BATTERY, batteryStyle);
+			mStatusBarBattery.setSummary(mStatusBarBattery.getEntries()[index]);
+			enableStatusBarBatteryDependents((String) newValue);
+			return true;
+		} else if (preference.equals(mVisible)) {
 			Settings.System.putBoolean(mResolver,
 					CFXConstants.STATUS_BAR_NETWORK_STATS,
 					((Boolean) newValue).booleanValue());
@@ -112,5 +138,11 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 			}
 		}
 		mInterval.setSummary(newEntry);
+	}
+
+	private void enableStatusBarBatteryDependents(String value) {
+		boolean enabled = !(value.equals(STATUS_BAR_STYLE_TEXT) || value
+				.equals(STATUS_BAR_STYLE_HIDDEN));
+		mStatusBarBatteryShowPercent.setEnabled(enabled);
 	}
 }
