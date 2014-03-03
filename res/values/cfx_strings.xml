@@ -74,9 +74,6 @@
     <string name="power_menu_airplane_title">Airplane mode</string>
     <string name="power_menu_user_title">User switcher</string>
     <string name="power_menu_sound_title">Sound panel</string>
-
-    <string name="device_settings_title_def">Device settings</string>
-    <string name="device_settings_summary_def">Advanded device specific settings</string>
     
     <string name="display_power_title">Display &amp; power</string>
     <string name="display_power_summary"></string>
