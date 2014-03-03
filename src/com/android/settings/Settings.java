@@ -601,6 +601,13 @@ public class Settings extends PreferenceActivity
                         target.remove(i);
                     }
                 }
+			} else if (id == R.id.more_device_settings) {
+				Header tmp = checkForDeviceSettings(header);
+				if (tmp.intent == null) {
+					target.remove(i);
+				} else {
+					header = tmp;
+				}
             } else if (id == R.id.development_settings) {
                 if (!showDev) {
                     target.remove(i);
@@ -1064,6 +1071,75 @@ public class Settings extends PreferenceActivity
     public static void requestHomeNotice() {
         sShowNoHomeNotice = true;
     }
+
+	private Header checkForDeviceSettings(Header h) {
+		ActivityInfo ai = null;
+		Intent intent = null;
+		// first check if package is implicitly set
+		String _package = getString(R.string.config_device_settings_package);
+		// not implicitly set, resolve common device settings intents
+		// starting with the most common
+		// we break on the first resolved one, if any
+		if (TextUtils.isEmpty(_package)) {
+			ai = getDeviceSettingsComponent("com.cyanogenmod.action.LAUNCH_DEVICE_SETTINGS");
+			if (ai == null) {
+				ai = getDeviceSettingsComponent("org.teameos.action.LAUNCH_DEVICE_SETTINGS");
+				if (ai == null) {
+					ai = getDeviceSettingsComponent("com.cfx.action.LAUNCH_DEVICE_SETTINGS");
+					if (ai == null) {
+						// we're done, device does not have Device Settings
+						h.intent = null;
+						return h;
+					}
+				}
+			}
+			intent = new Intent().setAction(Intent.ACTION_MAIN).setClassName(
+					ai.packageName, ai.name);
+			h.intent = intent;
+			return h;
+		} else {
+			// package implicitly set in device config
+			String _class = getString(R.string.config_device_settings_class);
+			if (TextUtils.isEmpty(_class)) {
+				// if package is set, the class must be set too
+				h.intent = null;
+				return h;
+			}
+			intent = new Intent().setAction(Intent.ACTION_MAIN).setClassName(
+					_package, _class);
+			// make sure device maintainer didn't derp their config
+			if (intent.resolveActivity(getPackageManager()) != null) {
+				h.intent = intent;
+				try {
+					ai = getPackageManager().getActivityInfo(
+							intent.getComponent(), 0);
+				} catch (NameNotFoundException e) {
+					e.printStackTrace();
+					// should never get here
+					h.intent = null;
+					return h;
+				}
+			} else {
+				// invalid configuration, config set but settings app isn't
+				// resolved
+				h.intent = null;
+				return h;
+			}
+		}
+		h.intent = null;
+		return h;
+	}
+
+	private ActivityInfo getDeviceSettingsComponent(String customAction) {
+		ActivityInfo ai = null;
+		Intent intent = new Intent(customAction);
+		ResolveInfo info = getPackageManager().resolveActivity(intent,
+				PackageManager.GET_RESOLVED_FILTER);
+		if (info != null) {
+			ai = info.activityInfo;
+		}
+		return ai;
+	}
 
     /*
      * Settings subclasses for launching independently.
