@@ -63,6 +63,10 @@
             android:key="cfx_weather_date_view"
             android:summary="@string/cfx_interface_statusbar_weather_date_view_summary"
             android:title="@string/cfx_interface_statusbar_weather_date_view_title" />
+        <CheckBoxPreference
+            android:key="cfx_weather_notification"
+            android:summary="@string/cfx_interface_statusbar_weather_notification_summary"
+            android:title="@string/cfx_interface_statusbar_weather_notification_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>
