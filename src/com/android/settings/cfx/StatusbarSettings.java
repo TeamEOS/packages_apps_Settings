@@ -43,6 +43,7 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 	private static final String NET_VISIBLE = "cfx_netstats_visible";
 	private static final String NET_INTERVAL = "cfx_netstats_refresh_interval";
 	private static final String WEATHER_DATE_VIEW = "cfx_weather_date_view";
+	private static final String WEATHER_NOTIFICATION = "cfx_weather_notification";
 
 	ContentResolver mResolver;
 	Context mContext;
@@ -50,6 +51,7 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 	private CheckBoxPreference mVisible;
 	private ListPreference mInterval;
 	private CheckBoxPreference mWeatherDate;
+	private CheckBoxPreference mWeatherNot;
     private ListPreference mStatusBarBattery;
     private SystemSettingCheckBoxPreference mStatusBarBatteryShowPercent;
 
@@ -85,6 +87,10 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 				CFXConstants.SYSTEMUI_WEATHER_HEADER_VIEW, false));
 		mWeatherDate.setOnPreferenceChangeListener(this);
 
+		mWeatherNot = (CheckBoxPreference) findPreference(WEATHER_NOTIFICATION);
+		mWeatherNot.setChecked(Settings.System.getBoolean(mResolver, WEATHER_NOTIFICATION, false));
+		mWeatherNot.setOnPreferenceChangeListener(this);
+
 		updateIntervalSummary();
 		enableStatusBarBatteryDependents(mStatusBarBattery.getValue());
 	}
@@ -118,6 +124,10 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 		} else if (preference.equals(mWeatherDate)) {
 			Settings.System.putBoolean(mResolver,
 					CFXConstants.SYSTEMUI_WEATHER_HEADER_VIEW,
+					((Boolean) newValue).booleanValue());
+			return true;
+		} else if (preference.equals(mWeatherNot)) {
+			Settings.System.putBoolean(mResolver, WEATHER_NOTIFICATION,
 					((Boolean) newValue).booleanValue());
 			return true;
 		}

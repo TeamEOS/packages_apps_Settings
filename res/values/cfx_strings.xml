@@ -88,5 +88,7 @@
     <string name="cfx_weather_views_note_summary">Weather views are visible when the service is enabled in system settings</string>
     <string name="cfx_interface_statusbar_weather_date_view_title">Expanded header</string>
     <string name="cfx_interface_statusbar_weather_date_view_summary">Show current conditions next to the clock and date</string>
+    <string name="cfx_interface_statusbar_weather_notification_summary">Show a persistent forecast notification</string>
+    <string name="cfx_interface_statusbar_weather_notification_title">Notification</string>
 
 </resources>
