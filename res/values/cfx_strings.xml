@@ -91,4 +91,59 @@
     <string name="cfx_interface_statusbar_weather_notification_summary">Show a persistent forecast notification</string>
     <string name="cfx_interface_statusbar_weather_notification_title">Notification</string>
 
+    <!-- Clock -->
+    <string name="cfx_style_indicator_clock_title">Clock</string>
+    <string name="cfx_style_indicator_clock_summary">Clock styles and location</string>
+    <string name="cfx_style_statusbar_clock_title">Clock location</string>
+    <string name="cfx_style_statusbar_clock_am_pm_title">AM/PM Style</string>
+
+    <!-- Softkeys -->
+    <string name="cfx_interface_navigation">Navigation</string>
+    <string name="cfx_interface_navbar">Navigation Bar</string>
+    <string name="cfx_interface_navbar_appearance">Navigation Bar Appearance</string>
+    <string name="cfx_interface_systemui_mode_title">UI Mode</string>
+    <string name="cfx_interface_systemui_mode_capkey_warning">\nNotice:\u0020 You appear to be simulating a capacitive key device. \nUse caution</string>
+    <string name="cfx_softkey_settings_title">Softkeys</string>
+    <string name="cfx_softkey_settings_summary">Set long press actions</string>
+    <string name="cfx_softkey_style_summary">Configure softkey and key glow appearance</string>
+    <string name="cfx_style_navbar_softkey">Navigation bar and Softkeys</string>
+    <string name="cfx_softkey_longpress_title">Long press</string>
+    <string name="cfx_softkey_longpress_summary">Set long press action</string>
+    <string name="cfx_softkey_key_color_title">Key colors</string>
+    <string name="cfx_softkey_key_color_summary">Select keys to apply color to</string>
+    <string name="cfx_softkey_key_color_restore_summary">Select keys to restore colors to default</string>
+    <string name="cfx_softkey_key_color_restore_title">Restore default</string>
+    <string name="cfx_softkey_glow_color_title">Glow colors</string>
+    <string name="cfx_softkey_glow_color_summary">Select keys to apply glow color to</string>
+    <string name="cfx_softkey_glow_color_restore_summary">Select keys to restore glow colors to default</string>
+    <string name="cfx_softkey_glow_color_dialog_title">Apply colors</string>
+    <string name="cfx_softkey_back">Back</string>
+    <string name="cfx_softkey_home">Home</string>
+    <string name="cfx_softkey_recent">Recent apps</string>
+    <string name="cfx_softkey_menu">Menu</string>
+    <string name="cfx_softkey_back_observed_uri">systemui_softkey_lp_back</string>
+    <string name="cfx_softkey_home_observed_uri">systemui_softkey_lp_home</string>
+    <string name="cfx_softkey_recent_observed_uri">systemui_softkey_lp_recent</string>
+    <string name="cfx_softkey_menu_observed_uri">systemui_softkey_lp_menu</string>
+    <string name="cfx_softkey_extra1_observed_uri">systemui_softkey_lp_extra1</string>
+    <string name="cfx_softkey_extra2_observed_uri">systemui_softkey_lp_extra2</string>
+    <string name="cfx_softkey_keyColor_uri_back">systemui_softkey_color_back</string>
+    <string name="cfx_softkey_keyColor_uri_home">systemui_softkey_color_home</string>
+    <string name="cfx_softkey_keyColor_uri_recent">systemui_softkey_color_recent</string>
+    <string name="cfx_softkey_keyColor_uri_menu">systemui_softkey_color_menu</string>
+    <string name="cfx_softkey_keyColor_uri_extra1">systemui_softkey_color_extra1</string>
+    <string name="cfx_softkey_keyColor_uri_extra2">systemui_softkey_color_extra2</string>
+    <string name="cfx_softkey_glowColor_uri_back">systemui_softkey_glowColor_back</string>
+    <string name="cfx_softkey_glowColor_uri_home">systemui_softkey_glowColor_home</string>
+    <string name="cfx_softkey_glowColor_uri_recent">systemui_softkey_glowColor_recent</string>
+    <string name="cfx_softkey_glowColor_uri_menu">systemui_softkey_glowColor_menu</string>
+    <string name="cfx_softkey_glowColor_uri_extra1">systemui_softkey_glowColor_extra1</string>
+    <string name="cfx_softkey_glowColor_uri_extra2">systemui_softkey_glowColor_extra2</string>
+    <string name="cfx_softkey_back_ext_icon">ic_sysbar_back</string>
+    <string name="cfx_softkey_home_ext_icon">ic_sysbar_home</string>
+    <string name="cfx_softkey_recent_ext_icon">ic_sysbar_recent</string>
+    <string name="cfx_softkey_menu_ext_icon">ic_sysbar_menu</string>
+    <string name="cfx_softkey_extra1_ext_icon">ic_sysbar_back</string>
+    <string name="cfx_softkey_extra2_ext_icon">ic_sysbar_back</string>
+
 </resources>

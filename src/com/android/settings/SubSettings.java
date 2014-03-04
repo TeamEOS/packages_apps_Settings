@@ -18,6 +18,7 @@ package com.android.settings;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -28,6 +29,8 @@ import com.android.settings.ChooseLockGeneric.ChooseLockGenericFragment;
  * since for our app it is a special singleTask class.
  */
 public class SubSettings extends Settings {
+    private SettingsPreferenceFragment holder;
+
     @Override
     public boolean onNavigateUp() {
         if (!popFragment()) {
@@ -49,5 +52,17 @@ public class SubSettings extends Settings {
             return true;
         }
         return false;
+    }
+
+    public void registerActivityResultReceiverFragment(SettingsPreferenceFragment f) {
+        holder = f;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (holder != null) {
+            holder.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

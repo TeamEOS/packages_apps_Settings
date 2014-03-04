@@ -36,6 +36,22 @@
             android:title="@string/status_bar_battery_show_percent_title" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:key="cfx_statusbar_clock"
+        android:title="@string/cfx_style_indicator_clock_title" >
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/cfx_clock_state_entries"
+            android:entryValues="@array/cfx_clock_state_entry_values"
+            android:key="cfx_style_statusbar_clock_state"
+            android:title="@string/cfx_style_statusbar_clock_title" />
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/cfx_clock_am_pm_entries"
+            android:entryValues="@array/cfx_clock_am_pm_entry_values"
+            android:key="cfx_style_statusbar_clock_am_pm"
+            android:title="@string/cfx_style_statusbar_clock_am_pm_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:key="statusbar_network_indicator"
         android:title="@string/cfx_interface_statusbar_network_stats_title" >
         <CheckBoxPreference

@@ -54,6 +54,8 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 	private CheckBoxPreference mWeatherNot;
     private ListPreference mStatusBarBattery;
     private SystemSettingCheckBoxPreference mStatusBarBatteryShowPercent;
+	private ListPreference mStatusbarClock;
+	private ListPreference mAmPmStyle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,19 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 		mStatusBarBattery.setValue(String.valueOf(batteryStyle));
 		mStatusBarBattery.setSummary(mStatusBarBattery.getEntry());
 		mStatusBarBattery.setOnPreferenceChangeListener(this);
+
+		mStatusbarClock = (ListPreference) findPreference("cfx_style_statusbar_clock_state");
+		mStatusbarClock.setValue(String.valueOf(Settings.System.getInt(
+				mResolver, CFXConstants.SYSTEMUI_CLOCK_VISIBLE,
+				CFXConstants.SYSTEMUI_CLOCK_CLUSTER)));
+		mStatusbarClock.setOnPreferenceChangeListener(this);
+
+		mAmPmStyle = (ListPreference) findPreference("cfx_style_statusbar_clock_am_pm");
+		String defValue = String.valueOf(Settings.System.getInt(mResolver,
+				CFXConstants.SYSTEMUI_CLOCK_AMPM,
+				CFXConstants.SYSTEMUI_CLOCK_AMPM_DEF));
+		mAmPmStyle.setValue(defValue);
+		mAmPmStyle.setOnPreferenceChangeListener(this);
 
 		mVisible = (CheckBoxPreference) findPreference(NET_VISIBLE);
 		mVisible.setChecked(Settings.System.getBoolean(mResolver,
@@ -104,6 +119,16 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 					Settings.System.STATUS_BAR_BATTERY, batteryStyle);
 			mStatusBarBattery.setSummary(mStatusBarBattery.getEntries()[index]);
 			enableStatusBarBatteryDependents((String) newValue);
+			return true;
+		}else if (preference.equals(mStatusbarClock)) {
+			int val = Integer.parseInt(((String) newValue).toString());
+			Settings.System.putInt(mContext.getContentResolver(),
+					CFXConstants.SYSTEMUI_CLOCK_VISIBLE, (val));
+			return true;
+		} else if (preference.equals(mAmPmStyle)) {
+			int val = Integer.parseInt(((String) newValue).toString());
+			Settings.System.putInt(mContext.getContentResolver(),
+					CFXConstants.SYSTEMUI_CLOCK_AMPM, (val));
 			return true;
 		} else if (preference.equals(mVisible)) {
 			Settings.System.putBoolean(mResolver,

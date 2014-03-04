@@ -77,4 +77,85 @@
         <item>8</item>
     </string-array>
 
+    <!-- Clock -->
+    <string-array name="cfx_clock_state_entries">
+        <item>Gone</item>
+        <item>Right</item>
+        <item>Center</item>
+    </string-array>
+    <string-array name="cfx_clock_state_entry_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="cfx_clock_am_pm_entries">
+        <item>AM/PM Large text</item>
+        <item>AM/PM Small text</item>
+        <item>Gone</item>
+    </string-array>
+    <string-array name="cfx_clock_am_pm_entry_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    
+    <string-array name="action_dialog_entries">
+        <item>Clear action</item>
+        <item>Select Application</item>
+        <item>Take screenshot</item>
+        <item>Kill process</item>
+        <item>Screen off</item>
+        <item>Search assist</item>
+        <item>Torch</item>
+        <item>Camera</item>
+        <item>Toggle Wifi</item>
+        <item>Toggle Wifi AP</item>
+        <item>Toggle Bluetooth</item>
+        <item>Power menu</item>
+        <item>Recent apps</item>
+        <item>Voice search</item>
+        <item>In-app search</item>
+        <item>Menu</item>
+    </string-array>
+
+    <string-array name="action_dialog_values">
+        <item>empty</item>
+        <item>app</item>
+        <item>task_screenshot</item>
+        <item>task_killcurrent</item>
+        <item>task_screenoff</item>
+        <item>task_assist</item>
+        <item>task_torch</item>
+        <item>task_camera</item>
+        <item>task_wifi</item>
+        <item>task_wifiap</item>
+        <item>task_bt</item>
+        <item>task_powermenu</item>
+        <item>task_recents</item>
+        <item>task_voice_search</item>
+        <item>task_app_search</item>
+        <item>task_menu</item>
+    </string-array>
+
+    <string-array name="multilist_softkey_title_entries">
+        <item>@string/cfx_softkey_back</item>
+        <item>@string/cfx_softkey_home</item>
+        <item>@string/cfx_softkey_recent</item>
+        <item>@string/cfx_softkey_menu</item>
+    </string-array>
+
+    <string-array name="multilist_softkey_color_values">
+        <item>@string/cfx_softkey_keyColor_uri_back</item>
+        <item>@string/cfx_softkey_keyColor_uri_home</item>
+        <item>@string/cfx_softkey_keyColor_uri_recent</item>
+        <item>@string/cfx_softkey_keyColor_uri_menu</item>
+    </string-array>
+
+    <string-array name="multilist_softkey_glow_color_values">
+        <item>@string/cfx_softkey_glowColor_uri_back</item>
+        <item>@string/cfx_softkey_glowColor_uri_home</item>
+        <item>@string/cfx_softkey_glowColor_uri_recent</item>
+        <item>@string/cfx_softkey_glowColor_uri_menu</item>
+    </string-array>
 </resources>
