@@ -129,9 +129,9 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_SETTINGS, R.string.title_tile_settings,
                 "com.android.systemui:drawable/ic_qs_settings"));
-//        registerTile(new QuickSettingsUtil.TileInfo(
-//                TILE_RINGER, R.string.title_tile_sound,
-//                "com.android.systemui:drawable/ic_qs_ring_on"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_RINGER, R.string.title_tile_sound,
+                "com.android.systemui:drawable/ic_qs_ring_on"));
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_SYNC, R.string.title_tile_sync,
                 "com.android.systemui:drawable/ic_qs_sync_on"));
@@ -177,7 +177,7 @@ public class QuickSettingsUtil {
         }
     }
 
-    private static synchronized void removeUnsupportedTiles(Context context) {
+    protected static synchronized void removeUnsupportedTiles(Context context) {
         // Don't show mobile data options if not supported
         if (!QSUtils.deviceSupportsMobileData(context)) {
             removeTile(TILE_MOBILEDATA);
