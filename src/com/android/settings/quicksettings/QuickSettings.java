@@ -94,9 +94,10 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         }
         */
 
-        /*
+
         // Add the sound mode
         mRingMode = (MultiSelectListPreference) prefSet.findPreference(EXP_RING_MODE);
+
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator.hasVibrator()) {
             String storedRingMode = Settings.System.getString(resolver,
@@ -110,7 +111,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         } else {
             mStaticTiles.removePreference(mRingMode);
         }
-
+        /*
         // Add the network mode preference
         mNetworkMode = (ListPreference) prefSet.findPreference(EXP_NETWORK_MODE);
         if (mNetworkMode != null) {
@@ -182,7 +183,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        /* ContentResolver resolver = getContentResolver();
+        ContentResolver resolver = getContentResolver();
         if (preference == mRingMode) {
             ArrayList<String> arrValue = new ArrayList<String>((Set<String>) newValue);
             Collections.sort(arrValue, new MultiSelectListPreferenceComparator(mRingMode));
@@ -190,6 +191,8 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             Settings.System.putString(resolver, Settings.System.EXPANDED_RING_MODE, value);
             updateSummary(value, mRingMode, R.string.pref_ring_mode_summary);
             return true;
+        }
+        /*
         } else if (preference == mNetworkMode) {
             int value = Integer.valueOf((String) newValue);
             int index = mNetworkMode.findIndexOfValue((String) newValue);

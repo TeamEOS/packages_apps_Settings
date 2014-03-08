@@ -27,6 +27,14 @@
             android:summary="@string/tile_picker_summary"
             android:fragment="com.android.settings.quicksettings.QuickSettingsTiles" />
 
+        <MultiSelectListPreference
+            android:key="pref_ring_mode"
+            android:dialogTitle="@string/pref_ring_mode_title"
+            android:title="@string/pref_ring_mode_title"
+            android:summary="@string/pref_ring_mode_summary"
+            android:entries="@array/entries_ring_widget"
+            android:entryValues="@array/values_ring_widget" />
+
         </PreferenceCategory>
 
     <PreferenceCategory
