@@ -45,6 +45,8 @@ import static com.android.internal.util.cm.QSConstants.TILE_USER;
 import static com.android.internal.util.cm.QSConstants.TILE_VOLUME;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFI;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFIAP;
+import static com.android.internal.util.cm.QSConstants.TILE_FASTCHARGE;
+import static com.android.internal.util.cm.QSConstants.TILE_OTOUCH;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -61,6 +63,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.codefirex.utils.CFXUtils;
 
 public class QuickSettingsUtil {
     private static final String TAG = "QuickSettingsUtil";
@@ -153,6 +157,12 @@ public class QuickSettingsUtil {
 //        registerTile(new QuickSettingsUtil.TileInfo(
 //                TILE_NETWORKADB, R.string.title_tile_network_adb,
 //                "com.android.systemui:drawable/ic_qs_network_adb_off"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_FASTCHARGE, R.string.title_tile_fast_charge,
+                "com.android.systemui:drawable/ic_qs_fcharge_on"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_OTOUCH, R.string.title_tile_otouch,
+                "com.android.systemui:drawable/ic_qs_otouch_on"));
     }
 
     private static void registerTile(QuickSettingsUtil.TileInfo info) {
@@ -214,6 +224,14 @@ public class QuickSettingsUtil {
 //        if (!QSUtils.deviceSupportsPerformanceProfiles(context)) {
 //            removeTile(TILE_PERFORMANCE_PROFILE);
 //        }
+
+        // only if kernel supports this
+        if (!CFXUtils.hasKernelFeature(CFXUtils.FFC_PATH)) {
+        	removeTile(TILE_FASTCHARGE);
+        }
+        if (!CFXUtils.hasKernelFeature(CFXUtils.OT_PATH)) {
+        	removeTile(TILE_OTOUCH);
+        }
     }
 
     private static synchronized void refreshAvailableTiles(Context context) {
