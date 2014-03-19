@@ -59,7 +59,7 @@
     <string name="cfx_interface_navbar_size_title">Bar size</string>
     <string name="cfx_systemui_navigation_bar_height">Height</string>
     <string name="navigationbar_settings_title">Navigation bar</string>
-    <string name="navigationbar_settings_summary"></string>
+    <string name="navigationbar_settings_summary">Customize bar and soft key style and behavior</string>
 
     <!-- Power menu enable disable -->
     <string name="power_menu_title">Power menu</string>
@@ -201,5 +201,8 @@
     <string name="cfx_hardkey_assist_long_press_uri">input_hardkey_assist_longpress</string>
     <string name="cfx_hardkey_assist_double_tap_uri">input_hardkey_assist_doubletap</string>
     <string name="cfx_hardkey_assist_single_tap_uri">input_hardkey_assist_singletap</string>
+
+    <string name="cfx_interface_force_navbar_title">Force navigation bar</string>
+    <string name="cfx_interface_force_navbar_summary">Hardware keys will NOT be disabled at this time. Used for testing and debugging only.</string>
 
 </resources>
