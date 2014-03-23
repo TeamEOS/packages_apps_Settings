@@ -115,6 +115,12 @@
         android:key="volume_keys"
         android:title="@string/hardware_keys_volume_keys_title" >
 
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="volume_wake_screen"
+            android:title="@string/volume_wake_title"
+            android:summary="@string/volume_wake_summary"
+            android:defaultValue="false" />
+
         <ListPreference
             android:key="volume_key_cursor_control"
             android:dialogTitle="@string/volbtn_cursor_control_title"
