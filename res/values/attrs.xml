@@ -87,6 +87,7 @@
     <!-- custom attributes for custom preferences -->
     <declare-styleable name="CfxPrefs">
         <attr name="observedUri" format="reference" />
+        <attr name="defaultVal" format="reference" />
         <attr name="externalIcon" format="reference" />
         <attr name="keyColorUrl" format="reference" />
         <attr name="keyGlowColorUrl" format="reference" />
