@@ -97,7 +97,42 @@
     <string name="cfx_style_statusbar_clock_title">Clock location</string>
     <string name="cfx_style_statusbar_clock_am_pm_title">AM/PM Style</string>
 
-    <!-- Softkeys -->
+    <!-- Actions. And the things they act upon -->
+    <string name="action_entry_clear_actions">Default settings</string>
+    <string name="action_entry_select_app">Select Application</string>
+    <string name="action_entry_screenshot">Take screenshot</string>
+    <string name="action_entry_kill_process">Kill app</string>
+    <string name="action_entry_screen_off">Screen off</string>
+    <string name="action_entry_search_assist">Search assist</string>
+    <string name="action_entry_torch">Torch</string>
+    <string name="action_entry_camera">Camera</string>
+    <string name="action_entry_toggle_wifi">Toggle Wifi</string>
+    <string name="action_entry_toggle_wifi_ap">Toggle Wifi AP</string>
+    <string name="action_entry_toggle_bluetooth">Toggle Bluetooth</string>
+    <string name="action_entry_power_menu">Power menu</string>
+    <string name="action_entry_recent_apps">Recent apps</string>
+    <string name="action_entry_voice_search">Voice search</string>
+    <string name="action_entry_in_app_search">In-app search</string>
+    <string name="action_entry_menu">Menu</string>
+
+    <string name="action_value_clear_actions">empty</string>
+    <string name="action_value_select_app">app</string>
+    <string name="action_value_screenshot">task_screenshot</string>
+    <string name="action_value_kill_process">task_killcurrent</string>
+    <string name="action_value_screen_off">task_screenoff</string>
+    <string name="action_value_search_assist">task_assist</string>
+    <string name="action_value_torch">task_torch</string>
+    <string name="action_value_camera">task_camera</string>
+    <string name="action_value_toggle_wifi">task_wifi</string>
+    <string name="action_value_toggle_wifi_ap">task_wifiap</string>
+    <string name="action_value_toggle_bluetooth">task_bt</string>
+    <string name="action_value_power_menu">task_powermenu</string>
+    <string name="action_value_recent_apps">task_recents</string>
+    <string name="action_value_voice_search">task_voice_search</string>
+    <string name="action_value_in_app_search">task_app_search</string>
+    <string name="action_value_menu">task_menu</string>
+
+<!-- Softkeys -->
     <string name="cfx_interface_navigation">Navigation</string>
     <string name="cfx_interface_navbar">Navigation Bar</string>
     <string name="cfx_interface_navbar_appearance">Navigation Bar Appearance</string>
@@ -145,5 +180,24 @@
     <string name="cfx_softkey_menu_ext_icon">ic_sysbar_menu</string>
     <string name="cfx_softkey_extra1_ext_icon">ic_sysbar_back</string>
     <string name="cfx_softkey_extra2_ext_icon">ic_sysbar_back</string>
+    
+    <!-- Buttons -->
+    <string name="hardware_keys_double_tap_summary">Set double tap action</string>
+    <string name="hardware_keys_single_tap_summary">Set single tap action</string>
+    <string name="hardware_keys_single_tap_title">Single tap action</string>
+    <string name="hardware_keys_back_key_title">Back button</string>
+    <string name="cfx_hardkey_back_long_press_uri">input_hardkey_back_longpress</string>
+    <string name="cfx_hardkey_back_double_tap_uri">input_hardkey_back_doubletap</string>
+    <string name="cfx_hardkey_home_long_press_uri">input_hardkey_home_longpress</string>
+    <string name="cfx_hardkey_home_double_tap_uri">input_hardkey_home_doubletap</string>
+    <string name="cfx_hardkey_app_switch_long_press_uri">input_hardkey_recent_longpress</string>
+    <string name="cfx_hardkey_app_switch_double_tap_uri">input_hardkey_recent_doubletap</string>
+    <string name="cfx_hardkey_app_switch_single_tap_uri">input_hardkey_recent_singletap</string>
+    <string name="cfx_hardkey_menu_long_press_uri">input_hardkey_menu_longpress</string>
+    <string name="cfx_hardkey_menu_double_tap_uri">input_hardkey_menu_doubletap</string>
+    <string name="cfx_hardkey_menu_single_tap_uri">input_hardkey_menu_singletap</string>
+    <string name="cfx_hardkey_assist_long_press_uri">input_hardkey_assist_longpress</string>
+    <string name="cfx_hardkey_assist_double_tap_uri">input_hardkey_assist_doubletap</string>
+    <string name="cfx_hardkey_assist_single_tap_uri">input_hardkey_assist_singletap</string>
 
 </resources>
