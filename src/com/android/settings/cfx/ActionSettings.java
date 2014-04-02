@@ -57,7 +57,7 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 	public void onStart() {
 		super.onStart();
 		for (ActionPreference pref : mPrefHolder) {
-			pref.refreshIcon();
+			pref.updateResources();
 		}
 	}
 

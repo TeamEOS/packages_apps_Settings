@@ -64,15 +64,32 @@ public class ActionPreference extends Preference {
 
         int iconRes = attrs.getAttributeResourceValue(SETTINGSNS, ATTR_EXT_ICON, -1);
         if (iconRes != -1) mIconRes = mContext.getResources().getString(iconRes);
-        
-        mAction = Settings.System.getString(mContext.getContentResolver(), mActionUri);
-        if (checkEmptyAction()) mAction = EMPTY;
 
 		if (!mDefValue.equals(EMPTY)) {
 			mDefSummary = mEntryMap.get(mDefValue);
 		} else {
 			mDefSummary = String.valueOf(getSummary());
 		}
+
+    }
+
+    public void updateResources() {
+    	refreshIcon();
+    	refreshSummary();
+    }
+
+    // refresh onStart() to catch a possible theme change
+	private void refreshIcon() {
+		if (mIconRes != null) {
+			setPrefIcon(this, mContext, mIconRes);
+		}
+	}
+
+    // SystemUI will catch a package removal and set default value
+    // but we need to update our summary onStart() to catch it
+    private void refreshSummary() {        
+        mAction = Settings.System.getString(mContext.getContentResolver(), mActionUri);
+        if (checkEmptyAction()) mAction = EMPTY;
 
 		// set initial summary based on loaded values
 		// we don't map package labels, only the component name
@@ -93,11 +110,6 @@ public class ActionPreference extends Preference {
     	updateSummary(newSummary);
     }
 
-    public void refreshIcon() {
-    	if (mIconRes == null) return;
-        setPrefIcon(this, mContext, mIconRes);
-    }
-    
     private boolean checkEmptyAction() {
     	return mAction == null || TextUtils.isEmpty(mAction);
     }
