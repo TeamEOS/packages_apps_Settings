@@ -103,6 +103,7 @@
         <item>@string/action_entry_clear_actions</item>
         <item>@string/action_entry_select_app</item>
         <item>@string/action_entry_screenshot</item>
+        <item>@string/action_entry_screenrecord</item>
         <item>@string/action_entry_kill_process</item>
         <item>@string/action_entry_screen_off</item>
         <item>@string/action_entry_search_assist</item>
@@ -122,6 +123,7 @@
         <item>@string/action_value_clear_actions</item>
         <item>@string/action_value_select_app</item>
         <item>@string/action_value_screenshot</item>
+        <item>@string/action_value_screenrecord</item>
         <item>@string/action_value_kill_process</item>
         <item>@string/action_value_screen_off</item>
         <item>@string/action_value_search_assist</item>
