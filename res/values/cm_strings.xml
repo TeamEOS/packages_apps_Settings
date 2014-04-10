@@ -956,8 +956,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="ime_switcher_notify">Selector notification</string>
     <string name="ime_switcher_notify_summary">Display input method selector notification</string>
 
-    <!-- CFX Strings -->
-    <string name="header_category_cfx">CFX</string>
+    <!-- EOS Strings -->
+    <string name="header_category_cfx">EOS</string>
     <!-- Network Stats -->
     <string name="cfx_interface_statusbar_network_stats_title">Network stats</string>
     <string name="cfx_interface_statusbar_network_stats_visible_title">Show network stats</string>
