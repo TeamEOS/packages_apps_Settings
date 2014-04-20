@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -64,6 +65,7 @@ public class NavigationSettings extends ActionSettings implements
 	List<CharSequence> mColorUriHolder;
 
 	private ListPreference mNavbarSize;
+	CheckBoxPreference mNxEnable;
 
     private static final boolean DEBUG = true;
 

@@ -91,5 +91,7 @@
         <attr name="externalIcon" format="reference" />
         <attr name="keyColorUrl" format="reference" />
         <attr name="keyGlowColorUrl" format="reference" />
+        <attr name="arrayEntries" format="reference" />
+        <attr name="arrayValues" format="reference" />
     </declare-styleable>
 </resources>

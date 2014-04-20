@@ -24,6 +24,8 @@ public class ActionPreference extends Preference {
 	private static final String ATTR_URI = "observedUri";
 	private static final String ATTR_EXT_ICON = "externalIcon";
 	private static final String ATTR_DEF_VAL = "defaultVal";
+	private static final String ATTR_ARRAY_ENTRIES = "arrayEntries";
+	private static final String ATTR_ARRAY_VALUES = "arrayValues";
     private static final String EMPTY = "empty";
     private static final String APP_PREFIX = "app:";
 
@@ -49,8 +51,17 @@ public class ActionPreference extends Preference {
         mContext = context;
         mEntryMap = new HashMap<String, String>();
 
-        String[] mapValues = mContext.getResources().getStringArray(R.array.action_dialog_values);
-        String[] mapEntries = mContext.getResources().getStringArray(R.array.action_dialog_entries);
+		int actionEntryRes = attrs.getAttributeResourceValue(SETTINGSNS,
+				ATTR_ARRAY_ENTRIES, -1);
+		String[] mapEntries = mContext.getResources().getStringArray(
+				actionEntryRes == -1 ? R.array.action_dialog_entries
+						: actionEntryRes);
+
+		int actionValueRes = attrs.getAttributeResourceValue(SETTINGSNS,
+				ATTR_ARRAY_VALUES, -1);
+		String[] mapValues = mContext.getResources().getStringArray(
+				actionValueRes == -1 ? R.array.action_dialog_values
+						: actionValueRes);
 
         for (int i = 0; i < mapValues.length; i++) {
         	mEntryMap.put(mapValues[i], mapEntries[i]);
@@ -110,8 +121,12 @@ public class ActionPreference extends Preference {
     	updateSummary(newSummary);
     }
 
-    private boolean checkEmptyAction() {
+    public boolean checkEmptyAction() {
     	return mAction == null || TextUtils.isEmpty(mAction);
+    }
+
+    public String getAction() {
+    	return mAction;
     }
 
 	// update a action and it's summary when selected from package chooser

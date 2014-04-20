@@ -28,6 +28,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
@@ -44,8 +45,9 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 
     private ArrayList<ActionPreference> mPrefHolder = new ArrayList<ActionPreference>();
 	private String mHolderKey;
+
 	private CharSequence[] mItem_entries;
-	private CharSequence[] mItem_values;	
+	private CharSequence[] mItem_values;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,16 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 			pref.updateResources();
 		}
 	}
+
+	protected boolean usesExtendedActionsList() {
+		return false;
+	}
+
+	protected boolean onActionPolicyEnforced(ArrayList<ActionPreference> prefs, ActionPreference targetPref) {
+		return false;
+	}
+
+	protected void onNotifyPolicyViolation(String action){}
 
     // populate holder list once everything is added and removed
 	protected void onPreferenceScreenLoaded() {
@@ -81,7 +93,7 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -91,7 +103,17 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 				String myLabel = data.getStringExtra("label");
 				for (ActionPreference pref : mPrefHolder) {
 					if (pref.getKey().equals(mHolderKey)) {
-						pref.updateAction(myFlatComponent, myLabel);
+						final String action = pref.getAction();
+						if (!onActionPolicyEnforced(mPrefHolder, pref)) {
+							pref.updateAction(myFlatComponent, myLabel);
+						} else {
+							new Handler().postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									onNotifyPolicyViolation(action);												
+								}											
+							}, 100);
+						}
 						break;
 					}
 				}
@@ -146,7 +168,17 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 						} else {
 							for (ActionPreference pref : mPrefHolder) {
 								if (pref.getKey().equals(mHolderKey)) {
-									pref.updateAction(pressed);
+									final String action = pref.getAction();
+									if (!onActionPolicyEnforced(mPrefHolder, pref)) {
+									    pref.updateAction(pressed);
+									} else {
+										new Handler().postDelayed(new Runnable() {
+											@Override
+											public void run() {
+												onNotifyPolicyViolation(action);												
+											}											
+										}, 100);
+									}
 									break;
 								}
 							}
@@ -170,6 +202,16 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 
 		for (String s : temp_values) {
 			item_values.add(s);
+		}
+
+		if (!usesExtendedActionsList()) {
+			int i = item_values.indexOf("task_home");
+			item_entries.remove(i);
+			item_values.remove(i);
+
+			i = item_values.indexOf("task_back");
+			item_entries.remove(i);
+			item_values.remove(i);			
 		}
 
 		if (!QSUtils.deviceSupportsMobileData(getActivity())) {
