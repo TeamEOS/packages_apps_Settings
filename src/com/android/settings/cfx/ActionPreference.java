@@ -9,11 +9,14 @@ import org.codefirex.utils.CFXUtils;
 import com.android.settings.R;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -24,6 +27,8 @@ public class ActionPreference extends Preference {
 	private static final String ATTR_URI = "observedUri";
 	private static final String ATTR_EXT_ICON = "externalIcon";
 	private static final String ATTR_DEF_VAL = "defaultVal";
+	private static final String ATTR_ARRAY_ENTRIES = "arrayEntries";
+	private static final String ATTR_ARRAY_VALUES = "arrayValues";
     private static final String EMPTY = "empty";
     private static final String APP_PREFIX = "app:";
 
@@ -32,6 +37,7 @@ public class ActionPreference extends Preference {
     private String mAction;
     private String mDefSummary;
     private String mDefValue;
+    private boolean mDefValueClearable;
     private Context mContext;
 
     private Map<String, String> mEntryMap;
@@ -49,8 +55,17 @@ public class ActionPreference extends Preference {
         mContext = context;
         mEntryMap = new HashMap<String, String>();
 
-        String[] mapValues = mContext.getResources().getStringArray(R.array.action_dialog_values);
-        String[] mapEntries = mContext.getResources().getStringArray(R.array.action_dialog_entries);
+		int actionEntryRes = attrs.getAttributeResourceValue(SETTINGSNS,
+				ATTR_ARRAY_ENTRIES, -1);
+		String[] mapEntries = mContext.getResources().getStringArray(
+				actionEntryRes == -1 ? R.array.action_dialog_entries
+						: actionEntryRes);
+
+		int actionValueRes = attrs.getAttributeResourceValue(SETTINGSNS,
+				ATTR_ARRAY_VALUES, -1);
+		String[] mapValues = mContext.getResources().getStringArray(
+				actionValueRes == -1 ? R.array.action_dialog_values
+						: actionValueRes);
 
         for (int i = 0; i < mapValues.length; i++) {
         	mEntryMap.put(mapValues[i], mapEntries[i]);
@@ -60,17 +75,22 @@ public class ActionPreference extends Preference {
         mActionUri = lpRes != -1 ?  mContext.getResources().getString(lpRes) : EMPTY;
 
         int defVal = attrs.getAttributeResourceValue(SETTINGSNS, ATTR_DEF_VAL, -1);
-        mDefValue = defVal != -1 ? mContext.getResources().getString(defVal) : EMPTY;
+        mDefValue = defVal != -1 ? mContext.getResources().getString(defVal) : EMPTY;        
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CfxPrefs,
+                defStyle, 0);
+        mDefValueClearable = a.getBoolean(R.styleable.CfxPrefs_defaultValClearable, false);
+		a.recycle();
 
         int iconRes = attrs.getAttributeResourceValue(SETTINGSNS, ATTR_EXT_ICON, -1);
         if (iconRes != -1) mIconRes = mContext.getResources().getString(iconRes);
 
-		if (!mDefValue.equals(EMPTY)) {
+		if (!mDefValue.equals(EMPTY) && !mDefValueClearable) {
 			mDefSummary = mEntryMap.get(mDefValue);
 		} else {
 			mDefSummary = String.valueOf(getSummary());
 		}
-
+		checkInitialState();
     }
 
     public void updateResources() {
@@ -110,8 +130,12 @@ public class ActionPreference extends Preference {
     	updateSummary(newSummary);
     }
 
-    private boolean checkEmptyAction() {
+    public boolean checkEmptyAction() {
     	return mAction == null || TextUtils.isEmpty(mAction);
+    }
+
+    public String getAction() {
+    	return mAction;
     }
 
 	// update a action and it's summary when selected from package chooser
@@ -143,7 +167,7 @@ public class ActionPreference extends Preference {
             newSummary = action.substring(4);
         } else {
         	if (action.equals(EMPTY)) {
-        	    if (mDefValue.equals(EMPTY)) {
+        	    if (mDefValue.equals(EMPTY) || mDefValueClearable) {
                     newSummary = mDefSummary;
         	    } else {
         		    newSummary = mEntryMap.get(mDefValue);
@@ -153,6 +177,21 @@ public class ActionPreference extends Preference {
         	}
         }
         setSummary(newSummary);
+    }
+
+    private void checkInitialState() {
+    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+    	boolean isInitialized = prefs.getBoolean(getKey(), false);
+    	if (!isInitialized) {
+    		// fresh wipe, set flag to initialized and write default value
+    		// to settings if default value is set
+    		SharedPreferences.Editor edit = prefs.edit();
+    		edit.putBoolean(getKey(), true).commit();
+    		if (!mDefValue.equals(EMPTY)) {
+    			// any defaults are never packages
+    			updateAction(mDefValue);
+    		}
+    	}
     }
 
     private static void setPrefIcon(Preference pref, Context context, String icon_name) {

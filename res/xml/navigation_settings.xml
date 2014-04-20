@@ -20,6 +20,16 @@
     android:title="@string/navigationbar_settings_title" >
 
     <PreferenceCategory
+        android:key="eos_systemui_navigation_bar_nx"
+        android:title="@string/eos_nx_interface" >
+        <PreferenceScreen
+            android:fragment="com.android.settings.cfx.NxSettings"
+            android:key="nx_settings"
+            android:summary="@string/eos_nx_enable_summmary"
+            android:title="@string/eos_nx_interface" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="cfx_systemui_navigation_bar_height"
         android:title="@string/cfx_interface_navbar_size_title" >
         <ListPreference

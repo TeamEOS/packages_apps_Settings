@@ -102,6 +102,8 @@
     <string-array name="action_dialog_entries">
         <item>@string/action_entry_clear_actions</item>
         <item>@string/action_entry_select_app</item>
+        <item>@string/action_entry_back</item>
+        <item>@string/action_entry_home</item>
         <item>@string/action_entry_screenshot</item>
         <item>@string/action_entry_screenrecord</item>
         <item>@string/action_entry_kill_process</item>
@@ -122,6 +124,8 @@
     <string-array name="action_dialog_values">
         <item>@string/action_value_clear_actions</item>
         <item>@string/action_value_select_app</item>
+        <item>@string/action_value_back</item>
+        <item>@string/action_value_home</item>
         <item>@string/action_value_screenshot</item>
         <item>@string/action_value_screenrecord</item>
         <item>@string/action_value_kill_process</item>

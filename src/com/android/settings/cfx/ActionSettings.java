@@ -28,6 +28,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
@@ -42,16 +43,17 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 	private static final String TAG = ActionSettings.class.getSimpleName();
 	private static final int REQUEST_CODE = 5150;
 
-    private ArrayList<ActionPreference> mPrefHolder = new ArrayList<ActionPreference>();
+    protected ArrayList<ActionPreference> mPrefHolder = new ArrayList<ActionPreference>();
 	private String mHolderKey;
+
 	private CharSequence[] mItem_entries;
-	private CharSequence[] mItem_values;	
+	private CharSequence[] mItem_values;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setActionsList();
-	}	
+	}
 
 	@Override
 	public void onStart() {
@@ -60,6 +62,18 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 			pref.updateResources();
 		}
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		onActionPolicyEnforced(mPrefHolder);
+	}
+
+	protected boolean usesExtendedActionsList() {
+		return false;
+	}
+
+	protected void onActionPolicyEnforced(ArrayList<ActionPreference> prefs) {}
 
     // populate holder list once everything is added and removed
 	protected void onPreferenceScreenLoaded() {
@@ -81,7 +95,7 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -92,12 +106,13 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 				for (ActionPreference pref : mPrefHolder) {
 					if (pref.getKey().equals(mHolderKey)) {
 						pref.updateAction(myFlatComponent, myLabel);
+						onActionPolicyEnforced(mPrefHolder);
 						break;
 					}
 				}
 			}
 		}
-	}	
+	}
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -146,7 +161,8 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 						} else {
 							for (ActionPreference pref : mPrefHolder) {
 								if (pref.getKey().equals(mHolderKey)) {
-									pref.updateAction(pressed);
+									    pref.updateAction(pressed);
+									    onActionPolicyEnforced(mPrefHolder);
 									break;
 								}
 							}
@@ -170,6 +186,16 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
 
 		for (String s : temp_values) {
 			item_values.add(s);
+		}
+
+		if (!usesExtendedActionsList()) {
+			int i = item_values.indexOf("task_home");
+			item_entries.remove(i);
+			item_values.remove(i);
+
+			i = item_values.indexOf("task_back");
+			item_entries.remove(i);
+			item_values.remove(i);			
 		}
 
 		if (!QSUtils.deviceSupportsMobileData(getActivity())) {
