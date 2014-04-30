@@ -967,4 +967,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="cfx_interface_statusbar_network_stats_color_title">Text color</string>
     <string name="cfx_interface_statusbar_network_stats_default_color_title">Restore default color</string>
     <string name="cfx_interface_statusbar_network_stats_Summary">Shows current upload and download rate</string>
+
+    <!-- Bluetooth accept all Filestypes -->
+    <string name="bluetooth_accept_all_files">Accept all file types</string>
 </resources>
