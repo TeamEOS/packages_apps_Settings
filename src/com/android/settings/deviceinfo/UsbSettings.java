@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.os.UserManager;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -41,10 +42,12 @@ public class UsbSettings extends SettingsPreferenceFragment {
 
     private static final String KEY_MTP = "usb_mtp";
     private static final String KEY_PTP = "usb_ptp";
+    private static final String KEY_CDROM = "usb_cdrom";
 
     private UsbManager mUsbManager;
     private CheckBoxPreference mMtp;
     private CheckBoxPreference mPtp;
+    private CheckBoxPreference mCdrom;
     private boolean mUsbAccessoryMode;
 
     private final BroadcastReceiver mStateReceiver = new BroadcastReceiver() {
@@ -68,11 +71,18 @@ public class UsbSettings extends SettingsPreferenceFragment {
 
         mMtp = (CheckBoxPreference)root.findPreference(KEY_MTP);
         mPtp = (CheckBoxPreference)root.findPreference(KEY_PTP);
+        mCdrom = (CheckBoxPreference)root.findPreference(KEY_CDROM);
+
+        if (!getResources().getBoolean(R.bool.mass_storage_as_cdrom)) {
+            root.removePreference(mCdrom);
+            mCdrom = null;
+        }
 
         UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
         if (um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
             mMtp.setEnabled(false);
             mPtp.setEnabled(false);
+            if (mCdrom != null) mCdrom.setEnabled(false);
         }
 
         return root;
@@ -104,21 +114,30 @@ public class UsbSettings extends SettingsPreferenceFragment {
     }
 
     private void updateToggles(String function) {
+		boolean massStorage = "mass_storage".equals(SystemProperties.get("sys.usb.config"));
+
         if (UsbManager.USB_FUNCTION_MTP.equals(function)) {
             mMtp.setChecked(true);
             mPtp.setChecked(false);
+            if (mCdrom != null) mCdrom.setChecked(false);
         } else if (UsbManager.USB_FUNCTION_PTP.equals(function)) {
             mMtp.setChecked(false);
             mPtp.setChecked(true);
+            if (mCdrom != null) mCdrom.setChecked(false);
+        } else if (massStorage) {
+            mMtp.setChecked(false);
+            mPtp.setChecked(false);
+            if (mCdrom != null) mCdrom.setChecked(true);
         } else  {
             mMtp.setChecked(false);
             mPtp.setChecked(false);
+            if (mCdrom != null) mCdrom.setChecked(false);
         }
         UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
         if (um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
             Log.e(TAG, "USB is locked down");
             mMtp.setEnabled(false);
-            mPtp.setEnabled(false);
+            mPtp.setEnabled(false); 
         } else if (!mUsbAccessoryMode) {
             //Enable MTP and PTP switch while USB is not in Accessory Mode, otherwise disable it
             Log.e(TAG, "USB Normal Mode");
@@ -151,6 +170,8 @@ public class UsbSettings extends SettingsPreferenceFragment {
             function = UsbManager.USB_FUNCTION_MTP;
         } else if (preference == mPtp && mPtp.isChecked()) {
             function = UsbManager.USB_FUNCTION_PTP;
+        } else if (preference == mCdrom && mCdrom.isChecked()) {
+            SystemProperties.set("sys.usb.config", "mass_storage");
         }
 
         mUsbManager.setCurrentFunction(function, true);

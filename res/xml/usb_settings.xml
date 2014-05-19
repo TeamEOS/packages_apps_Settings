@@ -31,5 +31,11 @@
         android:title="@string/usb_ptp_title"
         android:summary="@string/usb_ptp_summary"
         />
+        
+    <CheckBoxPreference
+        android:key="usb_cdrom"
+        android:title="@string/usb_cdrom_title"
+        android:summary="@string/usb_cdrom_summary"
+        />
 
 </PreferenceScreen>
