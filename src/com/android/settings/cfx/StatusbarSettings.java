@@ -28,10 +28,9 @@ import android.preference.Preference;
 import android.provider.Settings;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference;
 
-public class StatusbarSettings extends SettingsPreferenceFragment implements
+public class StatusbarSettings extends ActionSettings implements
 		Preference.OnPreferenceChangeListener {
 
     private static final String STATUS_BAR_BATTERY = "status_bar_battery";
@@ -108,6 +107,7 @@ public class StatusbarSettings extends SettingsPreferenceFragment implements
 
 		updateIntervalSummary();
 		enableStatusBarBatteryDependents(mStatusBarBattery.getValue());
+		onPreferenceScreenLoaded();
 	}
 
 	@Override
