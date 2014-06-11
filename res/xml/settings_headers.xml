@@ -103,7 +103,7 @@
     <header
         android:id="@+id/legacy_device_settings"
         android:icon="@drawable/empty_icon"
-        android:title="@string/more_device_controls_title" />
+        android:title="@string/radio_controls_title" />
 
 <!-- DEVICE -->
     <header android:id="@+id/device_section"
@@ -178,14 +178,6 @@
         android:id="@+id/manufacturer_settings">
         <intent android:action="com.android.settings.MANUFACTURER_APPLICATION_SETTING" />
     </header>
-
-    <!-- Other device controls -->
-    <header
-        android:id="@+id/more_device_settings"
-        android:breadCrumbTitle="@string/more_device_settings_title"
-        android:fragment="com.android.settings.cyanogenmod.MoreDeviceSettings"
-        android:icon="@drawable/empty_icon"
-        android:title="@string/more_device_controls_title" />
 
     <!-- PERSONAL -->
     <header android:id="@+id/personal_section"

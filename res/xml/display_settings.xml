@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2010 The Android Open Source Project
+<!--
+     Copyright (C) 2010 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,58 +16,88 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-        android:title="@string/display_settings"
-        xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
+    android:title="@string/display_settings" >
 
-        <com.android.settings.BrightnessPreference
-                android:title="@string/brightness"
-                android:persistent="false"/>
+    <com.android.settings.BrightnessPreference
+        android:persistent="false"
+        android:title="@string/brightness" />
+
+    <PreferenceCategory
+        android:key="display_prefs"
+        android:title="@string/display_settings_title" >
 
         <PreferenceScreen
-                android:key="wallpaper"
-                android:title="@string/wallpaper_settings_title"
-                android:fragment="com.android.settings.WallpaperTypeSettings" />
+            android:fragment="com.android.settings.WallpaperTypeSettings"
+            android:key="wallpaper"
+            android:title="@string/wallpaper_settings_title" />
 
         <CheckBoxPreference
             android:key="accelerometer"
-            android:title="@string/accelerometer_title"/>
+            android:title="@string/accelerometer_title" />
 
         <ListPreference
-                android:key="screen_timeout"
-                android:title="@string/screen_timeout"
-                android:summary="@string/screen_timeout_summary"
-                android:persistent="false"
-                android:entries="@array/screen_timeout_entries"
-                android:entryValues="@array/screen_timeout_values" />
+            android:entries="@array/screen_timeout_entries"
+            android:entryValues="@array/screen_timeout_values"
+            android:key="screen_timeout"
+            android:persistent="false"
+            android:summary="@string/screen_timeout_summary"
+            android:title="@string/screen_timeout" />
 
         <PreferenceScreen
-                android:key="screensaver"
-                android:title="@string/screensaver_settings_title"
-                android:fragment="com.android.settings.DreamSettings" />
+            android:fragment="com.android.settings.DreamSettings"
+            android:key="screensaver"
+            android:title="@string/screensaver_settings_title" />
 
         <com.android.settings.WarnedListPreference
-                android:key="font_size"
-                android:title="@string/title_font_size"
-                android:summary="@string/summary_font_size"
-                android:entries="@array/entries_font_size"
-                android:entryValues="@array/entryvalues_font_size"
-                android:dialogTitle="@string/dialog_title_font_size" />
+            android:dialogTitle="@string/dialog_title_font_size"
+            android:entries="@array/entries_font_size"
+            android:entryValues="@array/entryvalues_font_size"
+            android:key="font_size"
+            android:summary="@string/summary_font_size"
+            android:title="@string/title_font_size" />
 
         <PreferenceScreen
-                android:fragment="com.android.settings.notificationlight.NotificationLightSettings"
-                android:key="notification_led"
-                android:title="@string/notification_led_category_title" />
+            android:fragment="com.android.settings.wfd.WifiDisplaySettings"
+            android:key="wifi_display"
+            android:title="@string/wifi_display_settings_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="lights_prefs"
+        android:title="@string/lights_category_title" >
+
+        <PreferenceScreen
+            android:fragment="com.android.settings.notificationlight.NotificationLightSettings"
+            android:key="notification_led"
+            android:title="@string/notification_led_category_title" />
+    </PreferenceCategory>
+
+    <!-- DeviceParts Device Specific Display settings -->
+    <PreferenceCategory
+        android:key="advanced_display_prefs"
+        android:title="@string/advanced_settings" >
 
         <ListPreference
-            android:key="system_power_crt_mode"
             android:dialogTitle="@string/system_power_crt_mode_dialog_title"
-            android:title="@string/system_power_crt_mode_title"
             android:entries="@array/entries_system_power_crt_mode"
-            android:entryValues="@array/values_system_power_crt_mode" />
+            android:entryValues="@array/values_system_power_crt_mode"
+            android:key="system_power_crt_mode"
+            android:title="@string/system_power_crt_mode_title" />
 
-        <PreferenceScreen
-                android:key="wifi_display"
-                android:title="@string/wifi_display_settings_title"
-                android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
+        <com.android.settings.hardware.DisplayColor
+            android:dialogTitle="@string/color_calibration_title"
+            android:key="color_calibration"
+            android:persistent="false"
+            android:summary="@string/color_calibration_summary"
+            android:title="@string/color_calibration_title" />
+
+        <com.android.settings.hardware.DisplayGamma
+            android:dialogTitle="@string/gamma_tuning_title_head"
+            android:key="gamma_tuning"
+            android:persistent="false"
+            android:summary="@string/gamma_tuning_summary_head"
+            android:title="@string/gamma_tuning_title_head" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
