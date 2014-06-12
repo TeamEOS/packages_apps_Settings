@@ -245,7 +245,8 @@
     <string name="cfx_interface_force_navbar_summary">Hardware keys will NOT be disabled at this time. Used for testing and debugging only.</string>
 
     <!-- statusbar double tap action -->
-    <string name="eos_statusbar_doubletap_title">Status bar double tap action</string>
+    <string name="eos_statusbar_doubletap_title">Double tap action</string>
+    <string name="eos_statusbar_doubletap_summary">Set double tap action</string>
     <string name="eos_statusbar_doubletap_observed_uri">eos_statusbar_double_tap</string>
 
     <!-- Display : Animation options -->

@@ -29,7 +29,7 @@
         <com.android.settings.cfx.ActionPreference
             android:key="eos_statusbar_doubletap"
             android:title="@string/eos_statusbar_doubletap_title"
-            android:summary="@string/cfx_softkey_settings_summary"
+            android:summary="@string/eos_statusbar_doubletap_summary"
             settings:observedUri="@string/eos_statusbar_doubletap_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
     </PreferenceCategory>
