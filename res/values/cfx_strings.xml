@@ -99,6 +99,7 @@
 
     <!-- Actions. And the things they act upon -->
     <string name="action_entry_clear_actions">Default settings</string>
+    <string name="action_entry_no_action">No action</string>
     <string name="action_entry_select_app">Select Application</string>
     <string name="action_entry_back">Back</string>
     <string name="action_entry_home">Home</string>
@@ -119,6 +120,7 @@
     <string name="action_entry_menu">Menu</string>
 
     <string name="action_value_clear_actions">empty</string>
+    <string name="action_value_no_action">task_no_action</string>
     <string name="action_value_select_app">app</string>
     <string name="action_value_back">task_back</string>
     <string name="action_value_home">task_home</string>

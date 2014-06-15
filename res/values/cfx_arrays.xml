@@ -101,6 +101,7 @@
 
     <string-array name="action_dialog_entries">
         <item>@string/action_entry_clear_actions</item>
+        <item>@string/action_entry_no_action</item>
         <item>@string/action_entry_select_app</item>
         <item>@string/action_entry_back</item>
         <item>@string/action_entry_home</item>
@@ -123,6 +124,7 @@
 
     <string-array name="action_dialog_values">
         <item>@string/action_value_clear_actions</item>
+        <item>@string/action_value_no_action</item>
         <item>@string/action_value_select_app</item>
         <item>@string/action_value_back</item>
         <item>@string/action_value_home</item>
