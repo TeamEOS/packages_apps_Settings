@@ -25,6 +25,10 @@
         android:summary="@string/quick_settings_panel_summary"
         android:title="@string/quick_settings_panel_title" />
     <PreferenceScreen
+            android:key="heads_up"
+            android:fragment="com.android.settings.headsup.HeadsUpDoNotDisturbSettings"
+            android:title="@string/category_heads_up" />
+    <PreferenceScreen
         android:fragment="com.android.settings.cfx.StatusbarSettings"
         android:key="statusbar_settings"
         android:summary="@string/statusbar_settings_summary"
