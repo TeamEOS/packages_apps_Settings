@@ -27,6 +27,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
@@ -40,194 +41,207 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.SubSettings;
 
 public abstract class ActionSettings extends SettingsPreferenceFragment {
-	private static final String TAG = ActionSettings.class.getSimpleName();
-	private static final int REQUEST_CODE = 5150;
+    private static final String TAG = ActionSettings.class.getSimpleName();
+    private static final int REQUEST_CODE = 5150;
 
     protected ArrayList<ActionPreference> mPrefHolder = new ArrayList<ActionPreference>();
-	private String mHolderKey;
+    private String mHolderKey;
 
-	private CharSequence[] mItem_entries;
-	private CharSequence[] mItem_values;
+    private CharSequence[] mItem_entries;
+    private CharSequence[] mItem_values;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setActionsList();
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setActionsList();
+    }
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		for (ActionPreference pref : mPrefHolder) {
-			pref.updateResources();
-		}
-	}
+    @Override
+    public void onStart() {
+        super.onStart();
+        for (ActionPreference pref : mPrefHolder) {
+            pref.updateResources();
+        }
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		onActionPolicyEnforced(mPrefHolder);
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+        onActionPolicyEnforced(mPrefHolder);
+    }
 
-	protected boolean usesExtendedActionsList() {
-		return false;
-	}
+    protected boolean usesExtendedActionsList() {
+        return false;
+    }
 
-	protected void onActionPolicyEnforced(ArrayList<ActionPreference> prefs) {}
+    protected void onActionPolicyEnforced(ArrayList<ActionPreference> prefs) {
+    }
 
     // populate holder list once everything is added and removed
-	protected void onPreferenceScreenLoaded() {
-		final PreferenceScreen prefScreen = getPreferenceScreen();
-		for (int i = 0; i < prefScreen.getPreferenceCount(); i++) {
-			Preference pref = prefScreen.getPreference(i);
-			if (pref instanceof PreferenceCategory) {
-				PreferenceCategory cat = (PreferenceCategory) pref;
-				for (int j = 0; j < cat.getPreferenceCount(); j++) {
-					Preference child = cat.getPreference(j);
-					if (child instanceof ActionPreference) {
-						mPrefHolder.add((ActionPreference) child);
-						Log.i(TAG, child.getKey());
-					}
-				}
-			} else if (pref instanceof ActionPreference) {
-				mPrefHolder.add((ActionPreference) pref);
-				Log.i(TAG, pref.getKey() + " added to button settings");
-			}
-		}
-	}
+    protected void onPreferenceScreenLoaded() {
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+        for (int i = 0; i < prefScreen.getPreferenceCount(); i++) {
+            Preference pref = prefScreen.getPreference(i);
+            if (pref instanceof PreferenceCategory) {
+                PreferenceCategory cat = (PreferenceCategory) pref;
+                for (int j = 0; j < cat.getPreferenceCount(); j++) {
+                    Preference child = cat.getPreference(j);
+                    if (child instanceof ActionPreference) {
+                        mPrefHolder.add((ActionPreference) child);
+                        Log.i(TAG, child.getKey());
+                    }
+                }
+            } else if (pref instanceof ActionPreference) {
+                mPrefHolder.add((ActionPreference) pref);
+                Log.i(TAG, pref.getKey() + " added to button settings");
+            }
+        }
+    }
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_CODE) {
-			if (resultCode == Activity.RESULT_OK) {
-				String myFlatComponent = data.getStringExtra("result");
-				String myLabel = data.getStringExtra("label");
-				for (ActionPreference pref : mPrefHolder) {
-					if (pref.getKey().equals(mHolderKey)) {
-						pref.updateAction(myFlatComponent, myLabel);
-						onActionPolicyEnforced(mPrefHolder);
-						break;
-					}
-				}
-			}
-		}
-	}
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String myFlatComponent = data.getStringExtra("result");
+                String myLabel = data.getStringExtra("label");
+                for (ActionPreference pref : mPrefHolder) {
+                    if (pref.getKey().equals(mHolderKey)) {
+                        pref.updateAction(myFlatComponent, myLabel);
+                        onActionPolicyEnforced(mPrefHolder);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-		if (preference instanceof ActionPreference) {
-			String key = preference.getKey();
-			for (ActionPreference pref : mPrefHolder) {
-				if (key.equals(pref.getKey())) {
-					mHolderKey = key;
-					callActionDialog();
-					break;
-				}
-			}
-		}
+        if (preference instanceof ActionPreference) {
+            String key = preference.getKey();
+            for (ActionPreference pref : mPrefHolder) {
+                if (key.equals(pref.getKey())) {
+                    mHolderKey = key;
+                    callActionDialog();
+                    break;
+                }
+            }
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
-    
-	private void callActionDialog() {
-		final CharSequence[] item_entries = mItem_entries;
-		final CharSequence[] item_values = mItem_values;
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Set action")
-				.setNegativeButton(
-						getResources().getString(
-								com.android.internal.R.string.cancel),
-						new Dialog.OnClickListener() {
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.dismiss();
-							}
-						})
-				.setItems(item_entries, new DialogInterface.OnClickListener() {
+    private void callActionDialog() {
+        final CharSequence[] item_entries = mItem_entries;
+        final CharSequence[] item_values = mItem_values;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Set action")
+                .setNegativeButton(
+                        getResources().getString(
+                                com.android.internal.R.string.cancel),
+                        new Dialog.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						String pressed = (String) item_values[which];
-						if (pressed.equals("app")) {
-							((SubSettings) getActivity())
-									.registerActivityResultReceiverFragment(ActionSettings.this);
-							Intent intent = new Intent().setClassName(
-									"org.codefirex.cfxtools",
-									"org.codefirex.cfxtools.PackageBrowser");
-							getActivity().startActivityForResult(intent,
-									REQUEST_CODE);
-						} else {
-							for (ActionPreference pref : mPrefHolder) {
-								if (pref.getKey().equals(mHolderKey)) {
-									    pref.updateAction(pressed);
-									    onActionPolicyEnforced(mPrefHolder);
-									break;
-								}
-							}
-						}
-					}
-				}).create().show();
-	}
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                .setItems(item_entries, new DialogInterface.OnClickListener() {
 
-	private void setActionsList() {
-		List<String> temp_entries = Arrays.asList(getResources()
-				.getStringArray(R.array.action_dialog_entries));
-		List<String> temp_values = Arrays.asList(getResources().getStringArray(
-				R.array.action_dialog_values));
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String pressed = (String) item_values[which];
+                        if (pressed.equals("app")) {
+                            ((SubSettings) getActivity())
+                                    .registerActivityResultReceiverFragment(ActionSettings.this);
+                            Intent intent = new Intent().setClassName(
+                                    "org.codefirex.cfxtools",
+                                    "org.codefirex.cfxtools.PackageBrowser");
+                            getActivity().startActivityForResult(intent,
+                                    REQUEST_CODE);
+                        } else {
+                            for (ActionPreference pref : mPrefHolder) {
+                                if (pref.getKey().equals(mHolderKey)) {
+                                    pref.updateAction(pressed);
+                                    onActionPolicyEnforced(mPrefHolder);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }).create().show();
+    }
 
-		ArrayList<String> item_entries = new ArrayList<String>();
-		ArrayList<String> item_values = new ArrayList<String>();
+    private void setActionsList() {
+        List<String> temp_entries = Arrays.asList(getResources()
+                .getStringArray(R.array.action_dialog_entries));
+        List<String> temp_values = Arrays.asList(getResources().getStringArray(
+                R.array.action_dialog_values));
 
-		for (String s : temp_entries) {
-			item_entries.add(s);
-		}
+        ArrayList<String> item_entries = new ArrayList<String>();
+        ArrayList<String> item_values = new ArrayList<String>();
 
-		for (String s : temp_values) {
-			item_values.add(s);
-		}
+        for (String s : temp_entries) {
+            item_entries.add(s);
+        }
 
-		if (!usesExtendedActionsList()) {
-			int i = item_values.indexOf("task_home");
-			item_entries.remove(i);
-			item_values.remove(i);
+        for (String s : temp_values) {
+            item_values.add(s);
+        }
 
-			i = item_values.indexOf("task_back");
-			item_entries.remove(i);
-			item_values.remove(i);			
-		}
+        if (!usesExtendedActionsList()) {
+            int i = item_values.indexOf("task_home");
+            item_entries.remove(i);
+            item_values.remove(i);
 
-		if (!QSUtils.deviceSupportsMobileData(getActivity())) {
-			int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_WIFIAP);
-			item_entries.remove(i);
-			item_values.remove(i);
-		}
+            i = item_values.indexOf("task_back");
+            item_entries.remove(i);
+            item_values.remove(i);
+        }
 
-		if (!QSUtils.deviceSupportsBluetooth()) {
-			int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_BT);
-			item_entries.remove(i);
-			item_values.remove(i);
-		}
+        if (!QSUtils.deviceSupportsMobileData(getActivity())) {
+            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_WIFIAP);
+            item_entries.remove(i);
+            item_values.remove(i);
+        }
 
-		if (!QSUtils.deviceSupportsTorch(getActivity())) {
-			int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_TORCH);
-			item_entries.remove(i);
-			item_values.remove(i);
-		}
+        if (!QSUtils.deviceSupportsBluetooth()) {
+            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_BT);
+            item_entries.remove(i);
+            item_values.remove(i);
+        }
 
-		mItem_entries = new CharSequence[item_entries.size()];
-		mItem_values = new CharSequence[item_values.size()];
+        if (!QSUtils.deviceSupportsTorch(getActivity())) {
+            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_TORCH);
+            item_entries.remove(i);
+            item_values.remove(i);
+        }
 
-		int i = 0;
-		for (String s : item_entries) {
-			mItem_entries[i] = s;
-			i++;
-		}
-		i = 0;
-		for (String s : item_values) {
-			mItem_values[i] = s;
-			i++;
-		}
-	}
+        // only use for FFC only, i.e. Grouper
+        // all other devices set action from packages
+        if (hasRearCam()) {
+            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_CAMERA);
+            item_entries.remove(i);
+            item_values.remove(i);
+        }
+
+        mItem_entries = new CharSequence[item_entries.size()];
+        mItem_values = new CharSequence[item_values.size()];
+
+        int i = 0;
+        for (String s : item_entries) {
+            mItem_entries[i] = s;
+            i++;
+        }
+        i = 0;
+        for (String s : item_values) {
+            mItem_values[i] = s;
+            i++;
+        }
+    }
+
+    private boolean hasRearCam() {
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
 }
