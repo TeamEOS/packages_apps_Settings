@@ -32,6 +32,8 @@ import android.provider.Settings;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
+import com.android.settings.cyanogenmod.SystemSettingSwitchPreference;
+
 public class InterfaceSettings extends SettingsPreferenceFragment implements
 		Preference.OnPreferenceChangeListener {
 	private static final String TAG = "SystemSettings";
@@ -45,6 +47,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 	PreferenceScreen mNavbarSettings;
 
 	private DevForceNavbarObserver mObserver = null;
+	private SystemSettingSwitchPreference mSwitchPreference;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,9 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 			mObserver = new DevForceNavbarObserver(new Handler());
 			updateForcedPrefsState();
 		}
+
+        mSwitchPreference = (SystemSettingSwitchPreference)
+                findPreference(Settings.System.HEADS_UP_NOTIFICATION);
 	}
 
 	@Override
@@ -78,6 +84,15 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 			mObserver.observe();
 		}
 	}
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean headsUpEnabled = Settings.System.getIntForUser(
+                getActivity().getContentResolver(),
+                Settings.System.HEADS_UP_NOTIFICATION, 0, UserHandle.USER_CURRENT) == 1;
+        mSwitchPreference.setChecked(headsUpEnabled);
+    }
 
 	@Override
 	public void onStop() {
