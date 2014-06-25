@@ -97,6 +97,11 @@
                 android:key="pointer_speed"
                 android:title="@string/pointer_speed"
                 android:dialogTitle="@string/pointer_speed" />
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+                android:key="high_touch_sensitivity"
+                android:title="@string/high_touch_sensitivity_title"
+                android:summary="@string/high_touch_sensitivity_summary"
+                android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:key="game_controller_settings_category"

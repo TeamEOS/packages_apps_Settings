@@ -987,6 +987,10 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="cfx_interface_statusbar_network_stats_default_color_title">Restore default color</string>
     <string name="cfx_interface_statusbar_network_stats_Summary">Shows current upload and download rate</string>
 
+    <!-- High touch sensitivity -->
+    <string name="high_touch_sensitivity_title">High touch sensitivity</string>
+    <string name="high_touch_sensitivity_summary">Increase the screen\'s sensitivity so you can touch it while wearing gloves</string>
+
     <!-- Bluetooth accept all Filestypes -->
     <string name="bluetooth_accept_all_files">Accept all file types</string>
 
