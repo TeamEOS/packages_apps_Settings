@@ -32,8 +32,6 @@ import android.provider.Settings;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
-import com.android.settings.cyanogenmod.SystemSettingSwitchPreference;
-
 public class InterfaceSettings extends SettingsPreferenceFragment implements
 		Preference.OnPreferenceChangeListener {
 	private static final String TAG = "SystemSettings";
@@ -47,7 +45,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 	PreferenceScreen mNavbarSettings;
 
 	private DevForceNavbarObserver mObserver = null;
-	private SystemSettingSwitchPreference mSwitchPreference;
+	private Preference mHeadsUp;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,8 +71,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 			updateForcedPrefsState();
 		}
 
-        mSwitchPreference = (SystemSettingSwitchPreference)
-                findPreference(Settings.System.HEADS_UP_NOTIFICATION);
+        mHeadsUp = findPreference(Settings.System.HEADS_UP_NOTIFICATION);
 	}
 
 	@Override
@@ -88,10 +85,11 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        boolean headsUpEnabled = Settings.System.getIntForUser(
+        boolean headsUpEnabled = Settings.System.getInt(
                 getActivity().getContentResolver(),
-                Settings.System.HEADS_UP_NOTIFICATION, 0, UserHandle.USER_CURRENT) == 1;
-        mSwitchPreference.setChecked(headsUpEnabled);
+                Settings.System.HEADS_UP_NOTIFICATION, 0) == 1;
+        mHeadsUp.setSummary(headsUpEnabled
+                ? R.string.summary_heads_up_enabled : R.string.summary_heads_up_disabled);
     }
 
 	@Override
