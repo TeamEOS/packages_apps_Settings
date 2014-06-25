@@ -39,150 +39,144 @@ import com.android.settings.R;
 import com.android.settings.SubSettings;
 
 public class NavigationSettings extends ActionSettings implements
-		Preference.OnPreferenceChangeListener {
-	private static final String NAVBAR_SIZE = "cfx_interface_navbar_size";
-	private static final String CATEGORY_SOFTKEY_ACTIONS = "cfx_softkey_longpress_category";
-	private static final String CATEGORY_SOFTKEY_COLOR = "cfx_softkey_key_color_category";
-	private static final String CATEGORY_SOFTKEY_GLOW = "cfx_softkey_glow_color_category";
-	private static final String EXTRA1 = "cfx_softkey_extra1";
-	private static final String EXTRA2 = "cfx_softkey_extra2";
-	private static final String SOFTKEY_COLOR_KEY = "cfx_softkey_key_color_multipref";
-	private static final String SOFTKEY_COLOR_RESTORE_KEY = "cfx_softkey_key_color_restore_multipref";
-	private static final String SOFTKEY_GLOW_COLOR_KEY = "cfx_softkey_glow_color_multipref";
-	private static final String SOFTKEY_GLOW_COLOR_RESTORE_KEY = "cfx_softkey_glow_color_restore_multipref";
+        Preference.OnPreferenceChangeListener {
+    private static final String NAVBAR_SIZE = "cfx_interface_navbar_size";
+    private static final String CATEGORY_SOFTKEY_ACTIONS = "cfx_softkey_longpress_category";
+    private static final String CATEGORY_SOFTKEY_COLOR = "cfx_softkey_key_color_category";
+    private static final String CATEGORY_SOFTKEY_GLOW = "cfx_softkey_glow_color_category";
+    private static final String EXTRA1 = "cfx_softkey_extra1";
+    private static final String EXTRA2 = "cfx_softkey_extra2";
+    private static final String SOFTKEY_COLOR_KEY = "cfx_softkey_key_color_multipref";
+    private static final String SOFTKEY_COLOR_RESTORE_KEY = "cfx_softkey_key_color_restore_multipref";
+    private static final String SOFTKEY_GLOW_COLOR_KEY = "cfx_softkey_glow_color_multipref";
+    private static final String SOFTKEY_GLOW_COLOR_RESTORE_KEY = "cfx_softkey_glow_color_restore_multipref";
 
-	private static final int COLOR_REQUEST_CODE = 6969;
+    private static final int COLOR_REQUEST_CODE = 6969;
 
-	PreferenceCategory pc_ui;
-	PreferenceCategory pc_sofkey_actions;
-	PreferenceCategory pc_softkey_color;
-	PreferenceCategory pc_softkey_glow;
+    PreferenceCategory pc_ui;
+    PreferenceCategory pc_sofkey_actions;
+    PreferenceCategory pc_softkey_color;
+    PreferenceCategory pc_softkey_glow;
 
-	ContentResolver mResolver;
-	Context mContext;
+    ContentResolver mResolver;
+    Context mContext;
 
-	List<CharSequence> mColorUriHolder;
+    List<CharSequence> mColorUriHolder;
 
-	private ListPreference mNavbarSize;
+    private ListPreference mNavbarSize;
 
     private static final boolean DEBUG = true;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.navigation_settings);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.navigation_settings);
 
-		mContext = (Context) getActivity();
-		mResolver = getActivity().getContentResolver();
+        mContext = (Context) getActivity();
+        mResolver = getActivity().getContentResolver();
 
-		pc_sofkey_actions = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_ACTIONS);
-		pc_softkey_color = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_COLOR);
-		pc_softkey_glow = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_GLOW);
+        pc_sofkey_actions = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_ACTIONS);
+        pc_softkey_color = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_COLOR);
+        pc_softkey_glow = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_GLOW);
 
-		mNavbarSize = (ListPreference) findPreference(NAVBAR_SIZE);
-		int sizeVal = Settings.System.getInt(mResolver,
-				CFXConstants.SYSTEMUI_NAVBAR_SIZE_DP,
-				CFXConstants.SYSTEMUI_NAVBAR_SIZE_DEF_INDEX);
-		mNavbarSize.setDefaultValue(String.valueOf(sizeVal));
-		mNavbarSize.setValue(String.valueOf(sizeVal));
-		mNavbarSize.setOnPreferenceChangeListener(this);
-		updateSizeSummary();
+        mNavbarSize = (ListPreference) findPreference(NAVBAR_SIZE);
+        int sizeVal = Settings.System.getInt(mResolver,
+                CFXConstants.SYSTEMUI_NAVBAR_SIZE_DP,
+                CFXConstants.SYSTEMUI_NAVBAR_SIZE_DEF_INDEX);
+        mNavbarSize.setDefaultValue(String.valueOf(sizeVal));
+        mNavbarSize.setValue(String.valueOf(sizeVal));
+        mNavbarSize.setOnPreferenceChangeListener(this);
+        updateSizeSummary();
 
-		findPreference(SOFTKEY_COLOR_KEY).setOnPreferenceChangeListener(this);
-		findPreference(SOFTKEY_COLOR_RESTORE_KEY)
-				.setOnPreferenceChangeListener(this);
-		findPreference(SOFTKEY_GLOW_COLOR_KEY).setOnPreferenceChangeListener(
-				this);
-		findPreference(SOFTKEY_GLOW_COLOR_RESTORE_KEY)
-				.setOnPreferenceChangeListener(this);
+        findPreference(SOFTKEY_COLOR_KEY).setOnPreferenceChangeListener(this);
+        findPreference(SOFTKEY_COLOR_RESTORE_KEY)
+                .setOnPreferenceChangeListener(this);
+        findPreference(SOFTKEY_GLOW_COLOR_KEY).setOnPreferenceChangeListener(
+                this);
+        findPreference(SOFTKEY_GLOW_COLOR_RESTORE_KEY)
+                .setOnPreferenceChangeListener(this);
 
-		mColorUriHolder = new ArrayList<CharSequence>();
+        mColorUriHolder = new ArrayList<CharSequence>();
 
-		PreferenceCategory mLongPressCat = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_ACTIONS);
+        PreferenceCategory mLongPressCat = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_ACTIONS);
 
-		mLongPressCat.removePreference(findPreference(EXTRA1));
-		mLongPressCat.removePreference(findPreference(EXTRA2));
+        mLongPressCat.removePreference(findPreference(EXTRA1));
+        mLongPressCat.removePreference(findPreference(EXTRA2));
 
-		if(DEBUG) {
-			getPreferenceScreen().removePreference(pc_softkey_color);
-			getPreferenceScreen().removePreference(pc_softkey_glow);
-		}
+        if (DEBUG) {
+            getPreferenceScreen().removePreference(pc_softkey_color);
+            getPreferenceScreen().removePreference(pc_softkey_glow);
+        }
 
-		onPreferenceScreenLoaded();
-	}
+        onPreferenceScreenLoaded();
+    }
 
-	@Override
-	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		String aKey = preference.getKey();
-		if (preference.equals(mNavbarSize)) {
-			int val = Integer.parseInt(((String) newValue).toString());
-			Settings.System.putInt(mResolver,
-					CFXConstants.SYSTEMUI_NAVBAR_SIZE_DP, (val));
-			Intent intent = new Intent().setAction(
-					CFXConstants.ACTION_CFX_UI_CHANGE).putExtra(
-					CFXConstants.INTENT_REASON_UI_CHANGE,
-					CFXConstants.INTENT_REASON_UI_BAR_SIZE);
-			mContext.sendBroadcastAsUser(intent, new UserHandle(
-					UserHandle.USER_ALL));
-			new Handler().postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					updateSizeSummary();
-				}
-			}, 250);
-			return true;
-		} else if (aKey.equals(SOFTKEY_COLOR_KEY)
-				|| aKey.equals(SOFTKEY_GLOW_COLOR_KEY)) {
-			mColorUriHolder = Arrays.asList((CharSequence[]) newValue);
-			((SubSettings) getActivity())
-					.registerActivityResultReceiverFragment(NavigationSettings.this);
-			Intent intent = new Intent().setClassName("org.codefirex.cfxtools",
-					"org.codefirex.cfxtools.ColorPicker");
-			getActivity().startActivityForResult(intent, COLOR_REQUEST_CODE);
-			return true;
-		} else if (aKey.equals(SOFTKEY_COLOR_RESTORE_KEY)
-				|| aKey.equals(SOFTKEY_GLOW_COLOR_RESTORE_KEY)) {
-			mColorUriHolder = Arrays.asList((CharSequence[]) newValue);
-			for (CharSequence uri : mColorUriHolder) {
-				Settings.System.putIntForUser(getContentResolver(),
-						String.valueOf(uri), -1, UserHandle.USER_CURRENT);
-			}
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        String aKey = preference.getKey();
+        if (preference.equals(mNavbarSize)) {
+            int val = Integer.parseInt(((String) newValue).toString());
+            Settings.System.putInt(mResolver,
+                    CFXConstants.SYSTEMUI_NAVBAR_SIZE_DP, val);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateSizeSummary();
+                }
+            }, 250);
+            return true;
+        } else if (aKey.equals(SOFTKEY_COLOR_KEY)
+                || aKey.equals(SOFTKEY_GLOW_COLOR_KEY)) {
+            mColorUriHolder = Arrays.asList((CharSequence[]) newValue);
+            ((SubSettings) getActivity())
+                    .registerActivityResultReceiverFragment(NavigationSettings.this);
+            Intent intent = new Intent().setClassName("org.codefirex.cfxtools",
+                    "org.codefirex.cfxtools.ColorPicker");
+            getActivity().startActivityForResult(intent, COLOR_REQUEST_CODE);
+            return true;
+        } else if (aKey.equals(SOFTKEY_COLOR_RESTORE_KEY)
+                || aKey.equals(SOFTKEY_GLOW_COLOR_RESTORE_KEY)) {
+            mColorUriHolder = Arrays.asList((CharSequence[]) newValue);
+            for (CharSequence uri : mColorUriHolder) {
+                Settings.System.putIntForUser(getContentResolver(),
+                        String.valueOf(uri), -1, UserHandle.USER_CURRENT);
+            }
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == COLOR_REQUEST_CODE) {
-			if (resultCode == Activity.RESULT_OK) {
-				String rawColor = data.getStringExtra("result");
-				if (rawColor != null && !TextUtils.isEmpty(rawColor)) {
-					int color = Integer.parseInt(rawColor);
-					for (CharSequence uri : mColorUriHolder) {
-						Settings.System.putIntForUser(getContentResolver(),
-								String.valueOf(uri), color,
-								UserHandle.USER_CURRENT);
-					}
-				}
-			}
-		}
-	}
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COLOR_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String rawColor = data.getStringExtra("result");
+                if (rawColor != null && !TextUtils.isEmpty(rawColor)) {
+                    int color = Integer.parseInt(rawColor);
+                    for (CharSequence uri : mColorUriHolder) {
+                        Settings.System.putIntForUser(getContentResolver(),
+                                String.valueOf(uri), color,
+                                UserHandle.USER_CURRENT);
+                    }
+                }
+            }
+        }
+    }
 
-	private void updateSizeSummary() {
-		String[] entries = mContext.getResources().getStringArray(
-				R.array.systemui_navbar_size_entries);
-		String[] vals = mContext.getResources().getStringArray(
-				R.array.systemui_navbar_size_values);
-		String currentVal = mNavbarSize.getValue();
-		String newEntry = "";
-		for (int i = 0; i < vals.length; i++) {
-			if (vals[i].equals(currentVal)) {
-				newEntry = entries[i];
-				break;
-			}
-		}
-		mNavbarSize.setSummary(newEntry);
-	}
+    private void updateSizeSummary() {
+        String[] entries = mContext.getResources().getStringArray(
+                R.array.systemui_navbar_size_entries);
+        String[] vals = mContext.getResources().getStringArray(
+                R.array.systemui_navbar_size_values);
+        String currentVal = mNavbarSize.getValue();
+        String newEntry = "";
+        for (int i = 0; i < vals.length; i++) {
+            if (vals[i].equals(currentVal)) {
+                newEntry = entries[i];
+                break;
+            }
+        }
+        mNavbarSize.setSummary(newEntry);
+    }
 }

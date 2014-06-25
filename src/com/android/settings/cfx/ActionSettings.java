@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.codefirex.utils.CFXConstants;
+import org.codefirex.utils.ActionHandler;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -201,19 +201,19 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
         }
 
         if (!QSUtils.deviceSupportsMobileData(getActivity())) {
-            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_WIFIAP);
+            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_WIFIAP);
             item_entries.remove(i);
             item_values.remove(i);
         }
 
         if (!QSUtils.deviceSupportsBluetooth()) {
-            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_BT);
+            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_BT);
             item_entries.remove(i);
             item_values.remove(i);
         }
 
         if (!QSUtils.deviceSupportsTorch(getActivity())) {
-            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_TORCH);
+            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_TORCH);
             item_entries.remove(i);
             item_values.remove(i);
         }
@@ -221,7 +221,7 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
         // only use for FFC only, i.e. Grouper
         // all other devices set action from packages
         if (hasRearCam()) {
-            int i = item_values.indexOf(CFXConstants.SYSTEMUI_TASK_CAMERA);
+            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_CAMERA);
             item_entries.remove(i);
             item_values.remove(i);
         }
