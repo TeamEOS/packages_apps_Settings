@@ -19,6 +19,7 @@ package com.android.settings;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SELinux;
@@ -145,11 +146,7 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
 
         // These are contained by the root preference screen
         parentPreference = getPreferenceScreen();
-        if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
-            Utils.updatePreferenceToSpecificActivityOrRemove(act, parentPreference,
-                    KEY_SYSTEM_UPDATE_SETTINGS,
-                    Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
-        } else {
+        if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
             // Remove for secondary users
             removePreference(KEY_SYSTEM_UPDATE_SETTINGS);
         }
@@ -189,6 +186,15 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
                     Log.e(LOG_TAG, "Unable to start activity " + intent.toString());
                 }
             }
+        } else if (preference.getKey().equals(KEY_SYSTEM_UPDATE_SETTINGS)) {
+                StringBuilder url = new StringBuilder();
+                url.append("http://downloads.codefi.re/teameos/nightlies/")
+                        .append(SystemProperties.get("ro.product.manufacturer", "TeamEos"))
+                        .append("/")
+                        .append(SystemProperties.get("ro.product.device", "porkchop"));
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(url.toString()));
+                startActivity(intent);
         } else if (preference.getKey().equals(KEY_BUILD_NUMBER)) {
             // Don't enable developer options for secondary users.
             if (UserHandle.myUserId() != UserHandle.USER_OWNER) return true;
