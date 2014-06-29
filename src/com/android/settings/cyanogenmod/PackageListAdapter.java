@@ -118,11 +118,11 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
         if (convertView != null) {
             holder = (ViewHolder) convertView.getTag();
         } else {
-            convertView = mInflater.inflate(R.layout.preference_icon, null, false);
+            convertView = mInflater.inflate(R.layout.package_list_item_simple, null, false);
             holder = new ViewHolder();
             convertView.setTag(holder);
-            holder.title = (TextView) convertView.findViewById(com.android.internal.R.id.title);
-            holder.summary = (TextView) convertView.findViewById(com.android.internal.R.id.summary);
+            holder.title = (TextView) convertView.findViewById(R.id.name);
+            holder.summary = (TextView) convertView.findViewById(R.id.description);
             holder.icon = (ImageView) convertView.findViewById(R.id.icon);
         }
 
