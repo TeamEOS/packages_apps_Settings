@@ -25,7 +25,6 @@
         <PreferenceScreen
             android:fragment="com.android.settings.cfx.NxSettings"
             android:key="nx_settings"
-            android:summary="@string/eos_nx_enable_summmary"
             android:title="@string/eos_nx_interface" />
     </PreferenceCategory>
 

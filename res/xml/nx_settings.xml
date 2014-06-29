@@ -18,14 +18,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/eos_nx_interface" >
-    
-    <PreferenceCategory
-        android:key="eos_nx_category"
-        android:title="@string/eos_nx_interface" >
-        <CheckBoxPreference
-            android:key="eos_nx_enable"
-            android:title="@string/eos_nx_enable_title" />
-    </PreferenceCategory>
 
     <PreferenceCategory
         android:key="eos_actions_category"
@@ -40,7 +32,6 @@
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_short_swipe_right"
-            android:dependency="eos_nx_enable"
             android:title="@string/eos_nx_short_swipe_right"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_short_swipe_right_uri"
@@ -50,7 +41,6 @@
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_short_swipe_left"
-            android:dependency="eos_nx_enable"
             android:title="@string/eos_nx_short_swipe_left"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_short_swipe_left_uri"
@@ -60,7 +50,6 @@
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_long_swipe_right"
-            android:dependency="eos_nx_enable"
             android:title="@string/eos_nx_long_swipe_right"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_long_swipe_right_uri"
@@ -70,7 +59,6 @@
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_long_swipe_left"
-            android:dependency="eos_nx_enable"
             android:title="@string/eos_nx_long_swipe_left"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_long_swipe_left_uri"
@@ -79,7 +67,6 @@
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_single_tap"
-            android:dependency="eos_nx_enable"
             android:title="@string/eos_nx_single_tap"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_single_tap_uri"
@@ -89,7 +76,6 @@
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_double_tap"
-            android:dependency="eos_nx_enable"
             android:title="@string/eos_nx_double_tap"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_double_tap_uri"
@@ -98,7 +84,6 @@
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_long_press"
-            android:dependency="eos_nx_enable"
             android:title="@string/eos_nx_long_press"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_long_press_uri"
@@ -113,7 +98,6 @@
         android:title="@string/eos_nx_advanced" >
 
         <com.android.settings.cfx.LongSwipePreference
-            android:dependency="eos_nx_enable"
             android:key="eos_nx_long_swipe_pref"
             android:summary="@string/eos_nx_long_swipe_summary"
             android:title="@string/eos_nx_long_swipe_title" >

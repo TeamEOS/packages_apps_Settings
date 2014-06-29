@@ -196,7 +196,7 @@
     <!-- NX -->
     <string name="eos_nx_interface">NX Gesture Interface</string>
     <string name="eos_nx_enable_title">Enable NX</string>
-    <string name="eos_nx_enable_summmary">Navigation bar becomes a smart, fast, lightweight, and configurable gesture input interface</string>
+    <string name="eos_nx_disabled_notice">Navigation bar becomes a smart, fast, lightweight, and configurable gesture input interface</string>
     <string name="eos_nx_policy">Back and Home are required to be set at all times. This policy is enforced for security.</string>
     <string name="eos_nx_def_summary">No action set</string>
     <string name="eos_nx_actions">Actions</string>
