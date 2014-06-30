@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class PackageListAdapter extends BaseAdapter implements Runnable {
+    private boolean mAddWhitelist;
     private PackageManager mPm;
     private LayoutInflater mInflater;
     private List<PackageItem> mInstalledPackages = new LinkedList<PackageItem>();
@@ -85,6 +86,11 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
     }
 
     public PackageListAdapter(Context context) {
+        this(context, true);
+    }
+
+    public PackageListAdapter(Context context, boolean addWhitelist) {
+        mAddWhitelist = addWhitelist;
         mPm = context.getPackageManager();
         mInflater = LayoutInflater.from(context);
         reloadList();
@@ -165,15 +171,16 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
             item.activityTitles.add(info.loadLabel(mPm));
             mHandler.obtainMessage(0, item).sendToTarget();
         }
-
-        for (String packageName : PACKAGE_WHITELIST) {
-            try {
-                ApplicationInfo appInfo = mPm.getApplicationInfo(packageName, 0);
-                final PackageItem item = new PackageItem(appInfo.packageName,
-                        appInfo.loadLabel(mPm), appInfo.loadIcon(mPm));
-                mHandler.obtainMessage(0, item).sendToTarget();
-            } catch (PackageManager.NameNotFoundException ignored) {
-                // package not present, so nothing to add -> ignore it
+        if (mAddWhitelist) {
+            for (String packageName : PACKAGE_WHITELIST) {
+                try {
+                    ApplicationInfo appInfo = mPm.getApplicationInfo(packageName, 0);
+                    final PackageItem item = new PackageItem(appInfo.packageName,
+                            appInfo.loadLabel(mPm), appInfo.loadIcon(mPm));
+                    mHandler.obtainMessage(0, item).sendToTarget();
+                } catch (PackageManager.NameNotFoundException ignored) {
+                    // package not present, so nothing to add -> ignore it
+                }
             }
         }
     }
