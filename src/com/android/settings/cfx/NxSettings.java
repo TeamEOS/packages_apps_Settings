@@ -72,7 +72,7 @@ public class NxSettings extends ActionSettings implements
 
         if (activity instanceof PreferenceActivity) {
             PreferenceActivity preferenceActivity = (PreferenceActivity) activity;
-            if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {
+            if (preferenceActivity.onIsHidingHeaders() || preferenceActivity.onIsMultiPane()) {
                 final int padding = activity.getResources().getDimensionPixelSize(
                         R.dimen.action_bar_switch_padding);
                 mActionBarSwitch.setPaddingRelative(0, 0, padding, 0);
@@ -88,6 +88,12 @@ public class NxSettings extends ActionSettings implements
         mNxEnabler = new NxEnabler(activity, mActionBarSwitch);
         super.onActivityCreated(icicle);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onDestroyView() {
+        getActivity().getActionBar().setCustomView(null);
+        super.onDestroyView();
     }
 
     @Override
