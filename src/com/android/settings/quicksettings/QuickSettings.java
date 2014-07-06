@@ -110,7 +110,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
                 mStaticTiles.removePreference(mRingMode);
             }
         }
-        /*
+
         // Add the network mode preference
         mNetworkMode = (ListPreference) prefSet.findPreference(EXP_NETWORK_MODE);
         if (mNetworkMode != null) {
@@ -118,12 +118,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             mNetworkMode.setOnPreferenceChangeListener(this);
         }
 
+/*
         // Screen timeout mode
         mScreenTimeoutMode = (ListPreference) prefSet.findPreference(EXP_SCREENTIMEOUT_MODE);
         mScreenTimeoutMode.setSummary(mScreenTimeoutMode.getEntry());
         mScreenTimeoutMode.setOnPreferenceChangeListener(this);
-        */
-
+*/
         // Remove unsupported options
 /*        if (!QSUtils.deviceSupportsDockBattery(getActivity())) {
             Preference pref = findPreference(Settings.System.QS_DYNAMIC_DOCK_BATTERY);
@@ -190,14 +190,14 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             Settings.System.putString(resolver, Settings.System.EXPANDED_RING_MODE, value);
             updateSummary(value, mRingMode, R.string.pref_ring_mode_summary);
             return true;
-        /*
+
         } else if (preference == mNetworkMode) {
             int value = Integer.valueOf((String) newValue);
             int index = mNetworkMode.findIndexOfValue((String) newValue);
             Settings.System.putInt(resolver, Settings.System.EXPANDED_NETWORK_MODE, value);
             mNetworkMode.setSummary(mNetworkMode.getEntries()[index]);
             return true;
-		*/
+
         } else if (preference == mQuickPulldown) {
             int quickPulldownValue = Integer.valueOf((String) newValue);
             Settings.System.putInt(resolver, Settings.System.QS_QUICK_PULLDOWN,

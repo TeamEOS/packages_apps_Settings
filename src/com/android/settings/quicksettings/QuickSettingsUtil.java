@@ -113,9 +113,9 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_MOBILEDATA, R.string.title_tile_mobiledata,
                 "com.android.systemui:drawable/ic_qs_signal_full_4"));
-//        registerTile(new QuickSettingsUtil.TileInfo(
-//                TILE_NETWORKMODE, R.string.title_tile_networkmode,
-//                "com.android.systemui:drawable/ic_qs_2g3g_on"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_NETWORKMODE, R.string.title_tile_networkmode,
+                "com.android.systemui:drawable/ic_qs_2g3g_on"));
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_NFC, R.string.title_tile_nfc,
                 "com.android.systemui:drawable/ic_qs_nfc_on"));
