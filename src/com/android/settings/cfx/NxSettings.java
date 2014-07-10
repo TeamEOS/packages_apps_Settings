@@ -38,6 +38,8 @@ public class NxSettings extends ActionSettings implements
     private View mDisabledText;
 
     CheckBoxPreference mNxTrailsEnable;
+    CheckBoxPreference mShowLogo;
+    CheckBoxPreference mAnimateLogo;
 
     private ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
         @Override
@@ -58,8 +60,20 @@ public class NxSettings extends ActionSettings implements
                 "eos_nx_trails_enabled", true));
         mNxTrailsEnable.setOnPreferenceChangeListener(this);
 
-        PreferenceCategory advanced = (PreferenceCategory) findPreference("eos_long_swipe_category");
-        advanced.removePreference(mNxTrailsEnable); // disable trails for now
+        mShowLogo = (CheckBoxPreference) findPreference("eos_nx_show_logo");
+        mShowLogo.setChecked(Settings.System.getBoolean(getContentResolver(),
+                "nx_logo_visible", true));
+        mShowLogo.setOnPreferenceChangeListener(this);
+
+        mAnimateLogo = (CheckBoxPreference) findPreference("eos_nx_animate_logo");
+        mAnimateLogo.setChecked(Settings.System.getBoolean(getContentResolver(),
+                "nx_logo_animates", true));
+        mAnimateLogo.setOnPreferenceChangeListener(this);
+
+        PreferenceCategory appearance = (PreferenceCategory) findPreference("eos_nx_appearance");
+        appearance.removePreference(mAnimateLogo); 
+        appearance.removePreference(mNxTrailsEnable); // disable trails for now
+
 
         onPreferenceScreenLoaded();
 
@@ -144,6 +158,16 @@ public class NxSettings extends ActionSettings implements
             boolean enabled = ((Boolean) newValue).booleanValue();
             Settings.System.putBoolean(getContentResolver(),
                     "eos_nx_trails_enabled", enabled);
+            return true;
+        } else if (preference.equals(mShowLogo)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putBoolean(getContentResolver(),
+                    "nx_logo_visible", enabled);
+            return true;
+        } else if (preference.equals(mAnimateLogo)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putBoolean(getContentResolver(),
+                    "nx_logo_animates", enabled);
             return true;
         }
         return false;

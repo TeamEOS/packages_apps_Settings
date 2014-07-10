@@ -94,6 +94,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="eos_nx_appearance"
+        android:title="@string/eos_nx_appearance" >
+
+        <CheckBoxPreference
+            android:key="eos_nx_show_logo"
+            android:title="@string/eos_nx_show_logo_title" />
+
+         <CheckBoxPreference
+            android:key="eos_nx_animate_logo"
+            android:dependency="eos_nx_show_logo"
+            android:title="@string/eos_nx_animate_logo_title"
+            android:summary="@string/eos_nx_animate_logo_summary" />
+
+        <CheckBoxPreference
+            android:key="eos_nx_trails_enable"
+            android:title="@string/eos_nx_trails_enable_title" />
+     </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="eos_long_swipe_category"
         android:title="@string/eos_nx_advanced" >
 
@@ -102,10 +121,6 @@
             android:summary="@string/eos_nx_long_swipe_summary"
             android:title="@string/eos_nx_long_swipe_title" >
         </com.android.settings.cfx.LongSwipePreference>
-
-        <CheckBoxPreference
-            android:key="eos_nx_trails_enable"
-            android:title="@string/eos_nx_trails_enable_title" />
 
     </PreferenceCategory>
 </PreferenceScreen>
