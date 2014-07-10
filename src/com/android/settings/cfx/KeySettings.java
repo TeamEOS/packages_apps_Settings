@@ -1,15 +1,20 @@
 package com.android.settings.cfx;
 
 import org.codefirex.utils.CFXUtils;
+import org.cyanogenmod.hardware.KeyDisabler;
 
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.widget.Editor;
 
 import com.android.settings.R;
 import com.android.settings.Utils;
@@ -98,7 +103,96 @@ public class KeySettings extends ActionSettings implements
             prefScreen.removePreference(backlight);
         }
 
+        if (isKeyDisablerSupported()) updateDisableNavkeysOption();
         onPreferenceScreenLoaded();        
+    }
+
+    private static void writeDisableNavkeysOption(Context context, boolean enabled) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final int defaultBrightness = context.getResources().getInteger(
+                com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
+
+        KeyDisabler.setActive(enabled);
+
+        /* Save/restore button timeouts to disable them in softkey mode */
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if (enabled) {
+            int currentBrightness = Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.BUTTON_BRIGHTNESS, defaultBrightness);
+            if (!prefs.contains("pre_navbar_button_backlight")) {
+                editor.putInt("pre_navbar_button_backlight", currentBrightness);
+            }
+            Settings.System.putInt(context.getContentResolver(),
+                    Settings.System.BUTTON_BRIGHTNESS, 0);
+        } else {
+            int oldBright = prefs.getInt("pre_navbar_button_backlight", -1);
+            if (oldBright != -1) {
+                Settings.System.putInt(context.getContentResolver(),
+                        Settings.System.BUTTON_BRIGHTNESS, oldBright);
+                editor.remove("pre_navbar_button_backlight");
+            }
+        }
+        editor.commit();
+    }
+
+    private void updateDisableNavkeysOption() {
+        boolean enabled = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.DEV_FORCE_SHOW_NAVBAR, 0) != 0;
+
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        /* Disable hw-key options if they're disabled */
+        final PreferenceCategory homeCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
+        final PreferenceCategory menuCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
+        final PreferenceCategory assistCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
+        final PreferenceCategory appSwitchCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
+        final ButtonBacklightBrightness backlight =
+                (ButtonBacklightBrightness) prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
+
+        /*
+         * Toggle backlight control depending on navbar state, force it to off
+         * if enabling
+         */
+        if (backlight != null) {
+            backlight.setEnabled(!enabled);
+        }
+
+        /* Toggle hardkey control availability depending on navbar state */
+        if (homeCategory != null) {
+            homeCategory.setEnabled(!enabled);
+        }
+        if (menuCategory != null) {
+            menuCategory.setEnabled(!enabled);
+        }
+        if (assistCategory != null) {
+            assistCategory.setEnabled(!enabled);
+        }
+        if (appSwitchCategory != null) {
+            appSwitchCategory.setEnabled(!enabled);
+        }
+    }
+
+    public static void restoreKeyDisabler(Context context) {
+        if (!isKeyDisablerSupported()) {
+            return;
+        }
+
+        writeDisableNavkeysOption(context, Settings.System.getInt(context.getContentResolver(),
+                Settings.System.DEV_FORCE_SHOW_NAVBAR, 0) != 0);
+    }
+
+    public static boolean isKeyDisablerSupported() {
+        try {
+            return KeyDisabler.isSupported();
+        } catch (NoClassDefFoundError e) {
+            // Hardware abstraction framework not installed
+            return false;
+        }
     }
 
     @Override

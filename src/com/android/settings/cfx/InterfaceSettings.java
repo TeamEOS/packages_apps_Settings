@@ -17,8 +17,10 @@
 package com.android.settings.cfx;
 
 import org.codefirex.utils.CFXUtils;
+import org.cyanogenmod.hardware.KeyDisabler;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,54 +35,54 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
 public class InterfaceSettings extends SettingsPreferenceFragment implements
-		Preference.OnPreferenceChangeListener {
-	private static final String TAG = "SystemSettings";
-	private static final String NAVBAR_SETTINGS = "navigation_settings";
-	private static final String NAVBAR_CATEGORY = "interface_navigation";
-	private static final String NAVBAR_FORCE = "interface_force_navbar";
+        Preference.OnPreferenceChangeListener {
+    private static final String TAG = "SystemSettings";
+    private static final String NAVBAR_SETTINGS = "navigation_settings";
+    private static final String NAVBAR_CATEGORY = "interface_navigation";
+    private static final String NAVBAR_FORCE = "interface_force_navbar";
 
-	PreferenceCategory mNavCat;
-	Preference mNavNote;
-	CheckBoxPreference mNavForce;
-	PreferenceScreen mNavbarSettings;
+    PreferenceCategory mNavCat;
+    Preference mNavNote;
+    CheckBoxPreference mNavForce;
+    PreferenceScreen mNavbarSettings;
 
-	private DevForceNavbarObserver mObserver = null;
-	private Preference mHeadsUp;
+    private DevForceNavbarObserver mObserver = null;
+    private Preference mHeadsUp;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.interface_settings);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.interface_settings);
 
-		mNavCat = (PreferenceCategory) findPreference(NAVBAR_CATEGORY);
+        mNavCat = (PreferenceCategory) findPreference(NAVBAR_CATEGORY);
 
-		mNavForce = (CheckBoxPreference) mNavCat.findPreference(NAVBAR_FORCE);
-		mNavForce.setChecked(isForcedNavbar());
-		mNavForce.setOnPreferenceChangeListener(this);
+        mNavForce = (CheckBoxPreference) mNavCat.findPreference(NAVBAR_FORCE);
+        mNavForce.setChecked(isForcedNavbar());
+        mNavForce.setOnPreferenceChangeListener(this);
 
-		mNavbarSettings = (PreferenceScreen) mNavCat.findPreference(NAVBAR_SETTINGS);
+        mNavbarSettings = (PreferenceScreen) mNavCat.findPreference(NAVBAR_SETTINGS);
 
-		if (!CFXUtils.isCapKeyDevice(getActivity())) {
-			// device natively has navigation bar, remove the category
-			// and add preference to screen hierarchy
-			mNavCat.removePreference(mNavbarSettings);
-			getPreferenceScreen().removePreference(mNavCat);
-			getPreferenceScreen().addPreference(mNavbarSettings);
-		} else {
-			mObserver = new DevForceNavbarObserver(new Handler());
-			updateForcedPrefsState();
-		}
+        if (!CFXUtils.isCapKeyDevice(getActivity())) {
+            // device natively has navigation bar, remove the category
+            // and add preference to screen hierarchy
+            mNavCat.removePreference(mNavbarSettings);
+            getPreferenceScreen().removePreference(mNavCat);
+            getPreferenceScreen().addPreference(mNavbarSettings);
+        } else {
+            mObserver = new DevForceNavbarObserver(new Handler());
+            updateForcedPrefsState();
+        }
 
         mHeadsUp = findPreference(Settings.System.HEADS_UP_NOTIFICATION);
-	}
+    }
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		if (mObserver != null) {
-			mObserver.observe();
-		}
-	}
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mObserver != null) {
+            mObserver.observe();
+        }
+    }
 
     @Override
     public void onResume() {
@@ -92,62 +94,71 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
                 ? R.string.summary_heads_up_enabled : R.string.summary_heads_up_disabled);
     }
 
-	@Override
-	public void onStop() {
-		super.onStop();
-		if (mObserver != null) {
-			mObserver.unobserve();
-		}
-	}
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mObserver != null) {
+            mObserver.unobserve();
+        }
+    }
 
-	private boolean isForcedNavbar() {
-		return Settings.System.getIntForUser(getContentResolver(),
-				Settings.System.DEV_FORCE_SHOW_NAVBAR, 0,
-				UserHandle.USER_CURRENT) == 1;
-	}
+    private boolean isForcedNavbar() {
+        return Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.DEV_FORCE_SHOW_NAVBAR, 0,
+                UserHandle.USER_CURRENT) == 1;
+    }
 
-	private void updateForcedPrefsState() {
-		boolean isForced = isForcedNavbar();
-		if (isForced) {
-			if (mNavCat.findPreference(NAVBAR_SETTINGS) == null) {
-				mNavCat.addPreference(mNavbarSettings);
-			}
-		} else {
-			mNavCat.removePreference(mNavbarSettings);
-		}
-	}
+    private void updateForcedPrefsState() {
+        if (isForcedNavbar()) {
+            if (mNavCat.findPreference(NAVBAR_SETTINGS) == null) {
+                mNavCat.addPreference(mNavbarSettings);
+                String summary;
+                if (KeySettings.isKeyDisablerSupported()) {
+                    summary = getResources().getString(R.string.eos_key_disabler_active);
+                } else {
+                    summary = getResources().getString(R.string.eos_key_disabler_unsupported);
+                }
+                mNavForce.setSummary(summary);
+            }
+        } else {
+            mNavCat.removePreference(mNavbarSettings);
+            mNavForce.setSummary(getResources().getString(R.string.eos_key_disabler_off));
 
-	class DevForceNavbarObserver extends ContentObserver {
-		DevForceNavbarObserver(Handler handler) {
-			super(handler);
-		}
+        }
+    }
 
-		void observe() {
-			ContentResolver resolver = getContentResolver();
-			resolver.registerContentObserver(Settings.System
-					.getUriFor(Settings.System.DEV_FORCE_SHOW_NAVBAR), false,
-					this);
-		}
+    class DevForceNavbarObserver extends ContentObserver {
+        DevForceNavbarObserver(Handler handler) {
+            super(handler);
+        }
 
-		void unobserve() {
-			ContentResolver resolver = getContentResolver();
-			resolver.unregisterContentObserver(this);
-		}
+        void observe() {
+            ContentResolver resolver = getContentResolver();
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.DEV_FORCE_SHOW_NAVBAR), false,
+                    this);
+        }
 
-		@Override
-		public void onChange(boolean selfChange) {
-			updateForcedPrefsState();
-		}
-	}
+        void unobserve() {
+            ContentResolver resolver = getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
 
-	@Override
-	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		if (preference.equals(mNavForce)) {
-			Settings.System.putBoolean(getContentResolver(),
-					Settings.System.DEV_FORCE_SHOW_NAVBAR,
-					((Boolean) newValue).booleanValue());
-			return true;
-		}
-		return false;
-	}
+        @Override
+        public void onChange(boolean selfChange) {
+            updateForcedPrefsState();
+            KeySettings.restoreKeyDisabler((Context) getActivity());
+        }
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference.equals(mNavForce)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putBoolean(getContentResolver(),
+                    Settings.System.DEV_FORCE_SHOW_NAVBAR, enabled);
+            return true;
+        }
+        return false;
+    }
 }

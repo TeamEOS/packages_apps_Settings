@@ -260,7 +260,10 @@
     <string name="cfx_hardkey_assist_single_tap_uri">input_hardkey_assist_singletap</string>
 
     <string name="cfx_interface_force_navbar_title">Force navigation bar</string>
-    <string name="cfx_interface_force_navbar_summary">Hardware keys will NOT be disabled at this time. Used for testing and debugging only.</string>
+    <string name="cfx_interface_force_navbar_summary">Hardware navigation keys will be disabled on supported devices</string>
+    <string name="eos_key_disabler_active">Hardware navigation keys are disabled</string>
+    <string name="eos_key_disabler_off">Hardware navigation keys are enabled</string>
+    <string name="eos_key_disabler_unsupported">Hardware key disabler is unsupported</string>
 
     <!-- statusbar double tap action -->
     <string name="eos_statusbar_doubletap_title">Double tap action</string>
