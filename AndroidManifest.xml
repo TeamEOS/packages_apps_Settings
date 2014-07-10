@@ -67,6 +67,7 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.REBOOT" />
     <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application android:label="@string/settings_label"
             android:icon="@mipmap/ic_launcher_settings"
@@ -76,7 +77,8 @@
             android:requiredForAllUsers="true"
             android:supportsRtl="true">
 
-    <uses-library android:name="org.cyanogenmod.hardware" required="false" />
+        <uses-library android:name="org.cyanogenmod.hardware"
+            android:required="false" />
 
    <!-- Settings -->
 
@@ -636,7 +638,8 @@
         <activity android:name="MultiSimSettings"
                 android:label="@string/multi_sim_settings_title"
                 android:process="com.android.phone"
-                android:clearTaskOnLaunch="true">
+                android:clearTaskOnLaunch="true"
+                android:parentActivityName="Settings">
            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.android.settings.MULTI_SIM_SETTINGS" />
@@ -1108,7 +1111,8 @@
         <activity android:name=".deviceinfo.msim.MSimStatus"
                 android:label="@string/device_status_activity_title"
                 android:theme="@android:style/Theme.Holo.DialogWhenLarge"
-                android:process="com.android.phone">
+                android:process="com.android.phone"
+                android:parentActivityName="Settings$DeviceInfoSettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -1674,7 +1678,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.app.action.START_ENCRYPTION" />
-                <category android:name="android.intent.category.DEFAULT" /> />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
                 android:value="com.android.settings.CryptKeeperSettings" />
@@ -1702,7 +1706,8 @@
         <activity android:name=".SelectSubscription"
                 android:label="@string/subs_settings"
                 android:process="com.android.phone"
-                android:clearTaskOnLaunch="true">
+                android:clearTaskOnLaunch="true"
+                android:parentActivityName=".deviceinfo.msim.MSimStatus">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />

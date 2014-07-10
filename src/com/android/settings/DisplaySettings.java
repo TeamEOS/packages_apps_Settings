@@ -169,7 +169,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         mScreenColorSettings = (PreferenceScreen) findPreference(KEY_SCREEN_COLOR_SETTINGS);
         if (!isPostProcessingSupported()) {
-            getPreferenceScreen().removePreference(mScreenColorSettings);
+            advancedPrefs.removePreference(mScreenColorSettings);
         }
 
         boolean hasNotificationLed = getResources().getBoolean(
