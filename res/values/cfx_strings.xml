@@ -197,16 +197,21 @@
     <string name="eos_nx_interface">NX Gesture Interface</string>
     <string name="eos_nx_enable_title">Enable NX</string>
     <string name="eos_nx_disabled_notice">Navigation bar becomes a smart, fast, lightweight, and configurable gesture input interface</string>
-    <string name="eos_nx_policy">Back and Home are required to be set at all times. This policy is enforced for security.</string>
+    <string name="eos_nx_back_home_policy">Back and Home are required to be set at all times. To change a Back or Home assignment set the desired assignment first</string>
+    <string name="eos_nx_split_bar_policy">When only a right or left action is assigned the action applies to the full bar</string>
     <string name="eos_nx_def_summary">No action set</string>
-    <string name="eos_nx_actions">Actions</string>
+    <string name="eos_nx_swipe_actions">Swipe gestures</string>
+    <string name="eos_nx_tap_actions">Tap gestures</string>
     <string name="eos_nx_short_swipe_right">Right short swipe</string>
     <string name="eos_nx_short_swipe_left">Left short swipe</string>
     <string name="eos_nx_long_swipe_right">Right long swipe</string>
     <string name="eos_nx_long_swipe_left">Left long swipe</string>
-    <string name="eos_nx_single_tap">Single tap</string>
-    <string name="eos_nx_double_tap">Double tap</string>
-    <string name="eos_nx_long_press">Long press</string>
+    <string name="eos_nx_single_tap">Single tap right</string>
+    <string name="eos_nx_double_tap">Double tap right</string>
+    <string name="eos_nx_long_press">Long press right</string>
+    <string name="eos_nx_single_left_tap">Single tap left</string>
+    <string name="eos_nx_double_left_tap">Double tap left</string>
+    <string name="eos_nx_long_left_press">Long press left</string>
     <string name="long_swipe_portrait_title">Portrait</string>
     <string name="long_swipe_landscape_title">Landscape</string>
     <string name="right_swipe_title">Right swipe</string>
@@ -231,6 +236,9 @@
     <string name="nx_single_tap_uri">eos_nx_action_single_tap</string>
     <string name="nx_double_tap_uri">eos_nx_action_double_tap</string>
     <string name="nx_long_press_uri">eos_nx_action_long_press</string>
+    <string name="nx_single_left_tap_uri">eos_nx_action_single_left_tap</string>
+    <string name="nx_double_left_tap_uri">eos_nx_action_double_left_tap</string>
+    <string name="nx_long_left_press_uri">eos_nx_action_long_left_press</string>
 
     <!-- Buttons -->
     <string name="hardware_keys_double_tap_summary">Set double tap action</string>

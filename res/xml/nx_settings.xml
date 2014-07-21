@@ -18,17 +18,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/eos_nx_interface" >
+    
+    <Preference
+        style="?android:preferenceInformationStyle"
+        android:key="eos_nx_back_home_policy"
+        android:selectable="false"
+        android:summary="@string/eos_nx_back_home_policy"
+        android:title="@string/dynamic_tiles_note_title" />
 
-    <PreferenceCategory
-        android:key="eos_actions_category"
-        android:title="@string/eos_nx_actions" >
-
-        <Preference
-            android:key="eos_nx_enforcement_policy"
-            style="?android:preferenceInformationStyle"
-            android:selectable="false"
-            android:summary="@string/eos_nx_policy"
-            android:title="@string/dynamic_tiles_note_title" />
+     <PreferenceCategory
+        android:key="eos_actions_swipe_category"
+        android:title="@string/eos_nx_swipe_actions" >
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_short_swipe_right"
@@ -64,6 +64,18 @@
             settings:observedUri="@string/nx_long_swipe_left_uri"
             settings:defaultValClearable="true" >
         </com.android.settings.cfx.ActionPreference>
+     </PreferenceCategory>
+
+     <PreferenceCategory
+        android:key="eos_actions_tap_category"
+        android:title="@string/eos_nx_tap_actions" >
+
+        <Preference
+            style="?android:preferenceInformationStyle"
+            android:key="eos_nx_split_bar_policy"
+            android:selectable="false"
+            android:summary="@string/eos_nx_split_bar_policy"
+            android:title="@string/dynamic_tiles_note_title" />
 
         <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_single_tap"
@@ -75,10 +87,26 @@
         </com.android.settings.cfx.ActionPreference>
 
         <com.android.settings.cfx.ActionPreference
+            android:key="eos_nx_single_left_tap"
+            android:title="@string/eos_nx_single_left_tap"
+            android:summary="@string/eos_nx_def_summary"
+            settings:observedUri="@string/nx_single_left_tap_uri"
+            settings:defaultValClearable="true" >
+        </com.android.settings.cfx.ActionPreference>
+
+        <com.android.settings.cfx.ActionPreference
             android:key="eos_nx_double_tap"
             android:title="@string/eos_nx_double_tap"
             android:summary="@string/eos_nx_def_summary"
             settings:observedUri="@string/nx_double_tap_uri"
+            settings:defaultValClearable="true" >
+        </com.android.settings.cfx.ActionPreference>
+        
+        <com.android.settings.cfx.ActionPreference
+            android:key="eos_nx_double_left_tap"
+            android:title="@string/eos_nx_double_left_tap"
+            android:summary="@string/eos_nx_def_summary"
+            settings:observedUri="@string/nx_double_left_tap_uri"
             settings:defaultValClearable="true" >
         </com.android.settings.cfx.ActionPreference>
 
@@ -91,6 +119,13 @@
             settings:defaultValClearable="true" >
         </com.android.settings.cfx.ActionPreference>
 
+        <com.android.settings.cfx.ActionPreference
+            android:key="eos_nx_long_left_press"
+            android:title="@string/eos_nx_long_left_press"
+            android:summary="@string/eos_nx_def_summary"
+            settings:observedUri="@string/nx_long_left_press_uri"
+            settings:defaultValClearable="true" >
+        </com.android.settings.cfx.ActionPreference>
     </PreferenceCategory>
 
     <PreferenceCategory
