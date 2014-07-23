@@ -226,7 +226,7 @@
     <string name="eos_nx_appearance">Appearance</string>
     <string name="eos_nx_show_logo_title">Show NX logo</string>
     <string name="eos_nx_animate_logo_title">Animate logo</string>
-    <string name="eos_nx_animate_logo_summary">Logo animates on touch events</string>
+    <string name="eos_nx_animate_logo_summary">Logo animates on touch events (experimental)</string>
 
     <!-- NX action uris -->
     <string name="nx_short_swipe_right_uri">eos_nx_action_fling_short_right</string>

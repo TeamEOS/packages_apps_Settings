@@ -67,16 +67,13 @@ public class NxSettings extends ActionSettings implements
 
         mAnimateLogo = (CheckBoxPreference) findPreference("eos_nx_animate_logo");
         mAnimateLogo.setChecked(Settings.System.getBoolean(getContentResolver(),
-                "nx_logo_animates", true));
+                "nx_logo_animates", false));
         mAnimateLogo.setOnPreferenceChangeListener(this);
 
         PreferenceCategory appearance = (PreferenceCategory) findPreference("eos_nx_appearance");
-        appearance.removePreference(mAnimateLogo); 
         appearance.removePreference(mNxTrailsEnable); // disable trails for now
 
-
         onPreferenceScreenLoaded();
-
     }
 
     @Override
