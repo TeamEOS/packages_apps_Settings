@@ -75,7 +75,6 @@ import com.android.settings.bluetooth.BluetoothEnabler;
 import com.android.settings.bluetooth.BluetoothSettings;
 import com.android.settings.cfx.InterfaceSettings;
 import com.android.settings.cfx.KeySettings;
-import com.android.settings.cfx.SystemSettings;
 import com.android.settings.cyanogenmod.ButtonSettings;
 import com.android.settings.deviceinfo.Memory;
 import com.android.settings.deviceinfo.UsbSettings;
@@ -359,8 +358,7 @@ public class Settings extends PreferenceActivity
         HomeSettings.class.getName(),
         ButtonSettings.class.getName(),
         KeySettings.class.getName(),
-        InterfaceSettings.class.getName(),
-        SystemSettings.class.getName()
+        InterfaceSettings.class.getName()
     };
 
     @Override

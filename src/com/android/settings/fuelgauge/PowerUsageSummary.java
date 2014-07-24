@@ -31,6 +31,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +42,8 @@ import com.android.settings.HelpUtils;
 import com.android.settings.R;
 
 import java.util.List;
+
+import org.codefirex.utils.CFXConstants;
 
 /**
  * Displays a list of apps and subsystems that consume power, ordered by how much power was
@@ -58,6 +61,7 @@ public class PowerUsageSummary extends PreferenceFragment {
     private static final int MENU_STATS_TYPE = Menu.FIRST;
     private static final int MENU_STATS_REFRESH = Menu.FIRST + 1;
     private static final int MENU_HELP = Menu.FIRST + 2;
+    private static final int MENU_DISABLE_WARNING = Menu.FIRST + 3;
 
     private PreferenceGroup mAppListGroup;
     private Preference mBatteryStatusPref;
@@ -155,11 +159,20 @@ public class PowerUsageSummary extends PreferenceFragment {
                     .setIcon(com.android.internal.R.drawable.ic_menu_info_details)
                     .setAlphabeticShortcut('t');
         }
+
+        boolean warningEnabled = Settings.System.getBoolean(getActivity().getContentResolver(),
+                CFXConstants.SYSTEMUI_DISABLE_BATTERY_WARNING, false);
+
         MenuItem refresh = menu.add(0, MENU_STATS_REFRESH, 0, R.string.menu_stats_refresh)
                 .setIcon(R.drawable.ic_menu_refresh_holo_dark)
                 .setAlphabeticShortcut('r');
         refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+        menu.add(Menu.NONE, MENU_DISABLE_WARNING, 0, R.string.battery_disable_low_dialog_title)
+                .setCheckable(true)
+                .setChecked(warningEnabled)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
         String helpUrl;
         if (!TextUtils.isEmpty(helpUrl = getResources().getString(R.string.help_url_battery))) {
@@ -182,6 +195,12 @@ public class PowerUsageSummary extends PreferenceFragment {
             case MENU_STATS_REFRESH:
                 mStatsHelper.clearStats();
                 refreshStats();
+                return true;
+            case MENU_DISABLE_WARNING:
+                item.setChecked(!item.isChecked());
+                Settings.System.putBoolean(getActivity().getContentResolver(),
+                        CFXConstants.SYSTEMUI_DISABLE_BATTERY_WARNING,
+                        item.isChecked());
                 return true;
             default:
                 return false;

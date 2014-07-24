@@ -89,6 +89,12 @@
             android:inputType="textNoSuggestions"
             android:persistent="false" />
 
+        <PreferenceScreen
+            android:fragment="com.android.settings.cfx.PowerMenu"
+            android:key="power_menu"
+            android:summary="@string/power_menu_summary"
+            android:title="@string/power_menu_title" />
+
         <CheckBoxPreference
             android:key="bugreport_in_power"
             android:title="@string/bugreport_in_power"
