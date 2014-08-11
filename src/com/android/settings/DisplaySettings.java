@@ -63,6 +63,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_ACCELEROMETER = "accelerometer";
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_LED = "notification_led";
+    private static final String KEY_BATTERY_LIGHT = "battery_light";
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_ADVANCED_DISPLAY_SETTINGS = "advanced_display_settings";
     private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
@@ -89,6 +90,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private final Configuration mCurConfig = new Configuration();
 
     private PreferenceScreen mNotificationLed;
+    private PreferenceScreen mBatteryPulse;
     
     private ListPreference mScreenTimeoutPreference;
     private Preference mScreenSaverPreference;
@@ -174,10 +176,22 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         boolean hasNotificationLed = getResources().getBoolean(
                 com.android.internal.R.bool.config_intrusiveNotificationLed);
+        boolean hasBatteryLed = getResources().getBoolean(
+                com.android.internal.R.bool.config_intrusiveBatteryLed);
         mNotificationLed = (PreferenceScreen) findPreference(KEY_NOTIFICATION_LED);
+        mBatteryPulse = (PreferenceScreen) findPreference(KEY_BATTERY_LIGHT);
+        final PreferenceCategory ledCategory =
+                (PreferenceCategory) getPreferenceScreen().findPreference(CATEGORY_LIGHTS);
         if (!hasNotificationLed) {
             getPreferenceScreen().removePreference(mNotificationLed);
         }
+        if (!hasBatteryLed) {
+            getPreferenceScreen().removePreference(mBatteryPulse);
+        }
+        if (!hasBatteryLed && !hasNotificationLed) {
+            getPreferenceScreen().removePreference(ledCategory);
+        }
+
 
         // respect device default configuration
         // true fades while false animates
