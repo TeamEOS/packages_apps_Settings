@@ -21,7 +21,7 @@
     <string name="system_settings_title">System</string>
 
     <string name="statusbar_settings_title">Status bar</string>
-    <string name="statusbar_settings_summary"></string>
+    <string name="statusbar_settings_summary">Set status bar style and behavior</string>
     <string name="battery">Battery</string>
 
     <string name="quick_settings_panel_summary">Set tiles and control panel behavior</string>
