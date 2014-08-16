@@ -85,6 +85,11 @@
     <string name="battery_disable_low_dialog_summary_enabled">Warning dialogs will not show</string>
     <string name="battery_disable_low_dialog_summary_disabled">Warning dialogs will show</string>
 
+    <!-- Advanced battery info -->
+    <string name="eos_battery_info_title">Advanced battery info</string>
+    <string name="eos_battery_info_time_screen_on">Time with screen on:</string>
+    <string name="eos_battery_info_deep_sleep">Time in deep sleep:</string>
+
     <!-- Weather -->
     <string name="cfx_weather_settings">Weather</string>
     <string name="cfx_interface_statusbar_weather_title">Weather</string>

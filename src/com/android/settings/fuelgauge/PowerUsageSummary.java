@@ -38,6 +38,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.android.internal.os.PowerProfile;
+import com.android.settings.BatteryInfo;
 import com.android.settings.HelpUtils;
 import com.android.settings.R;
 
@@ -62,6 +63,7 @@ public class PowerUsageSummary extends PreferenceFragment {
     private static final int MENU_STATS_REFRESH = Menu.FIRST + 1;
     private static final int MENU_HELP = Menu.FIRST + 2;
     private static final int MENU_DISABLE_WARNING = Menu.FIRST + 3;
+    private static final int MENU_ADVANCED_BATTERY = Menu.FIRST + 4;
 
     private PreferenceGroup mAppListGroup;
     private Preference mBatteryStatusPref;
@@ -174,6 +176,9 @@ public class PowerUsageSummary extends PreferenceFragment {
                 .setChecked(warningEnabled)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
+        menu.add(Menu.NONE, MENU_ADVANCED_BATTERY, 0, R.string.eos_battery_info_title)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+
         String helpUrl;
         if (!TextUtils.isEmpty(helpUrl = getResources().getString(R.string.help_url_battery))) {
             final MenuItem help = menu.add(0, MENU_HELP, 0, R.string.help_label);
@@ -201,6 +206,11 @@ public class PowerUsageSummary extends PreferenceFragment {
                 Settings.System.putBoolean(getActivity().getContentResolver(),
                         CFXConstants.SYSTEMUI_DISABLE_BATTERY_WARNING,
                         item.isChecked());
+                return true;
+            case MENU_ADVANCED_BATTERY:
+                final Context mCtx = getActivity();
+                Intent intent = new Intent(mCtx, BatteryInfo.class);
+                mCtx.startActivity(intent);
                 return true;
             default:
                 return false;
