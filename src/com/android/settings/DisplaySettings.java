@@ -86,6 +86,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mAdaptiveBacklight;
     private CheckBoxPreference mColorEnhancement;
     private CheckBoxPreference mTapToWake;
+    private CheckBoxPreference mProximityWake;
     private ListPreference mCrtMode;
     private PreferenceScreen mScreenColorSettings;
 
@@ -159,9 +160,18 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (!isTapToWakeSupported()) {
             advancedPrefs.removePreference(mTapToWake);
             mTapToWake = null;
+        }
+
+        mProximityWake = (CheckBoxPreference) findPreference(KEY_PROXIMITY_WAKE);
+        boolean proximityCheckOnWait = getResources().getBoolean(
+                com.android.internal.R.bool.config_proximityCheckOnWake);
+        if (!proximityCheckOnWait) {
+            advancedPrefs.removePreference(mProximityWake);
+            mProximityWake = null;
         } else {
-            advancedPrefs.removePreference(findPreference(KEY_PROXIMITY_WAKE));
-            Settings.System.putInt(getContentResolver(), Settings.System.PROXIMITY_ON_WAKE, 1);
+            mProximityWake.setChecked(Settings.System.getInt(getContentResolver(),
+                    Settings.System.PROXIMITY_ON_WAKE, 0) == 1);
+            mProximityWake.setOnPreferenceChangeListener(this);
         }
 
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
@@ -423,6 +433,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     Settings.System.SYSTEM_POWER_CRT_MODE,
                     value);
             mCrtMode.setSummary(mCrtMode.getEntries()[index]);
+        }
+        if (KEY_PROXIMITY_WAKE.equals(key)) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PROXIMITY_ON_WAKE,
+                    ((Boolean) objValue).booleanValue() ? 1 : 0);
         }
         return true;
     }
