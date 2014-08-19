@@ -65,14 +65,16 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_NOTIFICATION_LED = "notification_led";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
     private static final String KEY_SCREEN_SAVER = "screensaver";
-    private static final String KEY_ADVANCED_DISPLAY_SETTINGS = "advanced_display_settings";
     private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
-    private static final String KEY_COLOR_ENHANCEMENT = "color_enhancement";
     private static final String KEY_ADAPTIVE_BACKLIGHT = "adaptive_backlight";
+    private static final String KEY_COLOR_ENHANCEMENT = "color_enhancement";
+    private static final String KEY_ADVANCED_DISPLAY_SETTINGS = "advanced_display_settings";
+    private static final String KEY_TAP_TO_WAKE = "double_tap_wake_gesture";
+    private static final String KEY_PROXIMITY_WAKE = "proximity_on_wake";
+
     private static final String CATEGORY_ADVANCED = "advanced_display_prefs";
     private static final String CATEGORY_DISPLAY = "display_prefs";
     private static final String CATEGORY_LIGHTS = "lights_prefs";
-    private static final String KEY_TAP_TO_WAKE = "double_tap_wake_gesture";
     private static final String KEY_DISPLAY_COLOR = "color_calibration";
     private static final String KEY_DISPLAY_GAMMA = "gamma_tuning";
     private static final String KEY_SCREEN_COLOR_SETTINGS = "screencolor_settings";
@@ -157,6 +159,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (!isTapToWakeSupported()) {
             advancedPrefs.removePreference(mTapToWake);
             mTapToWake = null;
+        } else {
+            advancedPrefs.removePreference(findPreference(KEY_PROXIMITY_WAKE));
+            Settings.System.putInt(getContentResolver(), Settings.System.PROXIMITY_ON_WAKE, 1);
         }
 
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
