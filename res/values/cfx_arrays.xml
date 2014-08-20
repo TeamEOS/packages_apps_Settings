@@ -117,6 +117,7 @@
         <item>@string/action_entry_toggle_bluetooth</item>
         <item>@string/action_entry_power_menu</item>
         <item>@string/action_entry_recent_apps</item>
+        <item>@string/action_entry_last_app</item>
         <item>@string/action_entry_toggle_notification</item>
         <item>@string/action_entry_toggle_settings</item>
         <item>@string/action_entry_voice_search</item>
@@ -142,6 +143,7 @@
         <item>@string/action_value_toggle_bluetooth</item>
         <item>@string/action_value_power_menu</item>
         <item>@string/action_value_recent_apps</item>
+        <item>@string/action_value_last_app</item>
         <item>@string/action_value_toggle_notification</item>
         <item>@string/action_value_toggle_settings</item>
         <item>@string/action_value_voice_search</item>

@@ -118,6 +118,7 @@
     <string name="action_entry_toggle_bluetooth">Toggle Bluetooth</string>
     <string name="action_entry_power_menu">Power menu</string>
     <string name="action_entry_recent_apps">Recent apps</string>
+    <string name="action_entry_last_app">Last app</string>
     <string name="action_entry_toggle_notification">Notification panel</string>
     <string name="action_entry_toggle_settings">Settings panel</string>
     <string name="action_entry_voice_search">Voice search</string>
@@ -141,6 +142,7 @@
     <string name="action_value_toggle_bluetooth">task_bt</string>
     <string name="action_value_power_menu">task_powermenu</string>
     <string name="action_value_recent_apps">task_recents</string>
+    <string name="action_value_last_app">task_last_app</string>
     <string name="action_value_toggle_notification">task_notification_panel</string>
     <string name="action_value_toggle_settings">task_settings_panel</string>
     <string name="action_value_voice_search">task_voice_search</string>
