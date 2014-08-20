@@ -194,6 +194,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private ListPreference mAnimatorDurationScale;
     private ListPreference mOverlayDisplayDevices;
     private ListPreference mOpenGLTraces;
+    private CheckBoxPreference mRebootAdvanced;
 
     private CheckBoxPreference mImmediatelyDestroyActivities;
     private ListPreference mAppProcessLimit;
@@ -213,6 +214,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private Dialog mAdbKeysDialog;
 
     private boolean mUnavailable;
+    private boolean mRebootEnabled;
 
     public DevelopmentSettings() {
         super(RESTRICTIONS_PIN_SET);
@@ -234,6 +236,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         }
 
         addPreferencesFromResource(R.xml.development_prefs);
+
+        updateRebootPref();
 
         final PreferenceGroup debugDebuggingCategory = (PreferenceGroup)
                 findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
@@ -315,6 +319,27 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         if (selectRuntime != null) {
             mAllPrefs.add(selectRuntime);
             filterRuntimeOptions(selectRuntime);
+        }
+
+        // advanced reboot
+	mRebootAdvanced = (CheckBoxPreference) findPreference(Settings.Secure.ADVANCED_REBOOT);
+	mRebootAdvanced.setChecked(Settings.Secure.getInt(getActivity().getContentResolver(),
+                                   Settings.Secure.ADVANCED_REBOOT, 0) == 1);
+	mRebootAdvanced.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+	@Override
+	public boolean onPreferenceChange(Preference preference,
+		Object newValue) {
+		Settings.Secure.putInt(getActivity()
+		        .getContentResolver(),
+		         Settings.Secure.ADVANCED_REBOOT,
+		         ((Boolean) newValue).booleanValue() ? 1 : 0);
+		    return true;
+		}
+	});
+
+        if (!mRebootEnabled) {
+           removePreference(mRebootAdvanced);
         }
 
         Preference hdcpChecking = findPreference(HDCP_CHECKING_KEY);
@@ -1437,5 +1462,10 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         } catch (NameNotFoundException e) {
             return false;
         }
+    }
+
+    private void updateRebootPref() {
+        mRebootEnabled = Settings.System.getInt(getContentResolver(),
+        Settings.System.POWER_MENU_REBOOT_ENABLED, 0) == 1;
     }
 }

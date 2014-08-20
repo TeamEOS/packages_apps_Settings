@@ -255,6 +255,7 @@
     <string name="hardware_keys_single_tap_summary">Set single tap action</string>
     <string name="hardware_keys_single_tap_title">Single tap action</string>
     <string name="hardware_keys_back_key_title">Back button</string>
+    <string name="power_key_title">Power button</string>
     <string name="cfx_hardkey_back_long_press_uri">input_hardkey_back_longpress</string>
     <string name="cfx_hardkey_back_double_tap_uri">input_hardkey_back_doubletap</string>
     <string name="cfx_hardkey_home_long_press_uri">input_hardkey_home_longpress</string>

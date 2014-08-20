@@ -25,6 +25,18 @@
         android:title="@string/button_backlight_title" />
 
     <PreferenceCategory
+        android:key="power_key"
+        android:title="@string/power_key_title" >
+
+        <PreferenceScreen
+            android:fragment="com.android.settings.cfx.PowerMenu"
+            android:key="power_menu"
+            android:summary="@string/power_menu_summary"
+            android:title="@string/power_menu_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="back_key"
         android:title="@string/hardware_keys_back_key_title" >
 
