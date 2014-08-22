@@ -105,53 +105,17 @@
     <string name="cfx_style_statusbar_clock_title">Clock location</string>
     <string name="cfx_style_statusbar_clock_am_pm_title">AM/PM Style</string>
 
-    <!-- Actions. And the things they act upon -->
-    <string name="action_entry_clear_actions">Default settings</string>
-    <string name="action_entry_no_action">No action</string>
+    <!-- Actions dialog and default task values set in ActionPreference xml-->
+    <string name="action_entry_default_action">Default settings</string>
     <string name="action_entry_select_app">Select Application</string>
-    <string name="action_entry_back">Back</string>
-    <string name="action_entry_home">Home</string>
-    <string name="action_entry_screenshot">Take screenshot</string>
-    <string name="action_entry_screenrecord">Record screen</string>
-    <string name="action_entry_kill_process">Kill app</string>
-    <string name="action_entry_screen_off">Screen off</string>
-    <string name="action_entry_search_assist">Search assist</string>
-    <string name="action_entry_torch">Torch</string>
-    <string name="action_entry_camera">Camera</string>
-    <string name="action_entry_toggle_wifi">Toggle Wifi</string>
-    <string name="action_entry_toggle_wifi_ap">Toggle Wifi AP</string>
-    <string name="action_entry_toggle_bluetooth">Toggle Bluetooth</string>
-    <string name="action_entry_power_menu">Power menu</string>
-    <string name="action_entry_recent_apps">Recent apps</string>
-    <string name="action_entry_last_app">Last app</string>
-    <string name="action_entry_toggle_notification">Notification panel</string>
-    <string name="action_entry_toggle_settings">Settings panel</string>
-    <string name="action_entry_voice_search">Voice search</string>
-    <string name="action_entry_in_app_search">In-app search</string>
-    <string name="action_entry_menu">Menu</string>
 
-    <string name="action_value_clear_actions">empty</string>
-    <string name="action_value_no_action">task_no_action</string>
+    <string name="action_value_default_action">default</string>
     <string name="action_value_select_app">app</string>
     <string name="action_value_back">task_back</string>
     <string name="action_value_home">task_home</string>
-    <string name="action_value_screenshot">task_screenshot</string>
-    <string name="action_value_screenrecord">task_screenrecord</string>
-    <string name="action_value_kill_process">task_killcurrent</string>
-    <string name="action_value_screen_off">task_screenoff</string>
     <string name="action_value_search_assist">task_assist</string>
-    <string name="action_value_torch">task_torch</string>
-    <string name="action_value_camera">task_camera</string>
-    <string name="action_value_toggle_wifi">task_wifi</string>
-    <string name="action_value_toggle_wifi_ap">task_wifiap</string>
-    <string name="action_value_toggle_bluetooth">task_bt</string>
-    <string name="action_value_power_menu">task_powermenu</string>
     <string name="action_value_recent_apps">task_recents</string>
-    <string name="action_value_last_app">task_last_app</string>
-    <string name="action_value_toggle_notification">task_notification_panel</string>
-    <string name="action_value_toggle_settings">task_settings_panel</string>
     <string name="action_value_voice_search">task_voice_search</string>
-    <string name="action_value_in_app_search">task_app_search</string>
     <string name="action_value_menu">task_menu</string>
 
 <!-- Softkeys -->

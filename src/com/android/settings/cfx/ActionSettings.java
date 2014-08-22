@@ -17,10 +17,9 @@
 package com.android.settings.cfx;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.codefirex.utils.ActionHandler;
+import org.codefirex.utils.ActionHandler.ActionBundle;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -60,14 +59,6 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
         mPackageManager = getPackageManager();
         mPackageAdapter = new PackageListAdapter(getActivity(), false);
         setActionsList();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        for (ActionPreference pref : mPrefHolder) {
-            pref.updateResources();
-        }
     }
 
     @Override
@@ -149,7 +140,11 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
                                 } else {
                                     for (ActionPreference pref : mPrefHolder) {
                                         if (pref.getKey().equals(mHolderKey)) {
-                                            pref.updateAction(pressed);
+                                            if (pressed.equals(getString(R.string.action_value_default_action))) {
+                                                pressed = pref.getDefaultAction();
+                                            }
+                                            ActionBundle b = new ActionBundle(getActivity(), pressed);
+                                            pref.updateAction(b);
                                             onActionPolicyEnforced(mPrefHolder);
                                             break;
                                         }
@@ -174,10 +169,11 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
                         String component = mPackageManager
                                 .getLaunchIntentForPackage(info.packageName).getComponent()
                                 .flattenToString();
-                        String label = info.title.toString();
                         for (ActionPreference pref : mPrefHolder) {
                             if (pref.getKey().equals(mHolderKey)) {
-                                pref.updateAction(component, label);
+                                String action = ActionHandler.APP_PREFIX + component;
+                                ActionBundle b = new ActionBundle(getActivity(), action);
+                                pref.updateAction(b);
                                 onActionPolicyEnforced(mPrefHolder);
                                 break;
                             }
@@ -192,75 +188,78 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
         return dialog;
     }
 
-    private void setActionsList() {
-        List<String> temp_entries = Arrays.asList(getResources()
-                .getStringArray(R.array.action_dialog_entries));
-        List<String> temp_values = Arrays.asList(getResources().getStringArray(
-                R.array.action_dialog_values));
+    private void setActionsList() {     
+        // load non-action dialog entries first from xml
+        String[] entries_start = getResources()
+                .getStringArray(R.array.action_dialog_entries);
+        String[] values_start = getResources().getStringArray(
+                R.array.action_dialog_values);
 
-        ArrayList<String> item_entries = new ArrayList<String>();
-        ArrayList<String> item_values = new ArrayList<String>();
+        ArrayList<String> temp_entries = new ArrayList<String>();
+        ArrayList<String> temp_values = new ArrayList<String>();
 
-        for (String s : temp_entries) {
-            item_entries.add(s);
+        for (int i = 0; i < entries_start.length; i++) {
+            temp_entries.add(entries_start[i]);
+            temp_values.add(values_start[i]);
         }
 
-        for (String s : temp_values) {
-            item_values.add(s);
+        // append actions to dialog
+        ArrayList<ActionBundle> actions = ActionHandler.getAllActions(getActivity());
+        for (ActionBundle b : actions) {
+            temp_entries.add(b.label);
+            temp_values.add(b.action);
         }
 
+        // filter actions based on environment
         if (!usesExtendedActionsList()) {
-            int i = item_values.indexOf("task_home");
-            item_entries.remove(i);
-            item_values.remove(i);
+            int i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_HOME);
+            temp_entries.remove(i);
+            temp_values.remove(i);
 
-            i = item_values.indexOf("task_back");
-            item_entries.remove(i);
-            item_values.remove(i);
+            i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_BACK);
+            temp_entries.remove(i);
+            temp_values.remove(i);
         }
 
         if (!QSUtils.deviceSupportsMobileData(getActivity())) {
-            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_WIFIAP);
-            item_entries.remove(i);
-            item_values.remove(i);
+            int i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_WIFIAP);
+            temp_entries.remove(i);
+            temp_values.remove(i);
         }
 
         if (!QSUtils.deviceSupportsBluetooth()) {
-            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_BT);
-            item_entries.remove(i);
-            item_values.remove(i);
+            int i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_BT);
+            temp_entries.remove(i);
+            temp_values.remove(i);
         }
 
         if (!QSUtils.deviceSupportsTorch(getActivity())) {
-            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_TORCH);
-            item_entries.remove(i);
-            item_values.remove(i);
+            int i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_TORCH);
+            temp_entries.remove(i);
+            temp_values.remove(i);
         }
 
         // only use for FFC only, i.e. Grouper
         // all other devices set action from packages
-        if (hasRearCam()) {
-            int i = item_values.indexOf(ActionHandler.SYSTEMUI_TASK_CAMERA);
-            item_entries.remove(i);
-            item_values.remove(i);
+        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            int i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_CAMERA);
+            temp_entries.remove(i);
+            temp_values.remove(i);
         }
 
-        mItem_entries = new CharSequence[item_entries.size()];
-        mItem_values = new CharSequence[item_values.size()];
+        // populate global dialog arrays
+        mItem_entries = new CharSequence[temp_entries.size()];
+        mItem_values = new CharSequence[temp_values.size()];
 
         int i = 0;
-        for (String s : item_entries) {
+        for (String s : temp_entries) {
             mItem_entries[i] = s;
             i++;
         }
         i = 0;
-        for (String s : item_values) {
+        for (String s : temp_values) {
             mItem_values[i] = s;
             i++;
         }
-    }
-
-    private boolean hasRearCam() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 }

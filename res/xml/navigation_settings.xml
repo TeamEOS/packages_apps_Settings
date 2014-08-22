@@ -46,7 +46,6 @@
             android:key="cfx_softkey_back"
             android:title="@string/cfx_softkey_back"
             android:summary="@string/cfx_softkey_longpress_summary"
-            settings:externalIcon="@string/cfx_softkey_back_ext_icon"
             settings:observedUri="@string/cfx_softkey_back_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
 
@@ -54,7 +53,6 @@
             android:key="cfx_softkey_home"
             android:title="@string/cfx_softkey_home"
             android:summary="@string/cfx_softkey_longpress_summary"
-            settings:externalIcon="@string/cfx_softkey_home_ext_icon"
             settings:observedUri="@string/cfx_softkey_home_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
 
@@ -62,21 +60,18 @@
             android:key="cfx_softkey_recent"
             android:title="@string/cfx_softkey_recent"
             android:summary="@string/cfx_softkey_longpress_summary"
-            settings:externalIcon="@string/cfx_softkey_recent_ext_icon"
             settings:observedUri="@string/cfx_softkey_recent_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
 
         <com.android.settings.cfx.ActionPreference
             android:key="cfx_softkey_extra1"
             android:summary="@string/cfx_softkey_longpress_summary"
-            settings:externalIcon="@string/cfx_softkey_back_ext_icon"
             settings:observedUri="@string/cfx_softkey_extra1_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
 
         <com.android.settings.cfx.ActionPreference
             android:key="cfx_softkey_extra2"
             android:summary="@string/cfx_softkey_longpress_summary"
-            settings:externalIcon="@string/cfx_softkey_back_ext_icon"
             settings:observedUri="@string/cfx_softkey_extra2_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
 
@@ -84,60 +79,8 @@
             android:key="cfx_softkey_menu"
             android:title="@string/cfx_softkey_menu"
             android:summary="@string/cfx_softkey_longpress_summary"
-            settings:externalIcon="@string/cfx_softkey_menu_ext_icon"
             settings:observedUri="@string/cfx_softkey_menu_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="cfx_softkey_key_color_category"
-        android:title="@string/cfx_softkey_key_color_title" >
-
-        <com.android.settings.cfx.MultiSelectListPreference
-            android:defaultValue="@array/empty_array"
-            android:dialogTitle="@string/cfx_softkey_glow_color_dialog_title"
-            android:entries="@array/multilist_softkey_title_entries"
-            android:entryValues="@array/multilist_softkey_color_values"
-            android:persistent="false"
-            android:key="cfx_softkey_key_color_multipref"
-            android:summary="@string/cfx_softkey_key_color_summary"
-            android:title="@string/cfx_softkey_key_color_title" />
-
-        <com.android.settings.cfx.MultiSelectListPreference
-            android:defaultValue="@array/empty_array"
-            android:dialogTitle="@string/cfx_softkey_key_color_restore_title"
-            android:entries="@array/multilist_softkey_title_entries"
-            android:entryValues="@array/multilist_softkey_color_values"
-            android:persistent="false"
-            android:key="cfx_softkey_key_color_restore_multipref"
-            android:summary="@string/cfx_softkey_key_color_restore_summary"
-            android:title="@string/cfx_softkey_key_color_restore_title" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="cfx_softkey_glow_color_category"
-        android:title="@string/cfx_softkey_glow_color_title" >
-
-        <com.android.settings.cfx.MultiSelectListPreference
-            android:defaultValue="@array/empty_array"
-            android:dialogTitle="@string/cfx_softkey_glow_color_dialog_title"
-            android:entries="@array/multilist_softkey_title_entries"
-            android:entryValues="@array/multilist_softkey_glow_color_values"
-            android:persistent="false"
-            android:key="cfx_softkey_glow_color_multipref"
-            android:summary="@string/cfx_softkey_glow_color_summary"
-            android:title="@string/cfx_softkey_glow_color_title" />
-
-        <com.android.settings.cfx.MultiSelectListPreference
-            android:defaultValue="@array/empty_array"
-            android:dialogTitle="@string/cfx_softkey_key_color_restore_title"
-            android:entries="@array/multilist_softkey_title_entries"
-            android:entryValues="@array/multilist_softkey_glow_color_values"
-            android:persistent="false"
-            android:key="cfx_softkey_glow_color_restore_multipref"
-            android:summary="@string/cfx_softkey_glow_color_restore_summary"
-            android:title="@string/cfx_softkey_key_color_restore_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

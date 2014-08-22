@@ -100,55 +100,13 @@
     </string-array>
 
     <string-array name="action_dialog_entries">
-        <item>@string/action_entry_clear_actions</item>
-        <item>@string/action_entry_no_action</item>
+        <item>@string/action_entry_default_action</item>
         <item>@string/action_entry_select_app</item>
-        <item>@string/action_entry_back</item>
-        <item>@string/action_entry_home</item>
-        <item>@string/action_entry_screenshot</item>
-        <item>@string/action_entry_screenrecord</item>
-        <item>@string/action_entry_kill_process</item>
-        <item>@string/action_entry_screen_off</item>
-        <item>@string/action_entry_search_assist</item>
-        <item>@string/action_entry_torch</item>
-        <item>@string/action_entry_camera</item>
-        <item>@string/action_entry_toggle_wifi</item>
-        <item>@string/action_entry_toggle_wifi_ap</item>
-        <item>@string/action_entry_toggle_bluetooth</item>
-        <item>@string/action_entry_power_menu</item>
-        <item>@string/action_entry_recent_apps</item>
-        <item>@string/action_entry_last_app</item>
-        <item>@string/action_entry_toggle_notification</item>
-        <item>@string/action_entry_toggle_settings</item>
-        <item>@string/action_entry_voice_search</item>
-        <item>@string/action_entry_in_app_search</item>
-        <item>@string/action_entry_menu</item>
     </string-array>
 
     <string-array name="action_dialog_values">
-        <item>@string/action_value_clear_actions</item>
-        <item>@string/action_value_no_action</item>
+        <item>@string/action_value_default_action</item>
         <item>@string/action_value_select_app</item>
-        <item>@string/action_value_back</item>
-        <item>@string/action_value_home</item>
-        <item>@string/action_value_screenshot</item>
-        <item>@string/action_value_screenrecord</item>
-        <item>@string/action_value_kill_process</item>
-        <item>@string/action_value_screen_off</item>
-        <item>@string/action_value_search_assist</item>
-        <item>@string/action_value_torch</item>
-        <item>@string/action_value_camera</item>
-        <item>@string/action_value_toggle_wifi</item>
-        <item>@string/action_value_toggle_wifi_ap</item>
-        <item>@string/action_value_toggle_bluetooth</item>
-        <item>@string/action_value_power_menu</item>
-        <item>@string/action_value_recent_apps</item>
-        <item>@string/action_value_last_app</item>
-        <item>@string/action_value_toggle_notification</item>
-        <item>@string/action_value_toggle_settings</item>
-        <item>@string/action_value_voice_search</item>
-        <item>@string/action_value_in_app_search</item>
-        <item>@string/action_value_menu</item>
     </string-array>
 
     <string-array name="multilist_softkey_title_entries">
