@@ -108,9 +108,11 @@
     <!-- Actions dialog and default task values set in ActionPreference xml-->
     <string name="action_entry_default_action">Default settings</string>
     <string name="action_entry_select_app">Select Application</string>
+    <string name="action_entry_quick_contact">Quick contact</string>
 
     <string name="action_value_default_action">default</string>
     <string name="action_value_select_app">app</string>
+    <string name="action_value_quick_contact">quick_contact</string>
     <string name="action_value_back">task_back</string>
     <string name="action_value_home">task_home</string>
     <string name="action_value_search_assist">task_assist</string>

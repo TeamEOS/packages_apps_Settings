@@ -17,22 +17,36 @@
 package com.android.settings.cfx;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.codefirex.utils.ActionHandler;
 import org.codefirex.utils.ActionHandler.ActionBundle;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.provider.ContactsContract.CommonDataKinds;
 import android.util.Log;
+import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.internal.util.cm.QSUtils;
 import com.android.settings.R;
@@ -44,6 +58,7 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
     private static final String TAG = ActionSettings.class.getSimpleName();
     private static final int DIALOG_ACTIONS = 0;
     private static final int DIALOG_PACKAGES = 1;
+    private static final int DIALOG_CONTACT = 2;
 
     protected ArrayList<ActionPreference> mPrefHolder = new ArrayList<ActionPreference>();
     private String mHolderKey;
@@ -53,11 +68,22 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
     private CharSequence[] mItem_entries;
     private CharSequence[] mItem_values;
 
+    private enum ContactType {
+        CALL,
+        SMS,
+        EMAIL
+    };
+
+    private ContactListAdapter mContactAdapter;
+    private Uri mCurrentContact;
+    private static final int REQUEST_CODE_CONTACT = 88;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPackageManager = getPackageManager();
         mPackageAdapter = new PackageListAdapter(getActivity(), false);
+        mContactAdapter = new ContactListAdapter(getActivity());
         setActionsList();
     }
 
@@ -137,6 +163,10 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
                                 String pressed = (String) item_values[which];
                                 if (pressed.equals("app")) {
                                     showDialog(DIALOG_PACKAGES);
+                                } else if (pressed.equals(getString(R.string.action_value_quick_contact))) {
+                                    Intent contactListIntent = new Intent(Intent.ACTION_PICK);
+                                    contactListIntent.setType(CommonDataKinds.Phone.CONTENT_TYPE);
+                                    startActivityForResult(contactListIntent, REQUEST_CODE_CONTACT, null);
                                 } else {
                                     for (ActionPreference pref : mPrefHolder) {
                                         if (pref.getKey().equals(mHolderKey)) {
@@ -182,10 +212,69 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
                     }
                 });
                 break;
+            case DIALOG_CONTACT:
+                final ListView contactListView = new ListView(getActivity());
+                mContactAdapter.loadList(mCurrentContact);
+                contactListView.setAdapter(mContactAdapter);
+                builder.setTitle(ActionHandler
+                        .getContactName(getContentResolver(), mCurrentContact));
+                builder.setIcon(ActionHandler.getIconFromContacts(getActivity(), mCurrentContact));
+                builder.setView(contactListView);
+                dialog = builder.create();
+                contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent,
+                            View view, int position, long id) {
+                        for (ActionPreference pref : mPrefHolder) {
+                            if (pref.getKey().equals(mHolderKey)) {
+                                ContactHolder info = (ContactHolder) parent
+                                        .getItemAtPosition(position);
+                                StringBuilder b = new StringBuilder();
+                                b.append(getActionTypeForContactType(info.type))
+                                        .append(info.num.second)
+                                        .append("|")
+                                        .append(mCurrentContact);
+                                String action = b.toString();
+                                ActionBundle bundle = new ActionBundle(getActivity(), action);
+                                pref.updateAction(bundle);
+                                onActionPolicyEnforced(mPrefHolder);
+                                break;
+                            }
+                        }
+                        dialog.cancel();
+                    }
+                });
+                break;
             default:
                 return null;
         }
         return dialog;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_CONTACT) {
+            if (resultCode == Activity.RESULT_OK) {
+                mCurrentContact = data.getData();
+                showDialog(DIALOG_CONTACT);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+    }
+
+    private String getActionTypeForContactType(ContactType type) {
+        switch (type) {
+            case CALL:
+                return ActionHandler.CALL_PREFIX;
+            case EMAIL:
+                return ActionHandler.EMAIL_PREFIX;
+            case SMS:
+                return ActionHandler.TEXT_PREFIX;
+            default:
+                return ActionHandler.CALL_PREFIX;
+        }
     }
 
     private void setActionsList() {     
@@ -227,6 +316,12 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
             temp_values.remove(i);
         }
 
+        if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
+            int i = temp_values.indexOf(getString(R.string.action_value_quick_contact));
+            temp_entries.remove(i);
+            temp_values.remove(i);
+        }
+
         if (!QSUtils.deviceSupportsBluetooth()) {
             int i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_BT);
             temp_entries.remove(i);
@@ -261,5 +356,118 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
             mItem_values[i] = s;
             i++;
         }
+    }
+
+    private class ContactListAdapter extends BaseAdapter {
+        private Context mContext;
+        private LayoutInflater mInflater;
+        private List<ContactHolder> mContacts = new LinkedList<ContactHolder>();
+
+        public ContactListAdapter(Context ctx) {
+            mContext = ctx;
+            mInflater = LayoutInflater.from(ctx);
+        }
+
+        void loadList(Uri contactUri) {
+            mContacts.clear();
+            ArrayList<Pair<String, String>> numbers = ActionHandler.getAllContactNumbers(mContext,
+                    contactUri);
+            // ArrayList<Pair<String, String>> emails = ActionHandler.getAllContactEmails(mContext,
+            // contactUri);
+
+            // calls
+            for (Pair<String, String> number : numbers) {
+                // often, phone number types are disorganized, but it's likely
+                // we don't want fax numbers here or in sms
+                if (number.first.contains("Fax") || number.first.contains("fax")) {
+                    continue;
+                }
+                ContactHolder holder = new ContactHolder();
+                holder.num = number;
+                holder.type = ContactType.CALL;
+                mContacts.add(holder);
+            }
+            // sms
+            for (Pair<String, String> number : numbers) {
+                if (number.first.contains("Fax") || number.first.contains("fax")) {
+                    continue;
+                }
+                ContactHolder holder = new ContactHolder();
+                holder.num = number;
+                holder.type = ContactType.SMS;
+                mContacts.add(holder);
+            }
+
+             // always load email 
+             // disable for now 
+             // for (Pair<String, String> email : emails) { 
+             //   ContactHolder holder = new ContactHolder();
+             //   holder.num = email;
+             //   holder.type = ContactType.EMAIL;
+             //   mContacts.add(holder);
+             // }
+
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return mContacts.size();
+        }
+
+        @Override
+        public ContactHolder getItem(int position) {
+            return mContacts.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView != null) {
+                holder = (ViewHolder) convertView.getTag();
+            } else {
+                convertView = mInflater.inflate(R.layout.contact_types_list, null, false);
+                holder = new ViewHolder();
+                convertView.setTag(holder);
+                holder.title = (TextView) convertView.findViewById(R.id.name);
+                holder.summary = (TextView) convertView.findViewById(R.id.description);
+                holder.icon = (ImageView) convertView.findViewById(R.id.icon);
+            }
+            ContactHolder contactHolder = getItem(position);
+            holder.title.setText(contactHolder.num.second);
+            holder.summary.setText(contactHolder.num.first);
+            holder.icon.setImageDrawable(mContext.getResources().getDrawable(
+                    getIconForType(contactHolder.type)));
+            return convertView;
+        }
+
+        private int getIconForType(ContactType type) {
+            switch (type) {
+                case CALL:
+                    return com.android.internal.R.drawable.sym_action_call;
+                case EMAIL:
+                    return com.android.internal.R.drawable.sym_action_email;
+                case SMS:
+                    return com.android.internal.R.drawable.sym_action_chat;
+                default:
+                    return com.android.internal.R.drawable.sym_action_call;
+            }
+        }
+    }
+
+    private static class ViewHolder {
+        TextView title;
+        TextView summary;
+        ImageView icon;
+    }
+
+    private static class ContactHolder {
+        Pair<String, String> num;
+        ContactType type;
     }
 }
