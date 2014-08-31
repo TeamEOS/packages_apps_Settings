@@ -19,6 +19,7 @@
     <!-- cfx settings headers  -->
     <string name="interface_settings_title">Interface</string>
     <string name="system_settings_title">System</string>
+    <string name="lockscreen_settings_title">Lockscreen</string>
 
     <string name="statusbar_settings_title">Status bar</string>
     <string name="statusbar_settings_summary">Set status bar style and behavior</string>
@@ -245,6 +246,9 @@
     <string name="eos_key_disabler_active">Hardware navigation keys are disabled</string>
     <string name="eos_key_disabler_off">Hardware navigation keys are enabled</string>
     <string name="eos_key_disabler_unsupported">Hardware key disabler is unsupported</string>
+
+    <!-- Lockscreen battery ring -->
+    <string name="battery_around_lockscreen_ring">Battery around unlock ring</string>
 
     <!-- statusbar double tap action -->
     <string name="eos_statusbar_doubletap_title">Double tap action</string>
