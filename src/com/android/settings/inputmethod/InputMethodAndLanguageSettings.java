@@ -67,6 +67,7 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
     private static final String KEY_CURRENT_INPUT_METHOD = "current_input_method";
     private static final String KEY_INPUT_METHOD_SELECTOR = "input_method_selector";
     private static final String KEY_USER_DICTIONARY_SETTINGS = "key_user_dictionary_settings";
+    private static final String KEY_POINTER_SETTINGS_CATEGORY = "pointer_settings_category";
     private static final String KEY_STYLUS_ICON_ENABLED = "stylus_icon_enabled";
     private static final String KEY_STYLUS_GESTURES = "stylus_gestures";
     private static final String KEY_HIGH_TOUCH_SENSITIVITY = "high_touch_sensitivity";
@@ -177,11 +178,15 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
         mIm = (InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
         updateInputDevices();
 
-        // High touch sensitivity
+        PreferenceCategory pointerSettingsCategory = (PreferenceCategory)
+                findPreference(KEY_POINTER_SETTINGS_CATEGORY);
         mHighTouchSensitivity = (CheckBoxPreference) findPreference(KEY_HIGH_TOUCH_SENSITIVITY);
-        if (!isHighTouchSensitivitySupported()) {
-            getPreferenceScreen().removePreference(mHighTouchSensitivity);
-            mHighTouchSensitivity = null;
+
+        if (pointerSettingsCategory != null) {
+            if (!isHighTouchSensitivitySupported()) {
+                pointerSettingsCategory.removePreference(mHighTouchSensitivity);
+                mHighTouchSensitivity = null;
+            }
         }
 
         // Spell Checker
