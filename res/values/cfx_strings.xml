@@ -203,6 +203,10 @@
     <string name="eos_nx_show_logo_title">Show NX logo</string>
     <string name="eos_nx_animate_logo_title">Animate logo</string>
     <string name="eos_nx_animate_logo_summary">Logo animates on touch events (experimental)</string>
+    <string name="eos_nx_longpress_timeout_label_left">Less delay</string>
+    <string name="eos_nx_longpress_timeout_label_right">More delay</string>
+    <string name="eos_nx_longpress_title">Long press delay</string>
+    <string name="eos_nx_longpress_summary">Increase or decrease the time it takes to execute a long press</string>
 
     <!-- NX action uris -->
     <string name="nx_short_swipe_right_uri">eos_nx_action_fling_short_right</string>

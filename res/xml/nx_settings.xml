@@ -147,5 +147,10 @@
             android:title="@string/eos_nx_long_swipe_title" >
         </com.android.settings.cfx.LongSwipePreference>
 
+        <com.android.settings.cfx.NxLongpressPreference
+            android:key="eos_nx_longpress_pref"
+            android:summary="@string/eos_nx_longpress_summary"
+            android:title="@string/eos_nx_longpress_title" >
+        </com.android.settings.cfx.NxLongpressPreference>
     </PreferenceCategory>
 </PreferenceScreen>
