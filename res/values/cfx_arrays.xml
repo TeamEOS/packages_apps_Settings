@@ -111,27 +111,6 @@
         <item>@string/action_value_quick_contact</item>
     </string-array>
 
-    <string-array name="multilist_softkey_title_entries">
-        <item>@string/cfx_softkey_back</item>
-        <item>@string/cfx_softkey_home</item>
-        <item>@string/cfx_softkey_recent</item>
-        <item>@string/cfx_softkey_menu</item>
-    </string-array>
-
-    <string-array name="multilist_softkey_color_values">
-        <item>@string/cfx_softkey_keyColor_uri_back</item>
-        <item>@string/cfx_softkey_keyColor_uri_home</item>
-        <item>@string/cfx_softkey_keyColor_uri_recent</item>
-        <item>@string/cfx_softkey_keyColor_uri_menu</item>
-    </string-array>
-
-    <string-array name="multilist_softkey_glow_color_values">
-        <item>@string/cfx_softkey_glowColor_uri_back</item>
-        <item>@string/cfx_softkey_glowColor_uri_home</item>
-        <item>@string/cfx_softkey_glowColor_uri_recent</item>
-        <item>@string/cfx_softkey_glowColor_uri_menu</item>
-    </string-array>
-
     <!-- CRT off animation mode -->
     <string-array name="entries_system_power_crt_mode">
         <item>@string/system_power_crt_mode_off</item>

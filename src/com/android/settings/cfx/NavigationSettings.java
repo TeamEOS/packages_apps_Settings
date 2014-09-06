@@ -32,12 +32,6 @@ import com.android.settings.R;
 public class NavigationSettings extends ActionSettings implements
         Preference.OnPreferenceChangeListener {
     private static final String NAVBAR_SIZE = "cfx_interface_navbar_size";
-    private static final String CATEGORY_SOFTKEY_ACTIONS = "cfx_softkey_longpress_category";
-    private static final String EXTRA1 = "cfx_softkey_extra1";
-    private static final String EXTRA2 = "cfx_softkey_extra2";
-
-    PreferenceCategory pc_ui;
-    PreferenceCategory pc_sofkey_actions;
 
     ContentResolver mResolver;
     Context mContext;
@@ -52,8 +46,6 @@ public class NavigationSettings extends ActionSettings implements
         mContext = (Context) getActivity();
         mResolver = getActivity().getContentResolver();
 
-        pc_sofkey_actions = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_ACTIONS);
-
         mNavbarSize = (ListPreference) findPreference(NAVBAR_SIZE);
         int sizeVal = Settings.System.getInt(mResolver,
                 CFXConstants.SYSTEMUI_NAVBAR_SIZE_DP,
@@ -62,11 +54,6 @@ public class NavigationSettings extends ActionSettings implements
         mNavbarSize.setValue(String.valueOf(sizeVal));
         mNavbarSize.setOnPreferenceChangeListener(this);
         updateSizeSummary();
-
-        PreferenceCategory mLongPressCat = (PreferenceCategory) findPreference(CATEGORY_SOFTKEY_ACTIONS);
-
-        mLongPressCat.removePreference(findPreference(EXTRA1));
-        mLongPressCat.removePreference(findPreference(EXTRA2));
 
         onPreferenceScreenLoaded();
     }

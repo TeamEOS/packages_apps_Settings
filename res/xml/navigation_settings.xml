@@ -39,8 +39,44 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="eos_softkey_doubletap_category"
+        android:title="@string/eos_softkey_doubletap_title" >
+
+        <com.android.settings.cfx.ActionPreference
+            android:key="eos_softkey_dt_back"
+            android:title="@string/cfx_softkey_back"
+            settings:observedUri="@string/eos_softkey_back_dt_observed_uri" >
+        </com.android.settings.cfx.ActionPreference>
+
+        <com.android.settings.cfx.ActionPreference
+            android:key="eos_softkey_dt_home"
+            android:title="@string/cfx_softkey_home"
+            settings:observedUri="@string/eos_softkey_home_dt_observed_uri" >
+        </com.android.settings.cfx.ActionPreference>
+
+        <com.android.settings.cfx.ActionPreference
+            android:key="eos_softkey_dt_recent"
+            android:title="@string/cfx_softkey_recent"
+            settings:observedUri="@string/eos_softkey_recent_dt_observed_uri" >
+        </com.android.settings.cfx.ActionPreference>
+
+        <com.android.settings.cfx.ActionPreference
+            android:key="eos_softkey_dt_menu"
+            android:title="@string/cfx_softkey_menu"
+            settings:observedUri="@string/eos_softkey_menu_dt_observed_uri" >
+        </com.android.settings.cfx.ActionPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="cfx_softkey_longpress_category"
         android:title="@string/cfx_softkey_longpress_title" >
+
+        <com.android.settings.cfx.NxLongpressPreference
+            android:key="eos_softkey_longpress_pref"
+            android:summary="@string/eos_nx_longpress_summary"
+            android:title="@string/eos_nx_longpress_title"
+            settings:observedUri="@string/eos_softkey_longpress_timeout_uri" >
+        </com.android.settings.cfx.NxLongpressPreference>
 
         <com.android.settings.cfx.ActionPreference
             android:key="cfx_softkey_back"
@@ -61,18 +97,6 @@
             android:title="@string/cfx_softkey_recent"
             android:summary="@string/cfx_softkey_longpress_summary"
             settings:observedUri="@string/cfx_softkey_recent_observed_uri" >
-        </com.android.settings.cfx.ActionPreference>
-
-        <com.android.settings.cfx.ActionPreference
-            android:key="cfx_softkey_extra1"
-            android:summary="@string/cfx_softkey_longpress_summary"
-            settings:observedUri="@string/cfx_softkey_extra1_observed_uri" >
-        </com.android.settings.cfx.ActionPreference>
-
-        <com.android.settings.cfx.ActionPreference
-            android:key="cfx_softkey_extra2"
-            android:summary="@string/cfx_softkey_longpress_summary"
-            settings:observedUri="@string/cfx_softkey_extra2_observed_uri" >
         </com.android.settings.cfx.ActionPreference>
 
         <com.android.settings.cfx.ActionPreference

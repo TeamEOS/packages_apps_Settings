@@ -149,26 +149,12 @@
     <string name="cfx_softkey_home_observed_uri">systemui_softkey_lp_home</string>
     <string name="cfx_softkey_recent_observed_uri">systemui_softkey_lp_recent</string>
     <string name="cfx_softkey_menu_observed_uri">systemui_softkey_lp_menu</string>
-    <string name="cfx_softkey_extra1_observed_uri">systemui_softkey_lp_extra1</string>
-    <string name="cfx_softkey_extra2_observed_uri">systemui_softkey_lp_extra2</string>
-    <string name="cfx_softkey_keyColor_uri_back">systemui_softkey_color_back</string>
-    <string name="cfx_softkey_keyColor_uri_home">systemui_softkey_color_home</string>
-    <string name="cfx_softkey_keyColor_uri_recent">systemui_softkey_color_recent</string>
-    <string name="cfx_softkey_keyColor_uri_menu">systemui_softkey_color_menu</string>
-    <string name="cfx_softkey_keyColor_uri_extra1">systemui_softkey_color_extra1</string>
-    <string name="cfx_softkey_keyColor_uri_extra2">systemui_softkey_color_extra2</string>
-    <string name="cfx_softkey_glowColor_uri_back">systemui_softkey_glowColor_back</string>
-    <string name="cfx_softkey_glowColor_uri_home">systemui_softkey_glowColor_home</string>
-    <string name="cfx_softkey_glowColor_uri_recent">systemui_softkey_glowColor_recent</string>
-    <string name="cfx_softkey_glowColor_uri_menu">systemui_softkey_glowColor_menu</string>
-    <string name="cfx_softkey_glowColor_uri_extra1">systemui_softkey_glowColor_extra1</string>
-    <string name="cfx_softkey_glowColor_uri_extra2">systemui_softkey_glowColor_extra2</string>
-    <string name="cfx_softkey_back_ext_icon">ic_sysbar_back</string>
-    <string name="cfx_softkey_home_ext_icon">ic_sysbar_home</string>
-    <string name="cfx_softkey_recent_ext_icon">ic_sysbar_recent</string>
-    <string name="cfx_softkey_menu_ext_icon">ic_sysbar_menu</string>
-    <string name="cfx_softkey_extra1_ext_icon">ic_sysbar_back</string>
-    <string name="cfx_softkey_extra2_ext_icon">ic_sysbar_back</string>
+    <string name="eos_softkey_back_dt_observed_uri">systemui_softkey_dt_back</string>
+    <string name="eos_softkey_home_dt_observed_uri">systemui_softkey_dt_home</string>
+    <string name="eos_softkey_recent_dt_observed_uri">systemui_softkey_dt_recent</string>
+    <string name="eos_softkey_menu_dt_observed_uri">systemui_softkey_dt_menu</string>
+    <string name="eos_softkey_longpress_timeout_uri">eos_softkey_longpress_timeout</string>
+    <string name="eos_softkey_doubletap_title">Double tap</string>
 
     <!-- NX -->
     <string name="eos_nx_interface">NX Gesture Interface</string>

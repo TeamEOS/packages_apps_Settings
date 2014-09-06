@@ -28,6 +28,10 @@ public class NxLongpressPreference extends DialogPreference implements
         SeekBar.OnSeekBarChangeListener {
     private static final String TAG = NxLongpressPreference.class.getSimpleName();
 
+    private static final String SETTINGSNS = "http://schemas.android.com/apk/res/com.android.settings";
+    private static final String ATTR_URI = "observedUri";
+    private String mActionUri;
+
     private static final String LONG_PRESS_URI = "eos_nx_long_press_timeout";
     // just a hair about tap timeout
     private static final int MIN_VAL = 25;
@@ -46,6 +50,13 @@ public class NxLongpressPreference extends DialogPreference implements
     public NxLongpressPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mResolver = context.getContentResolver();
+
+        // this was hard coded for NX, but we can use for anything that
+        // takes a longpress timeout configuration. So try to load
+        // the uri from attr, if not, it's NX
+        int uriRes = attrs.getAttributeResourceValue(SETTINGSNS, ATTR_URI, -1);
+        mActionUri = uriRes != -1 ? context.getResources().getString(uriRes) : LONG_PRESS_URI;
+
         mStoredVal = getValueFromProvider();
         mTempVal = mStoredVal - MIN_VAL;
         setDialogLayoutResource(R.layout.nx_longpress_timeout);
@@ -86,7 +97,7 @@ public class NxLongpressPreference extends DialogPreference implements
     }
 
     private int getValueFromProvider() {
-        return Settings.System.getInt(mResolver, LONG_PRESS_URI, MAX_VAL);
+        return Settings.System.getInt(mResolver, mActionUri, MAX_VAL);
     }
 
     @Override
@@ -118,7 +129,7 @@ public class NxLongpressPreference extends DialogPreference implements
             return;
         }
         mStoredVal = mTempVal + MIN_VAL;
-        Settings.System.putInt(mResolver, LONG_PRESS_URI, mStoredVal);
+        Settings.System.putInt(mResolver, mActionUri, mStoredVal);
         Log.i(TAG, "Committed " + String.valueOf(mStoredVal) + " to SettingsProvider");
     }
 
