@@ -249,6 +249,9 @@
 
     <!-- Lockscreen battery ring -->
     <string name="battery_around_lockscreen_ring">Battery around unlock ring</string>
+    <string name="lockscreen_appearance_title">Appearance</string>
+    <string name="hide_search_button_title">Hide search button</string>
+    <string name="hide_camera_button_title">Hide camera button</string>
 
     <!-- statusbar double tap action -->
     <string name="eos_statusbar_doubletap_title">Double tap action</string>

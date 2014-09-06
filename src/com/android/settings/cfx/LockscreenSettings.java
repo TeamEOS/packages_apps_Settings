@@ -28,8 +28,15 @@ public class LockscreenSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
     private static final String BATTERY_AROUND_LOCKSCREEN_RING = "battery_around_lockscreen_ring";
+    private static final String HIDE_SEARCH_BUTTON_KEY = "hide_search_button";
+    private static final String HIDE_CAMERA_BUTTON_KEY = "hide_camera_button";
+
+    private static final String HIDE_SEARCH_BUTTON_URI = "eos_navbar_lockscreen_hide_search";
+    private static final String HIDE_CAMERA_BUTTON_URI = "eos_navbar_lockscreen_hide_camera";
 
     private CheckBoxPreference mLockRingBattery;
+    private CheckBoxPreference mHideSearchButton;
+    private CheckBoxPreference mHideCameraButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,20 @@ public class LockscreenSettings extends SettingsPreferenceFragment implements
                     Settings.System.BATTERY_AROUND_LOCKSCREEN_RING, 0) == 1);
             mLockRingBattery.setOnPreferenceChangeListener(this);
         }
+
+        mHideSearchButton = (CheckBoxPreference) findPreference(HIDE_SEARCH_BUTTON_KEY);
+        if (mHideSearchButton != null) {
+            mHideSearchButton.setChecked(Settings.System.getInt(getContentResolver(),
+                    HIDE_SEARCH_BUTTON_URI, 0) == 1);
+            mHideSearchButton.setOnPreferenceChangeListener(this);
+        }
+
+        mHideCameraButton = (CheckBoxPreference) findPreference(HIDE_CAMERA_BUTTON_KEY);
+        if (mHideCameraButton != null) {
+            mHideCameraButton.setChecked(Settings.System.getInt(getContentResolver(),
+                    HIDE_CAMERA_BUTTON_URI, 0) == 1);
+            mHideCameraButton.setOnPreferenceChangeListener(this);
+        }
     }
 
     @Override
@@ -49,6 +70,14 @@ public class LockscreenSettings extends SettingsPreferenceFragment implements
         if (preference == mLockRingBattery) {
             return Settings.System.putInt(getContentResolver(),
                     Settings.System.BATTERY_AROUND_LOCKSCREEN_RING,
+                    ((Boolean) newValue).booleanValue() ? 1 : 0);
+        } else if (preference == mHideSearchButton) {
+            return Settings.System.putInt(getContentResolver(),
+                    HIDE_SEARCH_BUTTON_URI,
+                    ((Boolean) newValue).booleanValue() ? 1 : 0);
+        } else if (preference == mHideCameraButton) {
+            return Settings.System.putInt(getContentResolver(),
+                    HIDE_CAMERA_BUTTON_URI,
                     ((Boolean) newValue).booleanValue() ? 1 : 0);
         }
         return false;
