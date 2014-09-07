@@ -22,6 +22,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -32,11 +33,14 @@ import com.android.settings.R;
 public class NavigationSettings extends ActionSettings implements
         Preference.OnPreferenceChangeListener {
     private static final String NAVBAR_SIZE = "cfx_interface_navbar_size";
+    private static final String KEY_FORCE_SHOW_MENU = "eos_softkey_persist_menu";
+    private static final String URI_FORCE_SHOW_MENU = "eos_navbar_force_show_menu_button";
 
     ContentResolver mResolver;
     Context mContext;
 
     private ListPreference mNavbarSize;
+    private CheckBoxPreference mShowMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,11 @@ public class NavigationSettings extends ActionSettings implements
         mNavbarSize.setOnPreferenceChangeListener(this);
         updateSizeSummary();
 
+        mShowMenu = (CheckBoxPreference) findPreference(KEY_FORCE_SHOW_MENU);
+        if (mShowMenu != null) {
+            mShowMenu.setChecked(Settings.System.getInt(mResolver, URI_FORCE_SHOW_MENU, 0) == 1);
+            mShowMenu.setOnPreferenceChangeListener(this);
+        }
         onPreferenceScreenLoaded();
     }
 
@@ -71,6 +80,10 @@ public class NavigationSettings extends ActionSettings implements
                 }
             }, 250);
             return true;
+        } else if (preference.equals(mShowMenu)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            return Settings.System.putInt(mResolver,
+                    URI_FORCE_SHOW_MENU, enabled ? 1 : 0);
         }
         return false;
     }

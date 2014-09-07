@@ -155,6 +155,8 @@
     <string name="eos_softkey_menu_dt_observed_uri">systemui_softkey_dt_menu</string>
     <string name="eos_softkey_longpress_timeout_uri">eos_softkey_longpress_timeout</string>
     <string name="eos_softkey_doubletap_title">Double tap</string>
+    <string name="eos_softkey_persist_menu_title">Force show menu key</string>
+    <string name="eos_softkey_persist_menu_summary">Menu key always shows, except in lockscreen</string>
 
     <!-- NX -->
     <string name="eos_nx_interface">NX Gesture Interface</string>

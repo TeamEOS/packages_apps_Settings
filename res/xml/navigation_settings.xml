@@ -39,6 +39,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="eos_systemui_navbar_force_show_menu"
+        android:title="@string/cfx_softkey_menu" >
+        <CheckBoxPreference
+            android:key="eos_softkey_persist_menu"
+            android:title="@string/eos_softkey_persist_menu_title"
+            android:summary="@string/eos_softkey_persist_menu_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="eos_softkey_doubletap_category"
         android:title="@string/eos_softkey_doubletap_title" >
 
