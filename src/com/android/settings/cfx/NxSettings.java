@@ -1,57 +1,53 @@
+/*
+ * Copyright (C) 2014 TeamEos
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.android.settings.cfx;
 
 import java.util.ArrayList;
 
 import com.android.settings.R;
-import com.android.settings.Utils;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
-import android.database.ContentObserver;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.provider.Settings;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Switch;
 
 public class NxSettings extends ActionSettings implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = NxSettings.class.getSimpleName();
     private static final String NX_TRAILS_ENABLE_KEY = "eos_nx_trails_enable";
-    private static final String NX_ENABLE_URI = "eos_nx_enabled";
 
     Context mContext;
-
-    private Switch mActionBarSwitch;
-    private NxEnabler mNxEnabler;
-    private ViewGroup mPrefsContainer;
-    private View mDisabledText;
 
     CheckBoxPreference mNxTrailsEnable;
     CheckBoxPreference mShowLogo;
     CheckBoxPreference mAnimateLogo;
 
-    private ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            updateEnabledState();
-        }
-    };
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.nx_settings);
+
+        ActionBar bar = getActivity().getActionBar();
+        if (bar != null) {
+            bar.setTitle(R.string.eos_nx_interface);
+        }
 
         mContext = (Context) getActivity();
 
@@ -74,79 +70,6 @@ public class NxSettings extends ActionSettings implements
         appearance.removePreference(mNxTrailsEnable); // disable trails for now
 
         onPreferenceScreenLoaded();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle icicle) {
-        Activity activity = getActivity();
-        mActionBarSwitch = new Switch(activity);
-
-        if (activity instanceof PreferenceActivity) {
-            PreferenceActivity preferenceActivity = (PreferenceActivity) activity;
-            if (preferenceActivity.onIsHidingHeaders() || preferenceActivity.onIsMultiPane()) {
-                final int padding = activity.getResources().getDimensionPixelSize(
-                        R.dimen.action_bar_switch_padding);
-                mActionBarSwitch.setPaddingRelative(0, 0, padding, 0);
-                activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
-                        ActionBar.DISPLAY_SHOW_CUSTOM);
-                activity.getActionBar().setCustomView(mActionBarSwitch, new ActionBar.LayoutParams(
-                        ActionBar.LayoutParams.WRAP_CONTENT,
-                        ActionBar.LayoutParams.WRAP_CONTENT,
-                        Gravity.CENTER_VERTICAL | Gravity.END));
-            }
-        }
-
-        mNxEnabler = new NxEnabler(activity, mActionBarSwitch);
-        super.onActivityCreated(icicle);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onDestroyView() {
-        getActivity().getActionBar().setCustomView(null);
-        super.onDestroyView();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.nx_fragment, container, false);
-        mPrefsContainer = (ViewGroup) v.findViewById(R.id.prefs_container);
-        mDisabledText = v.findViewById(R.id.disabled_text);
-
-        View prefs = super.onCreateView(inflater, mPrefsContainer, savedInstanceState);
-        mPrefsContainer.addView(prefs);
-
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mNxEnabler != null) {
-            mNxEnabler.resume();
-        }
-        getActivity().invalidateOptionsMenu();
-        getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(NX_ENABLE_URI),
-                true, mSettingsObserver);
-        updateEnabledState();
-
-        // If running on a phone, remove padding around container
-        // and the preference listview
-        if (!Utils.isTablet(getActivity())) {
-            mPrefsContainer.setPadding(0, 0, 0, 0);
-            getListView().setPadding(0, 0, 0, 0);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mNxEnabler != null) {
-            mNxEnabler.pause();
-        }
-        getContentResolver().unregisterContentObserver(mSettingsObserver);
     }
 
     @Override
@@ -193,13 +116,5 @@ public class NxSettings extends ActionSettings implements
         for (ActionPreference pref : actionPrefs) {
             pref.setEnabled(moreThanOne);
         }
-    }
-
-    private void updateEnabledState() {
-        boolean enabled = Settings.System.getInt(getContentResolver(),
-                NX_ENABLE_URI, 0) != 0;
-        mPrefsContainer.setVisibility(enabled ? View.VISIBLE : View.GONE);
-        mDisabledText.setVisibility(enabled ? View.GONE : View.VISIBLE);
-        if (enabled) onActionPolicyEnforced(mPrefHolder);
     }
 }

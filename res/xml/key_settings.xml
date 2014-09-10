@@ -37,6 +37,14 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="interface_navigation"
+        android:title="@string/navigationbar_settings_title" >
+        <CheckBoxPreference
+            android:key="interface_force_navbar"
+            android:title="@string/cfx_interface_force_navbar_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="back_key"
         android:title="@string/hardware_keys_back_key_title" >
 

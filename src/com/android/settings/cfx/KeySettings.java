@@ -1,3 +1,4 @@
+
 package com.android.settings.cfx;
 
 import org.codefirex.utils.CFXUtils;
@@ -6,7 +7,9 @@ import org.cyanogenmod.hardware.KeyDisabler;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -21,12 +24,13 @@ import com.android.settings.Utils;
 import com.android.settings.cyanogenmod.ButtonBacklightBrightness;
 
 public class KeySettings extends ActionSettings implements
-		Preference.OnPreferenceChangeListener {
-	private static final String TAG = KeySettings.class.getSimpleName();
+        Preference.OnPreferenceChangeListener {
+    private static final String TAG = KeySettings.class.getSimpleName();
 
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
     private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
     private static final String KEY_VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
+    private static final String NAVBAR_FORCE = "interface_force_navbar";
 
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_HOME = "home_key";
@@ -45,6 +49,7 @@ public class KeySettings extends ActionSettings implements
 
     private ListPreference mVolumeKeyCursorControl;
     private CheckBoxPreference mSwapVolumeButtons;
+    private CheckBoxPreference mNavForce;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,19 @@ public class KeySettings extends ActionSettings implements
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         final boolean hasHardKeys = CFXUtils.isCapKeyDevice(getActivity());
+
+        mNavForce = (CheckBoxPreference) prefScreen.findPreference(NAVBAR_FORCE);
+        if (hasHardKeys) {
+            boolean navBarEnabled = isForcedNavbar();
+            mNavForce.setChecked(navBarEnabled);
+            mNavForce.setSummary(getForcedNavbarSummary(navBarEnabled));
+            mNavForce.setOnPreferenceChangeListener(this);
+        } else {
+            PreferenceCategory navCat = (PreferenceCategory) prefScreen
+                    .findPreference("interface_navigation");
+            prefScreen.removePreference(navCat);
+            mNavForce = null;
+        }
 
         final int deviceKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
@@ -74,11 +92,16 @@ public class KeySettings extends ActionSettings implements
         final PreferenceCategory appSwitchCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
 
-		if (!hasHardKeys) prefScreen.removePreference(backCategory);
-        if (!hasHomeKey) prefScreen.removePreference(homeCategory);
-        if (!hasMenuKey) prefScreen.removePreference(menuCategory);
-        if (!hasAppSwitchKey) prefScreen.removePreference(appSwitchCategory);
-        if (!hasAssistKey) prefScreen.removePreference(assistCategory);
+        if (!hasHardKeys)
+            prefScreen.removePreference(backCategory);
+        if (!hasHomeKey)
+            prefScreen.removePreference(homeCategory);
+        if (!hasMenuKey)
+            prefScreen.removePreference(menuCategory);
+        if (!hasAppSwitchKey)
+            prefScreen.removePreference(appSwitchCategory);
+        if (!hasAssistKey)
+            prefScreen.removePreference(assistCategory);
 
         final PreferenceCategory volumeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
@@ -88,23 +111,40 @@ public class KeySettings extends ActionSettings implements
                     Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0);
             mSwapVolumeButtons = (CheckBoxPreference)
                     prefScreen.findPreference(KEY_SWAP_VOLUME_BUTTONS);
-           mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
-           int cursorControlAction = Settings.System.getInt(resolver,
+            mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
+            int cursorControlAction = Settings.System.getInt(resolver,
                     Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0);
-           mVolumeKeyCursorControl = initActionList(KEY_VOLUME_KEY_CURSOR_CONTROL,
+            mVolumeKeyCursorControl = initActionList(KEY_VOLUME_KEY_CURSOR_CONTROL,
                     cursorControlAction);
         } else {
-           prefScreen.removePreference(volumeCategory);
+            prefScreen.removePreference(volumeCategory);
         }
 
         final ButtonBacklightBrightness backlight =
-            (ButtonBacklightBrightness) findPreference(KEY_BUTTON_BACKLIGHT);
+                (ButtonBacklightBrightness) findPreference(KEY_BUTTON_BACKLIGHT);
         if (!backlight.isButtonSupported() && !backlight.isKeyboardSupported()) {
             prefScreen.removePreference(backlight);
         }
 
-        if (isKeyDisablerSupported()) updateDisableNavkeysOption();
-        onPreferenceScreenLoaded();        
+        if (hasHardKeys)
+            updateDisableNavkeysOption();
+        onPreferenceScreenLoaded();
+    }
+
+    private boolean isForcedNavbar() {
+        return Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.DEV_FORCE_SHOW_NAVBAR, 0,
+                UserHandle.USER_CURRENT) != 0;
+    }
+
+    private String getForcedNavbarSummary(boolean barShowing) {
+        final Resources res = getResources();
+        if (!isKeyDisablerSupported()) {
+            return res.getString(R.string.eos_key_disabler_unsupported);
+        } else {
+            return res.getString(barShowing ? R.string.eos_key_disabler_active
+                    : R.string.eos_key_disabler_off);
+        }
     }
 
     private static void writeDisableNavkeysOption(Context context, boolean enabled) {
@@ -137,8 +177,7 @@ public class KeySettings extends ActionSettings implements
     }
 
     private void updateDisableNavkeysOption() {
-        boolean enabled = Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.DEV_FORCE_SHOW_NAVBAR, 0) != 0;
+        boolean enabled = isForcedNavbar();
 
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
@@ -197,24 +236,32 @@ public class KeySettings extends ActionSettings implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-		if (preference == mSwapVolumeButtons) {
+        if (preference == mSwapVolumeButtons) {
             int value = mSwapVolumeButtons.isChecked()
                     ? (Utils.isTablet(getActivity()) ? 2 : 1) : 0;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, value);
-		}
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-	@Override
-	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		if (preference == mVolumeKeyCursorControl) {
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mVolumeKeyCursorControl) {
             handleActionListChange(mVolumeKeyCursorControl, newValue,
                     Settings.System.VOLUME_KEY_CURSOR_CONTROL);
             return true;
-		}
-		return false;
-	}
+        } else if (preference.equals(mNavForce)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putBoolean(getContentResolver(),
+                    Settings.System.DEV_FORCE_SHOW_NAVBAR, enabled);
+            updateDisableNavkeysOption();
+            restoreKeyDisabler(getActivity());
+            mNavForce.setSummary(getForcedNavbarSummary(enabled));
+            return true;
+        }
+        return false;
+    }
 
     private ListPreference initActionList(String key, int value) {
         ListPreference list = (ListPreference) getPreferenceScreen().findPreference(key);

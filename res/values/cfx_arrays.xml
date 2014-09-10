@@ -125,4 +125,25 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+
+    <string-array name="systemui_navbar_mode_entries">
+        <item>Navigation bar</item>
+        <item>NX Gesture Interface</item>
+    </string-array>
+
+    <string-array name="systemui_navbar_mode_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="systemui_navbar_settings_fragments">
+        <item>com.android.settings.cfx.AospNavbarSettings</item>
+        <item>com.android.settings.cfx.NxSettings</item>
+    </string-array>
+
+    <string-array name="systemui_navbar_mode_settings">
+        <item>Navigation bar settings</item>
+        <item>NX settings</item>
+    </string-array>
+
 </resources>

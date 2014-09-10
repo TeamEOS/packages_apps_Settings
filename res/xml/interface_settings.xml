@@ -25,34 +25,18 @@
         android:summary="@string/quick_settings_panel_summary"
         android:title="@string/quick_settings_panel_title" />
     <Preference
-            android:key="heads_up_enabled"
-            android:fragment="com.android.settings.headsup.HeadsUpSettings"
-            android:title="@string/category_heads_up" />
+        android:key="heads_up_enabled"
+        android:fragment="com.android.settings.headsup.HeadsUpSettings"
+        android:title="@string/category_heads_up" />
     <PreferenceScreen
         android:fragment="com.android.settings.cfx.StatusbarSettings"
         android:key="statusbar_settings"
         android:summary="@string/statusbar_settings_summary"
         android:title="@string/statusbar_settings_title" />
-
-    <PreferenceCategory
-        android:key="interface_navigation"
-        android:title="@string/navigationbar_settings_title" >
-        <Preference
-            android:key="interface_force_nav_note"
-            style="?android:preferenceInformationStyle"
-            android:selectable="false"
-            android:summary="@string/cfx_interface_force_navbar_summary"
-            android:title="@string/dynamic_tiles_note_title" />
-
-        <CheckBoxPreference
-            android:key="interface_force_navbar"
-            android:title="@string/cfx_interface_force_navbar_title" />
-
-        <PreferenceScreen
-            android:fragment="com.android.settings.cfx.NavigationSettings"
-            android:key="navigation_settings"
-            android:summary="@string/navigationbar_settings_summary"
-            android:title="@string/navigationbar_settings_title" />
-    </PreferenceCategory>
+    <PreferenceScreen
+        android:fragment="com.android.settings.cfx.NavigationSettings"
+        android:key="navigation_settings"
+        android:summary="@string/navigationbar_settings_summary"
+        android:title="@string/navigationbar_settings_title" />
 
 </PreferenceScreen>

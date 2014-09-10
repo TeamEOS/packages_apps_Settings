@@ -60,10 +60,11 @@
     <string name="pulse_speed_very_slow">Very slow</string>
 
     <!-- Navigation Bar -->
-    <string name="cfx_interface_navbar_size_title">Bar size</string>
-    <string name="cfx_systemui_navigation_bar_height">Height</string>
-    <string name="navigationbar_settings_title">Navigation bar</string>
-    <string name="navigationbar_settings_summary">Customize bar and soft key style and behavior</string>
+    <string name="eos_navbar_size">Bar size</string>
+    <string name="eos_navbar_mode">Navigation mode</string>
+    <string name="eos_aosp_navigation_bar">Navigation bar</string>
+    <string name="navigationbar_settings_title">Navigation</string>
+    <string name="navigationbar_settings_summary">Customize navigation style and behavior</string>
 
     <!-- Power menu enable disable -->
     <string name="power_menu_title">Power menu</string>
@@ -131,7 +132,7 @@
     <string name="cfx_softkey_settings_summary">Set long press actions</string>
     <string name="cfx_softkey_style_summary">Configure softkey and key glow appearance</string>
     <string name="cfx_style_navbar_softkey">Navigation bar and Softkeys</string>
-    <string name="cfx_softkey_longpress_title">Long press</string>
+    <string name="cfx_softkey_longpress_title">Long press actions</string>
     <string name="cfx_softkey_longpress_summary">Set long press action</string>
     <string name="cfx_softkey_key_color_title">Key colors</string>
     <string name="cfx_softkey_key_color_summary">Select keys to apply color to</string>
@@ -154,7 +155,7 @@
     <string name="eos_softkey_recent_dt_observed_uri">systemui_softkey_dt_recent</string>
     <string name="eos_softkey_menu_dt_observed_uri">systemui_softkey_dt_menu</string>
     <string name="eos_softkey_longpress_timeout_uri">eos_softkey_longpress_timeout</string>
-    <string name="eos_softkey_doubletap_title">Double tap</string>
+    <string name="eos_softkey_doubletap_title">Double tap actions</string>
     <string name="eos_softkey_persist_menu_title">Force show menu key</string>
     <string name="eos_softkey_persist_menu_summary">Menu key always shows, except in lockscreen</string>
 
