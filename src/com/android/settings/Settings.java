@@ -76,6 +76,7 @@ import com.android.settings.bluetooth.BluetoothEnabler;
 import com.android.settings.bluetooth.BluetoothSettings;
 import com.android.settings.cfx.InterfaceSettings;
 import com.android.settings.cfx.KeySettings;
+import com.android.settings.cfx.LockscreenSettings;
 import com.android.settings.deviceinfo.Memory;
 import com.android.settings.deviceinfo.UsbSettings;
 import com.android.settings.fuelgauge.PowerUsageSummary;
@@ -366,7 +367,8 @@ public class Settings extends PreferenceActivity
         ApnSettings.class.getName(),
         HomeSettings.class.getName(),
         KeySettings.class.getName(),
-        InterfaceSettings.class.getName()
+        InterfaceSettings.class.getName(),
+        LockscreenSettings.class.getName()
     };
 
     @Override
