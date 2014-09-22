@@ -44,12 +44,6 @@
         android:entries="@array/select_runtime_titles"
         android:entryValues="@array/select_runtime_values" />
 
-    <CheckBoxPreference
-        android:key="advanced_reboot"
-        android:title="@string/advanced_reboot_title"
-        android:summary="@string/advanced_reboot_summary"
-        android:defaultValue="true" />
-
     <ListPreference
         android:key="hdcp_checking"
         android:title="@string/hdcp_checking_title"

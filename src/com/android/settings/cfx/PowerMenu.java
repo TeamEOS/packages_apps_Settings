@@ -30,11 +30,31 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
 public class PowerMenu extends SettingsPreferenceFragment {
+    CheckBoxPreference mRebootAdvanced;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-	addPreferencesFromResource(R.xml.power_menu_settings);
+        addPreferencesFromResource(R.xml.power_menu_settings);
+
+        mRebootAdvanced = (CheckBoxPreference) findPreference(Settings.Secure.ADVANCED_REBOOT);
+        mRebootAdvanced
+                .setChecked(Settings.Secure.getInt(getActivity()
+                        .getContentResolver(), Settings.Secure.ADVANCED_REBOOT,
+                        0) == 1);
+        mRebootAdvanced
+                .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                    @Override
+                    public boolean onPreferenceChange(Preference preference,
+                            Object newValue) {
+                        Settings.Secure.putInt(getActivity()
+                                .getContentResolver(),
+                                Settings.Secure.ADVANCED_REBOOT,
+                                ((Boolean) newValue).booleanValue() ? 1 : 0);
+                        return true;
+                    }
+                });
     }
 }
