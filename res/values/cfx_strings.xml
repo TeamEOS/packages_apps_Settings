@@ -256,4 +256,8 @@
     <string name="system_power_crt_mode_vertical">Portrait vertical</string>
     <string name="system_power_crt_mode_both">Orientation dependent</string>
 
+    <!-- Updater -->
+    <string name="eos_system_update_menu">org.teameos.updater.UpdatesSettings</string>
+    <string name="eos_system_update">org.teameos.updater</string>
+
 </resources>
