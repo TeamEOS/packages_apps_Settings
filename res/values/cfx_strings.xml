@@ -255,6 +255,8 @@
     <string name="system_power_crt_mode_horizontal">Portrait horizontal</string>
     <string name="system_power_crt_mode_vertical">Portrait vertical</string>
     <string name="system_power_crt_mode_both">Orientation dependent</string>
+    <string name="display_chromecast_mirror_title">Chromecast mirror</string>
+    <string name="display_chromecast_mirror_reboot_message">A reboot is required to apply settings</string>
 
     <!-- Updater -->
     <string name="eos_system_update_menu">org.teameos.updater.UpdatesSettings</string>

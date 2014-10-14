@@ -58,6 +58,10 @@
             android:summary="@string/summary_font_size"
             android:title="@string/title_font_size" />
 
+        <CheckBoxPreference
+            android:key="chromecast_mirror"
+            android:title="@string/display_chromecast_mirror_title"/>
+
         <PreferenceScreen
             android:fragment="com.android.settings.wfd.WifiDisplaySettings"
             android:key="wifi_display"

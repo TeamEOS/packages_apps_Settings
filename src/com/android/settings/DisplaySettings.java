@@ -20,17 +20,22 @@ package com.android.settings;
 import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
 
 import android.app.ActivityManagerNative;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -52,6 +57,7 @@ import org.cyanogenmod.hardware.ColorEnhancement;
 import org.cyanogenmod.hardware.SunlightEnhancement;
 import org.cyanogenmod.hardware.TapToWake;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class DisplaySettings extends SettingsPreferenceFragment implements
@@ -82,7 +88,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_DISPLAY_GAMMA = "gamma_tuning";
     private static final String KEY_SCREEN_COLOR_SETTINGS = "screencolor_settings";
 
+    private static final String KEY_CHROMECAST_MIRROR = "chromecast_mirror";
+
+    /** empty file used as flag for init.d to check **/
+    private static final String FLAG_CHROMECAST_MIRROR = "chromecast_enabled";
+
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
+    private static final int DLG_REBOOT_DEVICE = 2;
 
     private CheckBoxPreference mAccelerometer;
     private WarnedListPreference mFontSizePref;
@@ -102,6 +114,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private Preference mScreenSaverPreference;
 
     private CheckBoxPreference mSunlightEnhancement;
+    private CheckBoxPreference mChromecastMirror;
 
     private final RotationPolicy.RotationPolicyListener mRotationPolicyListener =
             new RotationPolicy.RotationPolicyListener() {
@@ -233,6 +246,18 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 mCrtMode.setOnPreferenceChangeListener(this);
             } else {
                 getPreferenceScreen().removePreference(mCrtMode);
+            }
+        }
+
+        mChromecastMirror = (CheckBoxPreference) findPreference(KEY_CHROMECAST_MIRROR);
+        if (mChromecastMirror != null) {
+            if (!isChromecastMirrorSupported()) {
+                PreferenceCategory cat = (PreferenceCategory) findPreference(CATEGORY_DISPLAY);
+                cat.removePreference(mChromecastMirror);
+                mChromecastMirror = null;
+            } else {
+                mChromecastMirror.setChecked(isFlagEnabled(FLAG_CHROMECAST_MIRROR));
+                mChromecastMirror.setOnPreferenceChangeListener(this);
             }
         }
     }
@@ -385,6 +410,25 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                         }
                     });
         }
+        if (dialogId == DLG_REBOOT_DEVICE) {
+            final Context context = getActivity();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(getString(R.string.display_chromecast_mirror_reboot_message));
+            builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    PowerManager pm = (PowerManager)
+                            context.getSystemService(Context.POWER_SERVICE);
+                    pm.reboot(null);
+                }
+            });
+            builder.setNegativeButton(android.R.string.cancel, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            return builder.create();
+        }
         return null;
     }
 
@@ -465,6 +509,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     Settings.System.PROXIMITY_ON_WAKE,
                     ((Boolean) objValue).booleanValue() ? 1 : 0);
         }
+        if (KEY_CHROMECAST_MIRROR.equals(key)) {
+            boolean enabled = ((Boolean) objValue).booleanValue();
+            setFlagEnabled(FLAG_CHROMECAST_MIRROR, enabled);
+            showDialog(DLG_REBOOT_DEVICE);
+        }
         return true;
     }
 
@@ -479,6 +528,66 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             }
         }
         return false;
+    }
+
+    /**
+     * Two conditions must be met for this feature to be available. 1: WiFi
+     * display must be enabled. 2: The system property
+     * "ro.enable.chromecast.mirror" must be set true
+     * 
+     * @return true if Chromecast mirror is supported, false if not
+     */
+    private boolean isChromecastMirrorSupported() {
+        return getResources().getBoolean(com.android.internal.R.bool.config_enableWifiDisplay) &&
+                SystemProperties.getBoolean("ro.enable.chromecast.mirror", false);
+    }
+
+    /**
+     * create flag directory in Settings data folder
+     * @return
+     */
+    private String checkAndGetFlagDir() {
+        File dir = getActivity().getDir("flags", Context.MODE_PRIVATE);
+        boolean isDir = dir.mkdir() || dir.isDirectory();
+        return dir.getAbsolutePath();
+    }
+
+    /**
+     * 
+     * @param flag Name of flag in Settings data directory "/flag" folder to get as a file
+     * @return a Flag object named with param
+     */
+    private File getFlag(String flag) {
+        return new File(checkAndGetFlagDir() + File.separator + flag);
+    }
+
+    /**
+     * Check if a file exists in Settings flag directory
+     * 
+     * @param flag Name of file to check for
+     * @return true if file exists, false if not
+     */
+    private boolean isFlagEnabled(String flag) {
+        return getFlag(flag).exists();
+    }
+
+    /**
+     * 
+     * @param flag Name of flag to create or delete
+     * @param enabled create or delete flag based on preference state
+     */
+    private void setFlagEnabled(String flag, boolean enabled) {
+        try {
+            File f = getFlag(flag);
+            if (enabled) {
+                f.createNewFile();
+                return;
+            } else {
+                f.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
