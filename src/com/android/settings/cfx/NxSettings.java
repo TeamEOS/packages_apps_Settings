@@ -38,6 +38,7 @@ public class NxSettings extends ActionSettings implements
     CheckBoxPreference mNxTrailsEnable;
     CheckBoxPreference mShowLogo;
     CheckBoxPreference mAnimateLogo;
+    CheckBoxPreference mShowPulse;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,11 @@ public class NxSettings extends ActionSettings implements
                 "nx_logo_animates", false));
         mAnimateLogo.setOnPreferenceChangeListener(this);
 
+        mShowPulse = (CheckBoxPreference) findPreference("eos_nx_show_pulse");
+        mShowPulse.setChecked(Settings.System.getBoolean(getContentResolver(),
+                "eos_nx_pulse", false));
+        mShowPulse.setOnPreferenceChangeListener(this);
+
         PreferenceCategory appearance = (PreferenceCategory) findPreference("eos_nx_appearance");
         appearance.removePreference(mNxTrailsEnable); // disable trails for now
 
@@ -88,6 +94,11 @@ public class NxSettings extends ActionSettings implements
             boolean enabled = ((Boolean) newValue).booleanValue();
             Settings.System.putBoolean(getContentResolver(),
                     "nx_logo_animates", enabled);
+            return true;
+        } else if (preference.equals(mShowPulse)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putBoolean(getContentResolver(),
+                    "eos_nx_pulse", enabled);
             return true;
         }
         return false;

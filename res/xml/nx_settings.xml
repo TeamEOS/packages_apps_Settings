@@ -135,6 +135,11 @@
         <CheckBoxPreference
             android:key="eos_nx_trails_enable"
             android:title="@string/eos_nx_trails_enable_title" />
+
+         <CheckBoxPreference
+            android:key="eos_nx_show_pulse"
+            android:title="@string/eos_nx_show_pulse_title"
+            android:summary="@string/eos_nx_show_pulse_summary" />
      </PreferenceCategory>
 
     <PreferenceCategory
