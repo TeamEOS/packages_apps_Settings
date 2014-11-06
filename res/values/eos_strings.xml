@@ -52,4 +52,9 @@
     <string name="expanded_desktop_style">Expanded desktop style</string>
     <string name="expanded_desktop_style_description">Choose a default expanded desktop style</string>
     <string name="expanded_desktop_title">Expanded desktop options</string>
+
+    <!-- About phone screen,  Mod Version -->
+    <string name="mod_version">Eos version</string>
+    <string name="mod_version_default">Unknown</string>
+
 </resources>
