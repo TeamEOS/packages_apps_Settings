@@ -168,7 +168,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             removePreference(KEY_TAP_TO_WAKE);
         }
 
-        if (RotationPolicy.isRotationLockToggleVisible(activity)) {
+        if (RotationPolicy.isRotationSupported(activity)) {
             mDisplayRotationPreference = (PreferenceScreen) findPreference(KEY_DISPLAY_ROTATION);
         } else {
             removePreference(KEY_DISPLAY_ROTATION);
