@@ -92,6 +92,13 @@
                 android:icon="@drawable/ic_settings_home"
                 />
 
+        <!-- Navigation bar -->
+        <dashboard-tile
+                android:id="@+id/navigation_bar_settings"
+                android:title="@string/navigationbar_settings_title"
+                android:fragment="com.android.settings.eos.NavigationSettings"
+                android:icon="@drawable/ic_settings_navigation"
+                />
 
     </dashboard-category>
 
@@ -103,11 +110,9 @@
         <dashboard-tile
                 android:id="@+id/button_settings"
                 android:title="@string/button_pref_title"
-                android:fragment="com.android.settings.ButtonSettings"
+                android:fragment="com.android.settings.eos.ButtonSettings"
                 android:icon="@drawable/ic_settings_buttons"
                 />
-
-
 
         <!-- Display -->
         <dashboard-tile

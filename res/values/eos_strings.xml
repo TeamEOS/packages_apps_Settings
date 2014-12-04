@@ -15,7 +15,148 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- misc -->
+    <string name="info_pref_note_title">Note</string>
 
+    <!-- eos settings headers  -->
+    <string name="interface_settings_title">Interface</string>
+
+    <!-- Navigation Bar -->
+    <string name="eos_navbar_size">Bar size</string>
+    <string name="eos_navbar_mode">Navigation mode</string>
+    <string name="eos_aosp_navigation_bar">Navigation bar</string>
+    <string name="navigationbar_settings_title">Navigation</string>
+    <string name="navigationbar_settings_summary">Customize navigation style and behavior</string>
+
+    <!-- Actions dialog and default task values set in ActionPreference xml-->
+    <string name="action_entry_default_action">Default settings</string>
+    <string name="action_entry_select_app">Select Application</string>
+    <string name="action_entry_quick_contact">Quick contact</string>
+
+    <string name="action_value_default_action">default</string>
+    <string name="action_value_select_app">app</string>
+    <string name="action_value_quick_contact">quick_contact</string>
+    <string name="action_value_back">task_back</string>
+    <string name="action_value_home">task_home</string>
+    <string name="action_value_search_assist">task_assist</string>
+    <string name="action_value_recent_apps">task_recents</string>
+    <string name="action_value_voice_search">task_voice_search</string>
+    <string name="action_value_menu">task_menu</string>
+
+    <!-- Softkeys -->
+    <string name="eos_interface_navigation">Navigation</string>
+    <string name="eos_interface_navbar">Navigation Bar</string>
+    <string name="eos_interface_navbar_appearance">Navigation Bar Appearance</string>
+    <string name="eos_interface_systemui_mode_title">UI Mode</string>
+    <string name="eos_interface_systemui_mode_capkey_warning">\nNotice:\u0020 You appear to be simulating a capacitive key device. \nUse caution</string>
+    <string name="eos_softkey_settings_title">Softkeys</string>
+    <string name="eos_softkey_settings_summary">Set long press actions</string>
+    <string name="eos_style_navbar_softkey">Navigation bar and Softkeys</string>
+    <string name="eos_softkey_longpress_title">Long press actions</string>
+    <string name="eos_softkey_longpress_summary">Set long press action</string>
+    <string name="eos_softkey_back">Back</string>
+    <string name="eos_softkey_home">Home</string>
+    <string name="eos_softkey_recent">Recent apps</string>
+    <string name="eos_softkey_menu">Menu</string>
+    <string name="eos_softkey_back_observed_uri">systemui_softkey_lp_back</string>
+    <string name="eos_softkey_home_observed_uri">systemui_softkey_lp_home</string>
+    <string name="eos_softkey_recent_observed_uri">systemui_softkey_lp_recent</string>
+    <string name="eos_softkey_menu_observed_uri">systemui_softkey_lp_menu</string>
+    <string name="eos_softkey_back_dt_observed_uri">systemui_softkey_dt_back</string>
+    <string name="eos_softkey_home_dt_observed_uri">systemui_softkey_dt_home</string>
+    <string name="eos_softkey_recent_dt_observed_uri">systemui_softkey_dt_recent</string>
+    <string name="eos_softkey_menu_dt_observed_uri">systemui_softkey_dt_menu</string>
+    <string name="eos_softkey_longpress_timeout_uri">eos_softkey_longpress_timeout</string>
+    <string name="eos_softkey_doubletap_title">Double tap actions</string>
+    <string name="eos_softkey_persist_menu_title">Force show menu key</string>
+    <string name="eos_softkey_persist_menu_summary">Menu key always shows, except in lockscreen</string>
+
+    <!-- NX -->
+    <string name="eos_nx_interface">NX Gesture Interface</string>
+    <string name="eos_nx_enable_title">Enable NX</string>
+    <string name="eos_nx_disabled_notice">Navigation bar becomes a smart, fast, lightweight, and configurable gesture input interface</string>
+    <string name="eos_nx_back_home_policy">Back and Home are required to be set at all times. To change a Back or Home assignment set the desired assignment first</string>
+    <string name="eos_nx_split_bar_policy">When only a right or left action is assigned the action applies to the full bar</string>
+    <string name="eos_nx_def_summary">No action set</string>
+    <string name="eos_nx_swipe_actions">Swipe gestures</string>
+    <string name="eos_nx_tap_actions">Tap gestures</string>
+    <string name="eos_nx_short_swipe_right">Right short swipe</string>
+    <string name="eos_nx_short_swipe_left">Left short swipe</string>
+    <string name="eos_nx_long_swipe_right">Right long swipe</string>
+    <string name="eos_nx_long_swipe_left">Left long swipe</string>
+    <string name="eos_nx_single_tap">Single tap right</string>
+    <string name="eos_nx_double_tap">Double tap right</string>
+    <string name="eos_nx_long_press">Long press right</string>
+    <string name="eos_nx_single_left_tap">Single tap left</string>
+    <string name="eos_nx_double_left_tap">Double tap left</string>
+    <string name="eos_nx_long_left_press">Long press left</string>
+    <string name="long_swipe_portrait_title">Portrait</string>
+    <string name="long_swipe_landscape_title">Landscape</string>
+    <string name="right_swipe_title">Right swipe</string>
+    <string name="left_swipe_title">Left swipe</string>
+    <string name="up_swipe_title">Up swipe</string>
+    <string name="down_swipe_title">Down swipe</string>
+    <string name="long_swipe_reset">Reset</string>
+    <string name="eos_nx_advanced">Advanced</string>
+    <string name="eos_nx_long_swipe_title">Long swipe threshold</string>
+    <string name="eos_nx_long_swipe_summary">Fine tune long swipe thresholds based on a percentage of NX interface width or height</string>
+    <string name="eos_nx_trails_enable_title">Enable gesture trails</string>
+    <string name="eos_nx_appearance">Appearance</string>
+    <string name="eos_nx_show_logo_title">Show NX logo</string>
+    <string name="eos_nx_animate_logo_title">Animate logo</string>
+    <string name="eos_nx_animate_logo_summary">Logo animates on touch events (experimental)</string>
+    <string name="eos_nx_show_pulse_title">Show Pulse</string>
+    <string name="eos_nx_show_pulse_summary">NX shows bar visualization when music plays</string>
+    <string name="eos_nx_longpress_timeout_label_left">Less delay</string>
+    <string name="eos_nx_longpress_timeout_label_right">More delay</string>
+    <string name="eos_nx_longpress_title">Long press delay</string>
+    <string name="eos_nx_longpress_summary">Increase or decrease the time it takes to execute a long press</string>
+
+    <!-- NX action uris -->
+    <string name="nx_short_swipe_right_uri">eos_nx_action_fling_short_right</string>
+    <string name="nx_short_swipe_left_uri">eos_nx_action_fling_short_left</string>
+    <string name="nx_long_swipe_right_uri">eos_nx_action_fling_long_right</string>
+    <string name="nx_long_swipe_left_uri">eos_nx_action_fling_long_left</string>
+    <string name="nx_single_tap_uri">eos_nx_action_single_tap</string>
+    <string name="nx_double_tap_uri">eos_nx_action_double_tap</string>
+    <string name="nx_long_press_uri">eos_nx_action_long_press</string>
+    <string name="nx_single_left_tap_uri">eos_nx_action_single_left_tap</string>
+    <string name="nx_double_left_tap_uri">eos_nx_action_double_left_tap</string>
+    <string name="nx_long_left_press_uri">eos_nx_action_long_left_press</string>
+
+    <!-- Buttons -->
+    <string name="hardware_keys_home_key_title">Home button</string>
+    <string name="hardware_keys_menu_key_title">Menu button</string>
+    <string name="hardware_keys_assist_key_title">Search button</string>
+    <string name="hardware_keys_appswitch_key_title">Recents button</string>
+    <string name="hardware_keys_back_key_title">Back button</string>
+    <string name="hardware_keys_double_tap_summary">Set double tap action</string>
+    <string name="hardware_keys_single_tap_summary">Set single tap action</string>
+    <string name="hardware_keys_single_tap_title">Single tap action</string>
+    <string name="eos_hardkey_back_long_press_uri">input_hardkey_back_longpress</string>
+    <string name="eos_hardkey_back_double_tap_uri">input_hardkey_back_doubletap</string>
+    <string name="eos_hardkey_home_long_press_uri">input_hardkey_home_longpress</string>
+    <string name="eos_hardkey_home_double_tap_uri">input_hardkey_home_doubletap</string>
+    <string name="eos_hardkey_app_switch_long_press_uri">input_hardkey_recent_longpress</string>
+    <string name="eos_hardkey_app_switch_double_tap_uri">input_hardkey_recent_doubletap</string>
+    <string name="eos_hardkey_app_switch_single_tap_uri">input_hardkey_recent_singletap</string>
+    <string name="eos_hardkey_menu_long_press_uri">input_hardkey_menu_longpress</string>
+    <string name="eos_hardkey_menu_double_tap_uri">input_hardkey_menu_doubletap</string>
+    <string name="eos_hardkey_menu_single_tap_uri">input_hardkey_menu_singletap</string>
+    <string name="eos_hardkey_assist_long_press_uri">input_hardkey_assist_longpress</string>
+    <string name="eos_hardkey_assist_double_tap_uri">input_hardkey_assist_doubletap</string>
+    <string name="eos_hardkey_assist_single_tap_uri">input_hardkey_assist_singletap</string>
+
+    <string name="eos_interface_force_navbar_title">Force navigation bar</string>
+    <string name="eos_interface_force_navbar_summary">Hardware navigation keys will be disabled on supported devices</string>
+    <string name="eos_key_disabler_active">Hardware navigation keys are disabled</string>
+    <string name="eos_key_disabler_off">Hardware navigation keys are enabled</string>
+    <string name="eos_key_disabler_unsupported">Hardware key disabler is unsupported</string>
+
+    <!-- statusbar double tap action -->
+    <string name="eos_statusbar_doubletap_title">Double tap action</string>
+    <string name="eos_statusbar_doubletap_summary">Set double tap action</string>
+    <string name="eos_statusbar_doubletap_observed_uri">eos_statusbar_double_tap</string>
     <!-- Updater -->
     <string name="eos_system_update_menu">org.teameos.updater.UpdatesSettings</string>
     <string name="eos_system_update">org.teameos.updater</string>
