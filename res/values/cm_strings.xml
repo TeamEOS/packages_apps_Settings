@@ -43,6 +43,8 @@
     <string name="ring_mode_vibrate">Vibrate</string>
     <string name="ring_mode_mute">Mute</string>
 
+    <string name="ring_mode_unchanged">Unchanged</string>
+
     <!-- Profiles settings  -->
     <string name="profiles_settings_title">Profiles</string>
     <string name="profiles_add">Add</string>
@@ -96,7 +98,9 @@
     <string name="profile_volumeoverrides_title">Volume overrides</string>
     <string name="connection_state_disabled">Disable</string>
     <string name="connection_state_enabled">Enable</string>
-    <string name="volume_override_summary">Set to</string>
+    <string name="volume_override_summary">Set to %1$s/%2$s</string>
+    <string name="volume_override_summary_no_override">Do not override</string>
+    <string name="profile_volume_override_checkbox_label">Override volume</string>
 
     <!-- Menu item for managing profiles -->
     <string name="profile_profiles_manage">Profiles</string>
@@ -158,6 +162,7 @@
     <string name="button_pref_title">Buttons</string>
     <string name="hardware_keys_home_key_title">Home button</string>
     <string name="hardware_keys_menu_key_title">Menu button</string>
+    <string name="hardware_keys_volume_keys_title">Volume buttons</string>
     <string name="hardware_keys_short_press_title">Short press action</string>
     <string name="hardware_keys_long_press_title">Long press action</string>
     <string name="hardware_keys_double_tap_title">Double tap action</string>
@@ -169,6 +174,10 @@
     <string name="hardware_keys_action_in_app_search">In-app search</string>
     <string name="hardware_keys_action_launch_camera">Launch camera</string>
     <string name="hardware_keys_action_sleep">Turn screen off</string>
+    <string name="volbtn_cursor_control_title">Keyboard cursor control</string>
+    <string name="volbtn_cursor_control_off">Disabled</string>
+    <string name="volbtn_cursor_control_on">Volume up/down moves cursor left/right</string>
+    <string name="volbtn_cursor_control_on_reverse">Volume up/down moves cursor right/left</string>
 
     <string name="show_battery_percent_title">Show battery percentage</string>
     <string name="app_security_title">App security</string>
@@ -230,6 +239,7 @@
     <string name="spam_added_title">Added %1$s</string>
     <string name="spam_last_blocked_title">Last blocked %1$s</string>
     <string name="block_notifications_title">Filter notifications</string>
+    <string name="block_notifications_summary">Manage ignored notifications and filters</string>
     <string name="no_filters_title">No filters set</string>
     <string name="app_ops_ignored_count">Denied <xliff:g id="count" example="2 times">%s</xliff:g></string>
 
@@ -247,6 +257,10 @@
 
     <!--- Tap To Wake -->
     <string name="double_tap_to_wake_title">Double-tap to wake</string>
+
+    <!-- Proximity wake -->
+    <string name="proximity_wake_title">Prevent accidental wake-up</string>
+    <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen</string>
 
     <!-- Privacy Settings Header item -->
     <string name="privacy_settings_cyanogenmod_title">Privacy</string>
@@ -278,16 +292,35 @@
     <string name="advanced_reboot_title">Advanced reboot</string>
     <string name="advanced_reboot_summary">When unlocked, include options in the power menu for rebooting into recovery, bootloader or performing a soft reboot</string>
 
+    <!-- Setting checkbox title for Whether to enable Android debugging support on the phone. -->
+    <string name="enable_adb_cm">Android debugging</string>
+    <!-- Setting checkbox summary for Whether to enable Android debugging support on the phone -->
+    <string name="enable_adb_summary_cm">Enable the Android Debug Bridge (adb) interface</string>
+
     <!-- Setting checkbox summary for displaying USB debugging notification -->
     <string name="adb_notify">USB debugging notify</string>
     <string name="adb_notify_summary">Display a notification when USB debugging is connected</string>
 
+    <!-- Android debugging over WiFi -->
+    <string name="adb_over_network">ADB over network</string>
+    <string name="adb_over_network_summary">Enable TCP/IP debugging over network interfaces (Wi\u2011Fi, USB networks). This setting is reset on reboot</string>
+    <!-- Warning for Adb over Network -->
+    <string name="adb_over_network_warning">WARNING: When ADB over network is enabled, your phone is open for intrusions on all connected networks, including GSM data network!\n\nOnly use this feature when you are connected on trusted networks.\n\nDo you really want to enable this function?</string>
+
     <!-- Hostname setting -->
     <string name="device_hostname">Device hostname</string>
 
+    <!-- Development shortcut -->
+    <string name="development_shortcut_title">Development shortcut</string>
+    <string name="development_shortcut_summary">Enable application management shortcuts in recent apps list</string>
+
     <!-- tap-to-sleep -->
     <string name="double_tap_to_sleep_title">Double-tap to sleep</string>
-    <string name="double_tap_to_sleep_summary">Double tap status bar or lock screen slider to put the device to sleep</string>
+    <string name="double_tap_to_sleep_summary">Double tap on the status bar to put the device to sleep</string>
+
+    <!-- Turn on display when power connected; turn off display when power disconnected -->
+    <string name="wake_when_plugged_or_unplugged_title">Wake on plug</string>
+    <string name="wake_when_plugged_or_unplugged_summary">Turn the screen on when connecting or disconnecting a power source</string>
 
     <!-- Kill app long-press back -->
     <string name="kill_app_longpress_back">Kill app back button</string>
@@ -346,4 +379,160 @@
     <string name="notification_light_missed_call_title">Missed call</string>
     <string name="notification_light_voicemail_title">Voicemail</string>
 
+    <!-- Sound & notification > Sound section: Title for the option defining the default notification ringtone. [CHAR LIMIT=30] -->
+    <string name="notification_ringtone_title_cm">Notification tone</string>
+
+    <!-- Whether to display IME switcher notifcation -->
+    <string name="ime_switcher_notify">Selector notification</string>
+    <string name="ime_switcher_notify_summary">Display input method selector notification</string>
+
+    <!-- App ops -->
+    <string name="app_ops_summaries_coarse_location">coarse location</string>
+    <string name="app_ops_summaries_fine_location">fine location</string>
+    <string name="app_ops_summaries_gps">GPS</string>
+    <string name="app_ops_summaries_vibrate">vibrate</string>
+    <string name="app_ops_summaries_read_contacts">read contacts</string>
+    <string name="app_ops_summaries_modify_contacts">modify contacts</string>
+    <string name="app_ops_summaries_read_call_log">read call log</string>
+    <string name="app_ops_summaries_modify_call_log">modify call log</string>
+    <string name="app_ops_summaries_read_calendar">read calendar</string>
+    <string name="app_ops_summaries_modify_calendar">modify calendar</string>
+    <string name="app_ops_summaries_wifi_scan">wi-fi scan</string>
+    <string name="app_ops_summaries_notification">notification</string>
+    <string name="app_ops_summaries_cell_scan">cell scan</string>
+    <string name="app_ops_summaries_call_phone">call phone</string>
+    <string name="app_ops_summaries_read_sms">read SMS</string>
+    <string name="app_ops_summaries_write_sms">write SMS</string>
+    <string name="app_ops_summaries_receive_sms">receive SMS</string>
+    <string name="app_ops_summaries_receive_emergency_sms">receive emergency SMS</string>
+    <string name="app_ops_summaries_receive_mms">receive MMS</string>
+    <string name="app_ops_summaries_receive_wap_push">receive WAP push</string>
+    <string name="app_ops_summaries_send_sms">send SMS</string>
+    <string name="app_ops_summaries_read_icc_sms">read ICC SMS</string>
+    <string name="app_ops_summaries_write_icc_sms">write ICC SMS</string>
+    <string name="app_ops_summaries_modify_settings">modify settings</string>
+    <string name="app_ops_summaries_draw_on_top">draw on top</string>
+    <string name="app_ops_summaries_access_notifications">access notifications</string>
+    <string name="app_ops_summaries_camera">camera</string>
+    <string name="app_ops_summaries_record_audio">record audio</string>
+    <string name="app_ops_summaries_play_audio">play audio</string>
+    <string name="app_ops_summaries_read_clipboard">read clipboard</string>
+    <string name="app_ops_summaries_modify_clipboard">modify clipboard</string>
+    <string name="app_ops_summaries_media_buttons">media buttons</string>
+    <string name="app_ops_summaries_audio_focus">audio focus</string>
+    <string name="app_ops_summaries_master_volume">master volume</string>
+    <string name="app_ops_summaries_voice_volume">voice volume</string>
+    <string name="app_ops_summaries_ring_volume">ring volume</string>
+    <string name="app_ops_summaries_media_volume">media volume</string>
+    <string name="app_ops_summaries_alarm_volume">alarm volume</string>
+    <string name="app_ops_summaries_notification_volume">notification volume</string>
+    <string name="app_ops_summaries_bluetooth_volume">bluetooth volume</string>
+    <string name="app_ops_summaries_keep_awake">keep awake</string>
+    <string name="app_ops_summaries_monitor_location">monitor location</string>
+    <string name="app_ops_summaries_monitor_high_power_location">monitor high power location</string>
+    <string name="app_ops_summaries_get_usage_stats">get app usage stats</string>
+    <string name="app_ops_summaries_mute_unmute_microphone">mute/unmute microphone</string>
+    <string name="app_ops_summaries_toast_window">display toasts</string>
+    <string name="app_ops_summaries_project_media">project media</string>
+    <string name="app_ops_summaries_activate_vpn">activate vpn</string>
+    <string name="app_ops_summaries_wifi_change">wi-fi change</string>
+    <string name="app_ops_summaries_bluetooth_change">bluetooth change</string>
+    <string name="app_ops_summaries_send_mms">send MMS</string>
+    <string name="app_ops_summaries_read_mms">read MMS</string>
+    <string name="app_ops_summaries_write_mms">write MMS</string>
+    <string name="app_ops_summaries_auto_start">auto start</string>
+    <string name="app_ops_summaries_nfc_change">nfc change</string>
+    <string name="app_ops_summaries_delete_sms">delete MMS</string>
+    <string name="app_ops_summaries_delete_mms">delete MMS</string>
+    <string name="app_ops_summaries_delete_contacts">delete contacts</string>
+    <string name="app_ops_summaries_delete_call_log">delete call log</string>
+    <string name="app_ops_summaries_data_change">data change</string>
+
+    <string name="app_ops_labels_location">Location</string>
+    <string name="app_ops_labels_vibrate">Vibrate</string>
+    <string name="app_ops_labels_read_contacts">Read contacts</string>
+    <string name="app_ops_labels_modify_contacts">Modify contacts</string>
+    <string name="app_ops_labels_read_call_log">Read call log</string>
+    <string name="app_ops_labels_modify_call_log">Modify call log</string>
+    <string name="app_ops_labels_read_calendar">Read calendar</string>
+    <string name="app_ops_labels_modify_calendar">Modify calendar</string>
+    <string name="app_ops_labels_notification_toast">Notification/Toast</string>
+    <string name="app_ops_labels_call_phone">Call phone</string>
+    <string name="app_ops_labels_read_sms_db">Read SMS DB</string>
+    <string name="app_ops_labels_write_sms_db">Write SMS DB</string>
+    <string name="app_ops_labels_receive_sms">Receive SMS</string>
+    <string name="app_ops_labels_receive_mms">Receive MMS</string>
+    <string name="app_ops_labels_send_sms">Send SMS</string>
+    <string name="app_ops_labels_modify_settings">Modify settings</string>
+    <string name="app_ops_labels_draw_on_top">Draw on top</string>
+    <string name="app_ops_labels_access_notifications">Access notifications</string>
+    <string name="app_ops_labels_camera">Camera</string>
+    <string name="app_ops_labels_record_audio">Record audio</string>
+    <string name="app_ops_labels_play_audio">Play audio</string>
+    <string name="app_ops_labels_read_clipboard">Read clipboard</string>
+    <string name="app_ops_labels_modify_clipboard">Modify clipboard</string>
+    <string name="app_ops_labels_media_buttons">Media buttons</string>
+    <string name="app_ops_labels_audio_focus">Audio focus</string>
+    <string name="app_ops_labels_master_volume">Master volume</string>
+    <string name="app_ops_labels_voice_volume">Voice volume</string>
+    <string name="app_ops_labels_ring_volume">Ring volume</string>
+    <string name="app_ops_labels_media_volume">Media volume</string>
+    <string name="app_ops_labels_alarm_volume">Alarm volume</string>
+    <string name="app_ops_labels_notification_volume">Notification volume</string>
+    <string name="app_ops_labels_bluetooth_volume">Bluetooth volume</string>
+    <string name="app_ops_labels_keep_awake">Keep awake</string>
+    <string name="app_ops_labels_get_usage_stats">Get app usage stats</string>
+    <string name="app_ops_labels_mute_unmute_microphone">Mute/unmute microphone</string>
+    <string name="app_ops_labels_toast_window">Display toasts</string>
+    <string name="app_ops_labels_project_media">Project media</string>
+    <string name="app_ops_labels_activate_vpn">Activate VPN</string>
+    <string name="app_ops_labels_wifi_change">Wi-Fi change</string>
+    <string name="app_ops_labels_bluetooth_change">Bluetooth change</string>
+    <string name="app_ops_labels_send_mms">Send MMS</string>
+    <string name="app_ops_labels_read_mms">Read MMS</string>
+    <string name="app_ops_labels_write_mms">Write MMS</string>
+    <string name="app_ops_labels_auto_start">Auto start</string>
+    <string name="app_ops_labels_nfc_change">NFC change</string>
+    <string name="app_ops_labels_delete_sms">Delete MMS</string>
+    <string name="app_ops_labels_delete_mms">Delete MMS</string>
+    <string name="app_ops_labels_delete_contacts">Delete contacts</string>
+    <string name="app_ops_labels_delete_call_log">Delete call log</string>
+    <string name="app_ops_labels_data_change">Data change</string>
+
+    <!-- App ops categories -->
+    <string name="app_ops_categories_location">Location</string>
+    <string name="app_ops_categories_personal">Personal</string>
+    <string name="app_ops_categories_messaging">Messaging</string>
+    <string name="app_ops_categories_media">Media</string>
+    <string name="app_ops_categories_device">Device</string>
+    <string name="app_ops_categories_bootup">Bootup</string>
+
+    <string name="ok">OK</string>
+
+    <!-- Profiles -->
+    <string name="profile_menu_delete_title">Delete</string>
+    <string name="profile_menu_triggers_title">Modify triggers</string>
+
+    <string name="profile_action_none">No action</string>
+    <string name="profile_action_disabled">Disable</string>
+    <string name="profile_action_enable">Enable</string>
+
+    <string name="profile_trigger_a2dp_connect">On A2DP connect</string>
+    <string name="profile_trigger_a2dp_disconnect">On A2DP disconnect</string>
+
+    <string name="profile_tabs_wifi">Wi-Fi</string>
+    <string name="profile_tabs_bluetooth">Bluetooth</string>
+    <string name="profile_tabs_nfc">NFC</string>
+
+    <string name="profile_setup_setup_triggers_title">Step 1: Add triggers</string>
+    <string name="profile_setup_setup_triggers_title_config">Modify triggers: <xliff:g id="profile_name">%1$s</xliff:g></string>
+
+    <string name="profile_setup_actions_title">Step 2: Setup actions</string>
+    <string name="profile_setup_actions_title_config">Reconfigure actions</string>
+
+    <string name="no_bluetooth_triggers">No Bluetooth triggers available</string>
+    <string name="no_wifi_triggers">No Wi-Fi triggers available</string>
+
+    <string name="profile_setup_setup_triggers_description">Please select triggers which will activate this profile</string>
+    <string name="profile_setup_actions_description">Now configure what happens when the profile is activated</string>
 </resources>
