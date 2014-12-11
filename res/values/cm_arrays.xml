@@ -88,9 +88,11 @@
         <item>@string/hardware_keys_action_in_app_search</item>
         <item>@string/hardware_keys_action_launch_camera</item>
         <item>@string/hardware_keys_action_sleep</item>
+        <item>@string/hardware_keys_action_last_app</item>
     </string-array>
 
     <string-array name="hardware_keys_action_values" translatable="false">
+        <!-- must match src/com/android/settings/ButtonSettings.java //-->
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -99,6 +101,7 @@
         <item>5</item>
         <item>6</item>
         <item>7</item>
+        <item>8</item>
     </string-array>
 
     <!-- Volume key cursor control -->
@@ -149,20 +152,20 @@
         <item></item>
     </string-array>
 
-    <!--- Sms security limit -->
-         <string-array name="sms_security_check_limit_entries" translatable="false">
-             <item>@string/sms_security_check_limit_default</item>
-             <item>50</item>
-             <item>100</item>
-             <item>200</item>
-         </string-array>
+    <!-- Sms security limit -->
+    <string-array name="sms_security_check_limit_entries" translatable="false">
+        <item>@string/sms_security_check_limit_default</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+    </string-array>
 
-         <string-array name="sms_security_check_limit_values" translatable="false">
-             <item>30</item>
-             <item>50</item>
-             <item>100</item>
-             <item>200</item>
-         </string-array>
+    <string-array name="sms_security_check_limit_values" translatable="false">
+        <item>30</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+    </string-array>
 
     <!-- Values for the notification light pulse spinners -->
     <string-array name="notification_pulse_length_entries" translatable="false">
@@ -261,6 +264,7 @@
         <item>@string/app_ops_summaries_delete_contacts</item>
         <item>@string/app_ops_summaries_delete_call_log</item>
         <item>@string/app_ops_summaries_data_change</item>
+        <item>@string/app_ops_summaries_wake_up</item>
     </string-array>
 
     <string-array name="app_ops_labels_cm" translatable="false">
@@ -324,6 +328,7 @@
         <item>@string/app_ops_labels_delete_contacts</item>
         <item>@string/app_ops_labels_delete_call_log</item>
         <item>@string/app_ops_labels_data_change</item>
+        <item>@string/app_ops_labels_wake_up</item>
     </string-array>
 
     <!-- Names of categories of app ops tabs -->
@@ -370,5 +375,10 @@
         <item>WiFi</item>
         <item>Bluetooth</item>
         <item>NFC</item>
+    </string-array>
+
+    <!-- Gamma calibration descriptors, deliberately empty as string values populated via
+         per-device overlay. Required to build on non-hardware tunable devices -->
+    <string-array name="gamma_descriptors" translatable="false">
     </string-array>
 </resources>

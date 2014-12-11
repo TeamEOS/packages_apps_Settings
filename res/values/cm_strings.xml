@@ -37,7 +37,7 @@
     <string name="ring_mode_unchanged">Unchanged</string>
 
     <!-- Profiles settings  -->
-    <string name="profiles_settings_title">Profiles</string>
+    <string name="profiles_settings_title">System profiles</string>
     <string name="profiles_add">Add</string>
     <string name="profile_menu_delete">Delete</string>
     <string name="profile_settings_title">Profile</string>
@@ -150,7 +150,9 @@
     <string name="toggleWimax">WiMAX</string>
     <string name="toggleNfc">NFC</string>
 
+    <!-- Hardware keys -->
     <string name="button_pref_title">Buttons</string>
+    <string name="hardware_keys_power_key_title">Power button</string>
     <string name="hardware_keys_home_key_title">Home button</string>
     <string name="hardware_keys_menu_key_title">Menu button</string>
     <string name="hardware_keys_volume_keys_title">Volume buttons</string>
@@ -165,10 +167,31 @@
     <string name="hardware_keys_action_in_app_search">In-app search</string>
     <string name="hardware_keys_action_launch_camera">Launch camera</string>
     <string name="hardware_keys_action_sleep">Turn screen off</string>
+    <string name="hardware_keys_action_last_app">Last app</string>
     <string name="volbtn_cursor_control_title">Keyboard cursor control</string>
     <string name="volbtn_cursor_control_off">Disabled</string>
     <string name="volbtn_cursor_control_on">Volume up/down moves cursor left/right</string>
     <string name="volbtn_cursor_control_on_reverse">Volume up/down moves cursor right/left</string>
+    <string name="power_end_call_title">End call</string>
+    <string name="power_end_call_summary">Pressing the power button will end the current call</string>
+    <string name="button_wake_title">Wake up</string>
+    <string name="home_wake_summary">Pressing the home button will wake your device</string>
+    <string name="home_answer_call_title">Answer call</string>
+    <string name="home_answer_call_summary">Pressing the home button will answer the current incoming call</string>
+    <string name="volbtn_wake_device_title">Wake up device</string>
+    <string name="volbtn_wake_device_summary">Pressing either volume button will wake your device</string>
+
+    <!-- Backlight brightness settings screen -->
+    <string name="adaptive_backlight_title">Adaptive backlight</string>
+    <string name="adaptive_backlight_summary">Dynamically adjust the brightness of the display\'s backlight to maximize battery life while maintaining usability</string>
+
+    <!-- Sunlight readability enhancement screen -->
+    <string name="sunlight_enhancement_title">Sunlight enhancement</string>
+    <string name="sunlight_enhancement_summary">Enhance display brightness and readability under bright sunlight</string>
+
+    <!-- Color enhancement settings screen -->
+    <string name="color_enhancement_title">Color enhancement</string>
+    <string name="color_enhancement_summary">Dynamically enhance the color of the display</string>
 
     <string name="show_battery_percent_title">Show battery percentage</string>
     <string name="app_security_title">App security</string>
@@ -185,10 +208,10 @@
     <string name="blacklist_notify">Show notification</string>
     <string name="blacklist_private_numbers_title">Private numbers</string>
     <string name="blacklist_private_numbers_summary_disabled">Don\'t block calls from private numbers</string>
-    <string name="blacklist_private_numbers_summary">Block incoming <xliff:g id="type">%2$s</xliff:g> from private numbers</string>
+    <string name="blacklist_private_numbers_summary">Block incoming <xliff:g id="type">%s</xliff:g> from private numbers</string>
     <string name="blacklist_unknown_numbers_title">Unknown numbers</string>
     <string name="blacklist_unknown_numbers_summary_disabled">Don\'t block calls or messages from numbers not in the contact list</string>
-    <string name="blacklist_unknown_numbers_summary">Block incoming <xliff:g id="type">%2$s</xliff:g> from numbers not in the contact list</string>
+    <string name="blacklist_unknown_numbers_summary">Block incoming <xliff:g id="type">%s</xliff:g> from numbers not in the contact list</string>
     <string name="blacklist_summary_type_calls_only">calls</string>
     <string name="blacklist_summary_type_messages_only">messages</string>
     <string name="blacklist_summary_type_calls_and_messages">calls and messages</string>
@@ -221,6 +244,21 @@
     <string name="pa_login_checking_password">Checking account\u2026</string>
     <string name="pa_login_incorrect_login">Login was incorrect</string>
 
+    <!-- Display : Rotation  -->
+    <string name="display_rotation_title">Rotation</string>
+    <string name="display_rotation_disabled">Disabled</string>
+    <string name="display_rotation_unit">degrees</string>
+    <string name="display_lockscreen_rotation_title">Rotate lock screen</string>
+    <string name="display_rotation_category_title">Rotation modes</string>
+    <string name="display_rotation_0_title">0 degrees</string>
+    <string name="display_rotation_90_title">90 degrees</string>
+    <string name="display_rotation_180_title">180 degrees</string>
+    <string name="display_rotation_270_title">270 degrees</string>
+
+    <!-- Advanced reboot options -->
+    <string name="advanced_reboot_title">Advanced reboot</string>
+    <string name="advanced_reboot_summary">When unlocked, include options in the power menu for rebooting into recovery or bootloader</string>
+
     <!--- Sms security limit -->
     <string name="app_security_title">App security</string>
     <string name="sms_security_check_limit_title">SMS message limit</string>
@@ -232,7 +270,9 @@
     <string name="block_notifications_title">Filter notifications</string>
     <string name="block_notifications_summary">Manage ignored notifications and filters</string>
     <string name="no_filters_title">No filters set</string>
-    <string name="app_ops_ignored_count">Denied <xliff:g id="count" example="2 times">%s</xliff:g></string>
+
+    <!-- CM Updater -->
+    <string name="cmupdate_settings_title">CyanogenMod updates</string>
 
     <!-- About phone screen, Eos version -->
     <string name="mod_version">Eos version</string>
@@ -323,9 +363,10 @@
     <string name="status_bar_title">Status bar</string>
     <string name="status_bar_toggle_brightness">Brightness control</string>
     <string name="status_bar_toggle_brightness_summary">Adjust brightness by sliding across the status bar</string>
-
     <string name="status_bar_quick_qs_pulldown_title">Quick pulldown</string>
     <string name="status_bar_quick_qs_pulldown_summary">Right edge of the status bar pulls down Quick Settings</string>
+    <string name="status_bar_notif_count_title">Show notification count</string>
+    <string name="status_bar_notif_count_summary">Display the number of pending notifications</string>
 
     <!-- Notification light dialogs -->
     <string name="edit_light_settings">Edit light settings</string>
@@ -429,11 +470,12 @@
     <string name="app_ops_summaries_write_mms">write MMS</string>
     <string name="app_ops_summaries_auto_start">auto start</string>
     <string name="app_ops_summaries_nfc_change">nfc change</string>
-    <string name="app_ops_summaries_delete_sms">delete MMS</string>
+    <string name="app_ops_summaries_delete_sms">delete SMS</string>
     <string name="app_ops_summaries_delete_mms">delete MMS</string>
     <string name="app_ops_summaries_delete_contacts">delete contacts</string>
     <string name="app_ops_summaries_delete_call_log">delete call log</string>
     <string name="app_ops_summaries_data_change">data change</string>
+    <string name="app_ops_summaries_wake_up">wake up</string>
 
     <string name="app_ops_labels_location">Location</string>
     <string name="app_ops_labels_vibrate">Vibrate</string>
@@ -480,11 +522,12 @@
     <string name="app_ops_labels_write_mms">Write MMS</string>
     <string name="app_ops_labels_auto_start">Auto start</string>
     <string name="app_ops_labels_nfc_change">NFC change</string>
-    <string name="app_ops_labels_delete_sms">Delete MMS</string>
+    <string name="app_ops_labels_delete_sms">Delete SMS</string>
     <string name="app_ops_labels_delete_mms">Delete MMS</string>
     <string name="app_ops_labels_delete_contacts">Delete contacts</string>
     <string name="app_ops_labels_delete_call_log">Delete call log</string>
     <string name="app_ops_labels_data_change">Data change</string>
+    <string name="app_ops_labels_wake_up">Wake up</string>
 
     <!-- App ops categories -->
     <string name="app_ops_categories_location">Location</string>
@@ -522,4 +565,47 @@
 
     <string name="profile_setup_setup_triggers_description">Please select triggers which will activate this profile</string>
     <string name="profile_setup_actions_description">Now configure what happens when the profile is activated</string>
+
+    <!-- App ops detail -->
+    <string name="app_ops_entry_summary"><xliff:g id="op">%1$s</xliff:g> (used <xliff:g id="count">%2$s</xliff:g>)</string>
+    <string name="app_ops_allowed_count">Allowed <xliff:g id="count" example="2 times">%s</xliff:g></string>
+    <string name="app_ops_ignored_count">Denied <xliff:g id="count" example="2 times">%s</xliff:g></string>
+    <string name="app_ops_both_count">Allowed <xliff:g id="count">%1$s</xliff:g>, denied <xliff:g id="count">%2$s</xliff:g></string>
+
+    <!-- App ops menu options -->
+    <string name="app_ops_show_user_apps">Show user apps</string>
+    <string name="app_ops_show_system_apps">Show built-in apps</string>
+    <string name="app_ops_reset_counters">Reset allow/deny counters</string>
+    <string name="app_ops_reset_confirm_title">Confirm counters reset</string>
+    <string name="app_ops_reset_confirm_mesg">Are you sure you wish to reset counters?</string>
+
+    <!-- Font size sample text. This needs to be a very short string, as it is shown in
+    multiple font sizes in a limited amount of space. -->
+    <string name="font_size_sample">Sample</string>
+
+    <!-- Hardware tunables - Vibrator intensity -->
+    <string name="vibrator_intensity_title">Vibrator intensity</string>
+    <string name="vibrator_warning">Values higher than %1$d are not recommended</string>
+
+    <!-- Hardware tunables - Color calibration -->
+    <string name="color_calibration_title">Color calibration</string>
+    <string name="color_calibration_summary">Calibrate on-screen colors</string>
+    <string name="color_red_title">Red</string>
+    <string name="color_green_title">Green</string>
+    <string name="color_blue_title">Blue</string>
+
+    <!-- Hardware tunables - Gamma calibration -->
+    <string name="gamma_tuning_title_head">Gamma calibration</string>
+    <string name="gamma_tuning_summary_head">Tweak gamma values</string>
+    <string name="gamma_tuning_control_set_header">Group <xliff:g id="index">%d</xliff:g></string> <!-- used if no name provided by overlay -->
+    <string name="gamma_tuning_contrast">Contrast</string>
+    <string name="gamma_tuning_brightness">Brightness</string>
+    <string name="gamma_tuning_saturation">Saturation</string>
+
+    <!-- Launch music player when headset is connected -->
+    <string name="headset_connect_player_title">Launch music app</string>
+    <string name="headset_connect_player_summary">Launch the default music app when headset is connected</string>
+
+    <string name="auto_brightness_reset_button">Reset</string>
+
 </resources>
