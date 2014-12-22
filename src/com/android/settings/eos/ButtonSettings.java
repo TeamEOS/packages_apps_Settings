@@ -260,6 +260,8 @@ public class ButtonSettings extends ActionSettings implements
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         /* Disable hw-key options if they're disabled */
+        final PreferenceCategory backCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
         final PreferenceCategory homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
         final PreferenceCategory menuCategory =
@@ -280,6 +282,9 @@ public class ButtonSettings extends ActionSettings implements
         }
 
         /* Toggle hardkey control availability depending on navbar state */
+        if (backCategory != null) {
+            backCategory.setEnabled(!enabled);
+        }
         if (homeCategory != null) {
             homeCategory.setEnabled(!enabled);
         }

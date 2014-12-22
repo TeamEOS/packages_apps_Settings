@@ -332,13 +332,13 @@ public abstract class ActionSettings extends SettingsPreferenceFragment {
             temp_entries.remove(i);
             temp_values.remove(i);
         }
-
+/*
         if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
             int i = temp_values.indexOf(getString(R.string.action_value_quick_contact));
             temp_entries.remove(i);
             temp_values.remove(i);
         }
-
+*/
         if (!EosUtils.deviceSupportsBluetooth()) {
             int i = temp_values.indexOf(ActionHandler.SYSTEMUI_TASK_BT);
             temp_entries.remove(i);
