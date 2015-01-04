@@ -46,6 +46,18 @@
     <PreferenceCategory
         android:key="volume_keys"
         android:title="@string/hardware_keys_volume_keys_title" >
+
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="volume_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
+
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="volbtn_music_controls"
+            android:title="@string/volbtn_music_controls_title"
+            android:summary="@string/volbtn_music_controls_summary"
+            android:defaultValue="false" />
+
         <ListPreference
             android:dialogTitle="@string/volbtn_cursor_control_title"
             android:entries="@array/volbtn_cursor_control_entries"
@@ -55,10 +67,9 @@
             android:title="@string/volbtn_cursor_control_title" />
 
         <SwitchPreference
-            android:key="volume_key_wake_device"
-            android:title="@string/volbtn_wake_device_title"
-            android:summary="@string/volbtn_wake_device_summary"
-            android:defaultValue="false" />
+            android:key="swap_volume_buttons"
+            android:title="@string/swap_volume_buttons_title"
+            android:summary="@string/swap_volume_buttons_summary" />
 
     </PreferenceCategory>
 
@@ -66,11 +77,10 @@
         android:key="home_key"
         android:title="@string/hardware_keys_home_key_title" >
 
-        <SwitchPreference
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
             android:key="home_wake_screen"
             android:title="@string/button_wake_title"
-            android:summary="@string/home_wake_summary"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
 
         <SwitchPreference
             android:key="home_answer_call"
@@ -99,6 +109,11 @@
     <PreferenceCategory
         android:key="back_key"
         android:title="@string/hardware_keys_back_key_title" >
+
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="back_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
 
         <com.android.settings.eos.ActionPreference
             android:key="eos_hardkey_back_long_press"
@@ -147,6 +162,11 @@
     <PreferenceCategory
         android:key="menu_key"
         android:title="@string/hardware_keys_menu_key_title" >        
+
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="menu_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
 
         <com.android.settings.eos.ActionPreference
             android:key="eos_hardkey_menu_single_tap"

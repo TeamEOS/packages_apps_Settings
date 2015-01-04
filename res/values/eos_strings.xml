@@ -146,6 +146,10 @@
     <string name="eos_hardkey_assist_long_press_uri">input_hardkey_assist_longpress</string>
     <string name="eos_hardkey_assist_double_tap_uri">input_hardkey_assist_doubletap</string>
     <string name="eos_hardkey_assist_single_tap_uri">input_hardkey_assist_singletap</string>
+    <string name="volbtn_music_controls_title">Playback control</string>
+    <string name="volbtn_music_controls_summary">When the screen is off, long pressing the volume keys will seek music tracks</string>
+    <string name="swap_volume_buttons_title">Reorient</string>
+    <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated</string>
 
     <string name="eos_interface_force_navbar_title">Force navigation bar</string>
     <string name="eos_interface_force_navbar_summary">Hardware navigation keys will be disabled on supported devices</string>

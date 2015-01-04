@@ -45,13 +45,16 @@ public class ButtonSettings extends ActionSettings implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = ButtonSettings.class.getSimpleName();
 
+    // preference keys
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
     private static final String KEY_VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
     private static final String KEY_VOLUME_WAKE_DEVICE = "volume_key_wake_device";
+    private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
     private static final String NAVBAR_FORCE = "interface_force_navbar";
     private static final String KEY_POWER_END_CALL = "power_end_call";
     private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
 
+    // category keys
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_MENU = "menu_key";
@@ -67,24 +70,71 @@ public class ButtonSettings extends ActionSettings implements
     public static final int KEY_MASK_MENU = 0x04;
     public static final int KEY_MASK_ASSIST = 0x08;
     public static final int KEY_MASK_APP_SWITCH = 0x10;
+    public static final int KEY_MASK_CAMERA = 0x20;
+    public static final int KEY_MASK_VOLUME = 0x40;
 
     private ListPreference mVolumeKeyCursorControl;
-    private SwitchPreference mVolumeKeyWakeControl;
+    private SwitchPreference mSwapVolumeButtons;
     private SwitchPreference mNavForce;
     private SwitchPreference mPowerEndCall;
     private SwitchPreference mHomeAnswerCall;
-    final boolean DEBUG = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.button_settings);
 
-        final ContentResolver resolver = getActivity().getContentResolver();
+        final ContentResolver resolver = getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
+        // test if device has navbar or hardware keys
         final boolean hasHardKeys = EosUtils.isCapKeyDevice(getActivity());
 
+        // bits for hardware keys present on device
+        final int deviceKeys = getResources().getInteger(
+                com.android.internal.R.integer.config_deviceHardwareKeys);
+
+        // bits for hardware keys that are capable of waking device
+        final int deviceWakeKeys = getResources().getInteger(
+                com.android.internal.R.integer.config_deviceHardwareWakeKeys);
+
+        // check for presetn hardware keys, all devices have some of these
+        // all devices should have a power key, but probably good to be thorough
+        // anyways
+        final boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
+        // read bits for present hardware keys
+        final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
+        final boolean hasBackKey = (deviceKeys & KEY_MASK_BACK) != 0;
+        final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
+        final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
+        final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
+        final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
+
+        // read bits for hardware keys that are capable of waking device
+        final boolean showHomeWake = (deviceWakeKeys & KEY_MASK_HOME) != 0;
+        final boolean showBackWake = (deviceWakeKeys & KEY_MASK_BACK) != 0;
+        final boolean showMenuWake = (deviceWakeKeys & KEY_MASK_MENU) != 0;
+        final boolean showVolumeWake = (deviceWakeKeys & KEY_MASK_VOLUME) != 0;
+
+        // load categories and init/remove preferences based on device
+        // configuration
+        final PreferenceCategory powerCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
+        final PreferenceCategory backCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
+        final PreferenceCategory homeCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
+        final PreferenceCategory menuCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
+        final PreferenceCategory assistCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
+        final PreferenceCategory appSwitchCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
+        final PreferenceCategory volumeCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
+
+        // only keep force navbar on hardware key devices
+        // todo: move this to navigation settings
         mNavForce = (SwitchPreference) prefScreen.findPreference(NAVBAR_FORCE);
         if (hasHardKeys) {
             boolean navBarEnabled = isForcedNavbar();
@@ -98,47 +148,31 @@ public class ButtonSettings extends ActionSettings implements
             mNavForce = null;
         }
 
-        final int deviceKeys = getResources().getInteger(
-                com.android.internal.R.integer.config_deviceHardwareKeys);
-        final boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
-        final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
-        final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
-        final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
-        final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
-
-        final PreferenceCategory backCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
-        final PreferenceCategory homeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
-        final PreferenceCategory menuCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
-        final PreferenceCategory assistCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
-        final PreferenceCategory appSwitchCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-        final PreferenceCategory powerCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
-
-        // Power button ends calls.
+        // All devices have power button,
         mPowerEndCall = (SwitchPreference) findPreference(KEY_POWER_END_CALL);
-
-        // Home button answers calls.
-        mHomeAnswerCall = (SwitchPreference) findPreference(KEY_HOME_ANSWER_CALL);
-
-        if (!hasHardKeys)
-            prefScreen.removePreference(backCategory);
-
         if (hasPowerKey) {
             if (!Utils.isVoiceCapable(getActivity())) {
                 powerCategory.removePreference(mPowerEndCall);
                 mPowerEndCall = null;
+                prefScreen.removePreference(powerCategory);
             }
         } else {
             prefScreen.removePreference(powerCategory);
         }
 
+        // back key
+        if (hasBackKey) {
+            if (!showBackWake) {
+                backCategory.removePreference(findPreference(Settings.System.BACK_WAKE_SCREEN));
+            }
+        } else {
+            prefScreen.removePreference(backCategory);
+        }
+
+        // home key
+        mHomeAnswerCall = (SwitchPreference) findPreference(KEY_HOME_ANSWER_CALL);
         if (hasHomeKey) {
-            if (!getResources().getBoolean(R.bool.config_show_homeWake)) {
+            if (!showHomeWake) {
                 homeCategory.removePreference(findPreference(Settings.System.HOME_WAKE_SCREEN));
             }
             if (!Utils.isVoiceCapable(getActivity())) {
@@ -149,38 +183,61 @@ public class ButtonSettings extends ActionSettings implements
             prefScreen.removePreference(homeCategory);
         }
 
-        if (!hasMenuKey)
-            prefScreen.removePreference(menuCategory);
-        if (!hasAppSwitchKey)
+        // App switch key (recents)
+        if (!hasAppSwitchKey) {
             prefScreen.removePreference(appSwitchCategory);
-        if (!hasAssistKey)
+        }
+
+        // menu key
+        if (hasMenuKey) {
+            if (!showMenuWake) {
+                menuCategory.removePreference(findPreference(Settings.System.MENU_WAKE_SCREEN));
+            }
+        } else {
+            prefScreen.removePreference(menuCategory);
+        }
+
+        // search/assist key
+        if (!hasAssistKey) {
             prefScreen.removePreference(assistCategory);
+        }
 
-        final PreferenceCategory volumeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
-
-        if (Utils.hasVolumeRocker(getActivity())) {
+        // volume rocker
+        // NOTE: we set overlay defaults to 64 on the relatively safe assumption
+        // all devices have volume rocker
+        if (hasVolumeKeys) {
+            if (!showVolumeWake) {
+                volumeCategory.removePreference(findPreference(Settings.System.VOLUME_WAKE_SCREEN));
+            }
 
             int cursorControlAction = Settings.System.getInt(resolver,
                     Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0);
             mVolumeKeyCursorControl = initActionList(KEY_VOLUME_KEY_CURSOR_CONTROL,
                     cursorControlAction);
-            int wakeControlAction = Settings.System.getInt(resolver,
-                    Settings.System.VOLUME_WAKE_SCREEN, 0);
-            mVolumeKeyWakeControl = initSwitch(KEY_VOLUME_WAKE_DEVICE, (wakeControlAction == 1));
+
+            int swapVolumeKeys = Settings.System.getInt(getContentResolver(),
+                    Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0);
+            mSwapVolumeButtons = (SwitchPreference)
+                    prefScreen.findPreference(KEY_SWAP_VOLUME_BUTTONS);
+            mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
         } else {
             prefScreen.removePreference(volumeCategory);
         }
 
+        // hardware keys backlight
         final ButtonBacklightBrightness backlight =
                 (ButtonBacklightBrightness) findPreference(KEY_BUTTON_BACKLIGHT);
         if (!backlight.isButtonSupported() && !backlight.isKeyboardSupported()) {
             prefScreen.removePreference(backlight);
         }
 
+        // enable / disable navigation hardware key settings
+        // if navigation bar is force showing
         if (hasHardKeys) {
             updateDisableNavkeysOption();
         }
+
+        // let super know we can load ActionPreferences
         onPreferenceScreenLoaded();
     }
 
@@ -207,6 +264,7 @@ public class ButtonSettings extends ActionSettings implements
                     (incallHomeBehavior == Settings.Secure.RING_HOME_BUTTON_BEHAVIOR_ANSWER);
             mHomeAnswerCall.setChecked(homeButtonAnswersCall);
         }
+
     }
 
     private boolean isForcedNavbar() {
@@ -331,17 +389,18 @@ public class ButtonSettings extends ActionSettings implements
             restoreKeyDisabler(getActivity());
             mNavForce.setSummary(getForcedNavbarSummary(enabled));
             return true;
-        } else if (preference == mVolumeKeyWakeControl) {
-            handleSwitchChange(mVolumeKeyWakeControl, newValue,
-                    Settings.System.VOLUME_WAKE_SCREEN);
-            return true;
         }
         return false;
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mPowerEndCall) {
+        if (preference == mSwapVolumeButtons) {
+            int value = mSwapVolumeButtons.isChecked()
+                    ? (Utils.isTablet(getActivity()) ? 2 : 1) : 0;
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, value);
+        } else if (preference == mPowerEndCall) {
             handleTogglePowerButtonEndsCallPreferenceClick();
             return true;
         } else if (preference == mHomeAnswerCall) {
