@@ -25,7 +25,7 @@
     <string name="eos_navbar_size">Bar size</string>
     <string name="eos_navbar_mode">Navigation mode</string>
     <string name="eos_aosp_navigation_bar">Navigation bar</string>
-    <string name="navigationbar_settings_title">Navigation</string>
+    <string name="navigationbar_settings_title">Navigation bar</string>
     <string name="navigationbar_settings_summary">Customize navigation style and behavior</string>
 
     <!-- Actions dialog and default task values set in ActionPreference xml-->
