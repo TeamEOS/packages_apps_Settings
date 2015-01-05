@@ -341,7 +341,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             disableForUser(mQuickBoot);
         }
 
-        if (!isPackageInstalled(getActivity(), QUICKBOOT_PACKAGE_NAME)) {
+        if (!Utils.isPackageInstalled(getActivity(), QUICKBOOT_PACKAGE_NAME, false)) {
             removePreference(mQuickBoot);
         }
 
