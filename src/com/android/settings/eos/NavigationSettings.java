@@ -20,11 +20,14 @@ import org.teameos.utils.EosConstants;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.Utils;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.provider.Settings;
 
 public class NavigationSettings extends SettingsPreferenceFragment implements
@@ -33,9 +36,12 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
     private static final String NAVBAR_MODE = "systemui_navbar_mode";
     private static final String NAVMODE_SETTINGS = "navigation_mode_settings";
     private static final String NX_ENABLE_URI = "eos_nx_enabled";
+    private static final String KEY_CATEGORY_NAVIGATION_GENERAL = "category_navbar_general";
+    private static final String KEY_NAVIGATION_BAR_LEFT = "navigation_bar_left";
 
     private ListPreference mNavbarMode;
     private PreferenceScreen mSettingsTarget;
+    private SwitchPreference mNavigationBarLeftPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,15 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
                 R.array.systemui_navbar_mode_values);
         updateSettingsTarget(val);
 
+        // Navigation bar left
+        mNavigationBarLeftPref = (SwitchPreference) findPreference(KEY_NAVIGATION_BAR_LEFT);
+        if (!Utils.isPhone(getActivity())) {
+            PreferenceCategory navbarGeneral = (PreferenceCategory) findPreference(KEY_CATEGORY_NAVIGATION_GENERAL);
+            navbarGeneral.removePreference(mNavigationBarLeftPref);
+            // temporary handling until more settings are added to this category
+            mNavigationBarLeftPref = null;
+            getPreferenceScreen().removePreference(navbarGeneral);
+        }
     }
 
     @Override

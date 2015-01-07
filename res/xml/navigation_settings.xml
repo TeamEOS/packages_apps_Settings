@@ -17,13 +17,31 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/navigationbar_settings_title" >
+    
+    <PreferenceCategory
+        android:key="category_navbar_interface"
+        android:title="@string/eos_navbar_interface_title" >
 
-    <ListPreference
-        android:entries="@array/systemui_navbar_mode_entries"
-        android:entryValues="@array/systemui_navbar_mode_values"
-        android:key="systemui_navbar_mode"
-        android:title="@string/eos_navbar_mode" />
+        <ListPreference
+            android:entries="@array/systemui_navbar_mode_entries"
+            android:entryValues="@array/systemui_navbar_mode_values"
+            android:key="systemui_navbar_mode"
+            android:title="@string/eos_navbar_mode" />
 
-    <PreferenceScreen android:key="navigation_mode_settings" />
+        <PreferenceScreen android:key="navigation_mode_settings" />
+
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:key="category_navbar_general"
+        android:title="@string/eos_navbar_general_title" >
+        
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="navigation_bar_left"
+            android:title="@string/navigation_bar_left_title"
+            android:summary="@string/navigation_bar_left_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
