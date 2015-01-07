@@ -28,6 +28,8 @@
     <string name="eos_navbar_general_title">Advanced</string>
     <string name="navigation_bar_left_title">Left-handed mode</string>
     <string name="navigation_bar_left_summary">Place the navigation bar on the left side of the screen in landscape mode</string>
+    <string name="navigation_disabled_notice">Enable the navigation bar to change settings.</string>
+    <string name="navigation_disabled_extended">Hardware key disable is not supported on this device.</string>
 
     <!-- Actions dialog and default task values set in ActionPreference xml-->
     <string name="action_entry_default_action">Default settings</string>
@@ -48,8 +50,6 @@
     <string name="eos_interface_navigation">Navigation</string>
     <string name="eos_interface_navbar">Navigation Bar</string>
     <string name="eos_interface_navbar_appearance">Navigation Bar Appearance</string>
-    <string name="eos_interface_systemui_mode_title">UI Mode</string>
-    <string name="eos_interface_systemui_mode_capkey_warning">\nNotice:\u0020 You appear to be simulating a capacitive key device. \nUse caution</string>
     <string name="eos_softkey_settings_title">Softkeys</string>
     <string name="eos_softkey_settings_summary">Set long press actions</string>
     <string name="eos_style_navbar_softkey">Navigation bar and Softkeys</string>

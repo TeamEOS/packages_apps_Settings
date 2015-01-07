@@ -25,14 +25,6 @@
         android:title="@string/button_backlight_title" />
 
     <PreferenceCategory
-        android:key="interface_navigation"
-        android:title="@string/navigationbar_settings_title" >
-        <SwitchPreference
-            android:key="interface_force_navbar"
-            android:title="@string/eos_interface_force_navbar_title" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="power_key"
         android:title="@string/hardware_keys_power_key_title" >
 

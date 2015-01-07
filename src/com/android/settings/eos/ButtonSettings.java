@@ -75,7 +75,6 @@ public class ButtonSettings extends ActionSettings implements
 
     private ListPreference mVolumeKeyCursorControl;
     private SwitchPreference mSwapVolumeButtons;
-    private SwitchPreference mNavForce;
     private SwitchPreference mPowerEndCall;
     private SwitchPreference mHomeAnswerCall;
 
@@ -132,21 +131,6 @@ public class ButtonSettings extends ActionSettings implements
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
         final PreferenceCategory volumeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
-
-        // only keep force navbar on hardware key devices
-        // todo: move this to navigation settings
-        mNavForce = (SwitchPreference) prefScreen.findPreference(NAVBAR_FORCE);
-        if (hasHardKeys) {
-            boolean navBarEnabled = isForcedNavbar();
-            mNavForce.setChecked(navBarEnabled);
-            mNavForce.setSummary(getForcedNavbarSummary(navBarEnabled));
-            mNavForce.setOnPreferenceChangeListener(this);
-        } else {
-            PreferenceCategory navCat = (PreferenceCategory) prefScreen
-                    .findPreference("interface_navigation");
-            prefScreen.removePreference(navCat);
-            mNavForce = null;
-        }
 
         // All devices have power button,
         mPowerEndCall = (SwitchPreference) findPreference(KEY_POWER_END_CALL);
@@ -273,17 +257,7 @@ public class ButtonSettings extends ActionSettings implements
                 UserHandle.USER_CURRENT) != 0;
     }
 
-    private String getForcedNavbarSummary(boolean barShowing) {
-        final Resources res = getResources();
-        if (!isKeyDisablerSupported()) {
-            return res.getString(R.string.eos_key_disabler_unsupported);
-        } else {
-            return res.getString(barShowing ? R.string.eos_key_disabler_active
-                    : R.string.eos_key_disabler_off);
-        }
-    }
-
-    private static void writeDisableNavkeysOption(Context context, boolean enabled) {
+    public static void writeDisableNavkeysOption(Context context, boolean enabled) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final int defaultBrightness = context.getResources().getInteger(
                 com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
@@ -380,14 +354,6 @@ public class ButtonSettings extends ActionSettings implements
         if (preference == mVolumeKeyCursorControl) {
             handleActionListChange(mVolumeKeyCursorControl, newValue,
                     Settings.System.VOLUME_KEY_CURSOR_CONTROL);
-            return true;
-        } else if (preference.equals(mNavForce)) {
-            boolean enabled = ((Boolean) newValue).booleanValue();
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.DEV_FORCE_SHOW_NAVBAR, enabled ? 1 : 0);
-            updateDisableNavkeysOption();
-            restoreKeyDisabler(getActivity());
-            mNavForce.setSummary(getForcedNavbarSummary(enabled));
             return true;
         }
         return false;
