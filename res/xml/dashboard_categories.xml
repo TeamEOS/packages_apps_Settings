@@ -98,6 +98,7 @@
                 android:title="@string/navigationbar_settings_title"
                 android:fragment="com.android.settings.eos.NavigationSettings"
                 android:icon="@drawable/ic_settings_navigation"
+                />
 
         <!-- Notification drawer -->
         <dashboard-tile
