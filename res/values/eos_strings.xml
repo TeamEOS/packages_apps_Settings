@@ -168,4 +168,7 @@
     <string name="eos_system_update_menu">org.teameos.updater.UpdatesSettings</string>
     <string name="eos_system_update">org.teameos.updater</string>
 
+    <!-- TEMP: follow up later -->
+    <string name="auto_brightness_reset_button">Reset</string>
+
 </resources>
