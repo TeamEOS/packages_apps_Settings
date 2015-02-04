@@ -28,7 +28,7 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.provider.Settings;
 
-public class NxSettings extends ActionSettings implements
+public class NxSettings extends ActionFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = NxSettings.class.getSimpleName();
     private static final String NX_TRAILS_ENABLE_KEY = "eos_nx_trails_enable";

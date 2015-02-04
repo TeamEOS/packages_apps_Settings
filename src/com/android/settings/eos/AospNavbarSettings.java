@@ -24,7 +24,7 @@ import android.provider.Settings;
 
 import com.android.settings.R;
 
-public class AospNavbarSettings extends ActionSettings implements
+public class AospNavbarSettings extends ActionFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String KEY_FORCE_SHOW_MENU = "eos_softkey_persist_menu";
     private static final String URI_FORCE_SHOW_MENU = "eos_navbar_force_show_menu_button";

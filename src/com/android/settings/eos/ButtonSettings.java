@@ -41,7 +41,7 @@ import com.android.settings.R;
 import com.android.settings.Utils;
 import com.android.settings.cyanogenmod.ButtonBacklightBrightness;
 
-public class ButtonSettings extends ActionSettings implements
+public class ButtonSettings extends ActionFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = ButtonSettings.class.getSimpleName();
 
