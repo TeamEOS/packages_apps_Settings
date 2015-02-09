@@ -24,6 +24,7 @@ import com.android.settings.eos.ButtonSettings;
 import com.android.settings.DisplaySettings;
 import com.android.settings.hardware.VibratorIntensity;
 import com.android.settings.livedisplay.DisplayGamma;
+
 public class BootReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BootReceiver";

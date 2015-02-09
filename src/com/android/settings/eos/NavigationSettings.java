@@ -18,7 +18,6 @@ package com.android.settings.eos;
 
 import org.teameos.utils.EosConstants;
 import org.teameos.utils.EosUtils;
-import org.cyanogenmod.hardware.KeyDisabler;
 
 import com.android.internal.util.cm.ScreenType;
 import com.android.settings.R;
@@ -28,6 +27,8 @@ import com.android.settings.Utils;
 import com.android.settings.cyanogenmod.BaseSystemSettingSwitchBar;
 import com.android.settings.widget.SwitchBar;
 
+import android.content.Context;
+import android.hardware.CmHardwareManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -99,7 +100,9 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
 
         StringBuilder builder = new StringBuilder();
         builder.append(getString(R.string.navigation_disabled_notice));
-        if (!ButtonSettings.isKeyDisablerSupported()) {
+        CmHardwareManager cmHardwareManager =
+                (CmHardwareManager) getSystemService(Context.CMHW_SERVICE);
+        if (!cmHardwareManager.isSupported(CmHardwareManager.FEATURE_KEY_DISABLE)) {
             builder.append(" ").append(getString(R.string.navigation_disabled_extended));
         }
         mDisabledText.setText(builder.toString());
