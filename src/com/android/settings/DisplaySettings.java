@@ -94,6 +94,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_PROXIMITY_WAKE = "proximity_on_wake";
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
+    private static final String KEY_BATTERY_LIGHT = "battery_light";
+    private static final String KEY_NOTIFICATION_LIGHT = "notification_light";
 
     private static final String CATEGORY_ADVANCED = "advanced_display_prefs";
     private static final String KEY_DISPLAY_COLOR = "color_calibration";
@@ -231,7 +233,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 (SwitchPreference) findPreference(KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED);
 
         mScreenColorSettings = (PreferenceScreen) findPreference(KEY_SCREEN_COLOR_SETTINGS);
-        if (!isPostProcessingSupported()) {
+        if (!isPostProcessingSupported(getActivity())) {
             getPreferenceScreen().removePreference(mScreenColorSettings);
         }
     }
@@ -637,15 +639,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
     }
 
-    private boolean isPostProcessingSupported() {
-        boolean ret = true;
-        final PackageManager pm = getPackageManager();
-        try {
-            pm.getPackageInfo("com.qualcomm.display", PackageManager.GET_META_DATA);
-        } catch (NameNotFoundException e) {
-            ret = false;
-        }
-        return ret;
+    private static boolean isPostProcessingSupported(Context context) {
+        return Utils.isPackageInstalled(context, "com.qualcomm.display");
     }
 
     private static boolean isAdaptiveBacklightSupported() {
@@ -677,6 +672,19 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     public static final Indexable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider() {
+                private boolean mHasTapToWake;
+                private boolean mHasSunlightEnhancement, mHasColorEnhancement;
+                private boolean mHasDisplayGamma, mHasDisplayColor;
+
+                @Override
+                public void prepare() {
+                    mHasTapToWake = isTapToWakeSupported();
+                    mHasSunlightEnhancement = isSunlightEnhancementSupported();
+                    mHasColorEnhancement = isColorEnhancementSupported();
+                    mHasDisplayGamma = DisplayGamma.isSupported();
+                    mHasDisplayColor = DisplayColor.isSupported();
+                }
+
                 @Override
                 public List<SearchIndexableResource> getXmlResourcesToIndex(Context context,
                         boolean enabled) {
@@ -696,6 +704,36 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     if (!context.getResources().getBoolean(
                             com.android.internal.R.bool.config_dreamsSupported)) {
                         result.add(KEY_SCREEN_SAVER);
+                    }
+                    if (!context.getResources().getBoolean(
+                            com.android.internal.R.bool.config_intrusiveNotificationLed)) {
+                        result.add(KEY_NOTIFICATION_LIGHT);
+                    }
+                    if (!context.getResources().getBoolean(
+                            com.android.internal.R.bool.config_intrusiveBatteryLed)) {
+                        result.add(KEY_BATTERY_LIGHT);
+                    }
+                    if (!context.getResources().getBoolean(
+                            com.android.internal.R.bool.config_proximityCheckOnWake)) {
+                        result.add(KEY_PROXIMITY_WAKE);
+                    }
+                    if (!mHasTapToWake) {
+                        result.add(KEY_TAP_TO_WAKE);
+                    }
+                    if (!mHasSunlightEnhancement) {
+                        result.add(KEY_SUNLIGHT_ENHANCEMENT);
+                    }
+                    if (!mHasColorEnhancement) {
+                        result.add(KEY_COLOR_ENHANCEMENT);
+                    }
+                    if (!isPostProcessingSupported(context)) {
+                        result.add(KEY_SCREEN_COLOR_SETTINGS);
+                    }
+                    if (!mHasDisplayColor) {
+                        result.add(KEY_DISPLAY_COLOR);
+                    }
+                    if (!mHasDisplayGamma) {
+                        result.add(KEY_DISPLAY_GAMMA);
                     }
                     if (!isAutomaticBrightnessAvailable(context.getResources())) {
                         result.add(KEY_AUTO_BRIGHTNESS);
