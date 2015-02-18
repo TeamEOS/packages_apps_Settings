@@ -185,10 +185,10 @@
     <string name="display_font_size_label" msgid="8941851418397475389">"Šrifto dydis:"</string>
     <!-- no translation found for intent_sender_data_label (6332324780477289261) -->
     <skip />
-    <string name="intent_sender_sendbroadcast_text" msgid="1415735148895872715">"Siųsti <xliff:g id="BROADCAST">broadcast</xliff:g>"</string>
+    <string name="intent_sender_sendbroadcast_text" msgid="1415735148895872715">"Siųsti <xliff:g id="BROADCAST">transliaciją</xliff:g>"</string>
     <string name="intent_sender_action_label" msgid="616458370005452389">"<xliff:g id="ACTION">Action</xliff:g>:"</string>
-    <string name="intent_sender_startactivity_text" msgid="5080516029580421895">"Pradėti <xliff:g id="ACTIVITY">activity</xliff:g>"</string>
-    <string name="intent_sender_resource_label" msgid="6963659726895482829">"<xliff:g id="RESOURCE">Resource</xliff:g>:"</string>
+    <string name="intent_sender_startactivity_text" msgid="5080516029580421895">"Pradėti <xliff:g id="ACTIVITY">veiklą</xliff:g>"</string>
+    <string name="intent_sender_resource_label" msgid="6963659726895482829">"<xliff:g id="RESOURCE">Išteklius</xliff:g>:"</string>
     <string name="intent_sender_account_label" msgid="465210404475603404">"Paskyra:"</string>
     <string name="proxy_settings_title" msgid="9049437837600320881">"Tarpinis serveris"</string>
     <string name="proxy_clear_text" msgid="5555400754952012657">"Išvalyti"</string>
