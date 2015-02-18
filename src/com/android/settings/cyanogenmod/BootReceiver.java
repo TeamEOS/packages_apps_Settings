@@ -19,23 +19,11 @@ package com.android.settings.cyanogenmod;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.SystemProperties;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
-import com.android.settings.DisplaySettings;
-import com.android.settings.R;
-import com.android.settings.Utils;
-import com.android.settings.hardware.DisplayColor;
-import com.android.settings.hardware.DisplayGamma;
-import com.android.settings.hardware.VibratorIntensity;
 import com.android.settings.eos.ButtonSettings;
-import com.android.settings.location.LocationSettings;
-
-import java.util.Arrays;
-import java.util.List;
-
+import com.android.settings.DisplaySettings;
+import com.android.settings.hardware.VibratorIntensity;
+import com.android.settings.livedisplay.DisplayGamma;
 public class BootReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BootReceiver";
@@ -45,7 +33,6 @@ public class BootReceiver extends BroadcastReceiver {
         /* Restore the hardware tunable values */
         DisplaySettings.restore(ctx);
         ButtonSettings.restoreKeyDisabler(ctx);
-        DisplayColor.restore(ctx);
         DisplayGamma.restore(ctx);
         VibratorIntensity.restore(ctx);
     }
