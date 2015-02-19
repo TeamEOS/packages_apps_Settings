@@ -20,6 +20,7 @@ import org.teameos.utils.EosConstants;
 import org.teameos.utils.EosUtils;
 import org.cyanogenmod.hardware.KeyDisabler;
 
+import com.android.internal.util.cm.ScreenType;
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
 import com.android.settings.SettingsPreferenceFragment;
@@ -80,7 +81,7 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
 
         // Navigation bar left
         mNavigationBarLeftPref = (SwitchPreference) findPreference(KEY_NAVIGATION_BAR_LEFT);
-        if (!Utils.isPhone(getActivity())) {
+        if (!ScreenType.isPhone(getActivity())) {
             PreferenceCategory navbarGeneral = (PreferenceCategory) findPreference(KEY_CATEGORY_NAVIGATION_GENERAL);
             navbarGeneral.removePreference(mNavigationBarLeftPref);
             // temporary handling until more settings are added to this category
