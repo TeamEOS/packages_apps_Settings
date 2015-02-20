@@ -22,7 +22,7 @@
         android:key="clock_styles"
         android:title="@string/clock_styles_title"
         android:summary="@string/clock_styles_summary"
-        android:fragment="com.android.settings.benzo.ClockStyles" />
+        android:fragment="com.android.settings.eos.ClockStyles" />
 
     <ListPreference
         android:key="status_bar_battery_style"
