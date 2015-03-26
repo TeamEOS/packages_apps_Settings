@@ -39,6 +39,7 @@ public class NxSettings extends ActionFragment implements
     SwitchPreference mShowLogo;
     SwitchPreference mAnimateLogo;
     SwitchPreference mShowPulse;
+    SwitchPreference mShowRipple;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,11 @@ public class NxSettings extends ActionFragment implements
         mAnimateLogo.setChecked(Settings.System.getInt(getContentResolver(),
                 "nx_logo_animates", 1) == 1);
         mAnimateLogo.setOnPreferenceChangeListener(this);
+
+        mShowRipple = (SwitchPreference) findPreference("eos_nx_show_ripple");
+        mShowRipple.setChecked(Settings.System.getInt(getContentResolver(),
+                "eos_nx_show_ripple", 1) == 1);
+        mShowRipple.setOnPreferenceChangeListener(this);
 
         mShowPulse = (SwitchPreference) findPreference("eos_nx_show_pulse");
         mShowPulse.setChecked(Settings.System.getInt(getContentResolver(),
@@ -99,6 +105,11 @@ public class NxSettings extends ActionFragment implements
             boolean enabled = ((Boolean) newValue).booleanValue();
             Settings.System.putInt(getContentResolver(),
                     "eos_nx_pulse", enabled ? 1 : 0);
+            return true;
+        } else if (preference.equals(mShowRipple)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putInt(getContentResolver(),
+                    "eos_nx_show_ripple", enabled ? 1 : 0);
             return true;
         }
         return false;

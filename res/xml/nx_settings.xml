@@ -132,6 +132,11 @@
             android:title="@string/eos_nx_animate_logo_title"
             android:summary="@string/eos_nx_animate_logo_summary" />
 
+         <SwitchPreference
+            android:key="eos_nx_show_ripple"
+            android:title="@string/eos_nx_show_ripple_title"
+            android:summary="@string/eos_nx_show_ripple_summary" />
+
         <SwitchPreference
             android:key="eos_nx_trails_enable"
             android:title="@string/eos_nx_trails_enable_title" />
