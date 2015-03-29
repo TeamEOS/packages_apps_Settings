@@ -257,9 +257,8 @@ public class ButtonSettings extends ActionFragment implements
     }
 
     private boolean isForcedNavbar() {
-        return Settings.System.getIntForUser(getContentResolver(),
-                Settings.System.DEV_FORCE_SHOW_NAVBAR, 0,
-                UserHandle.USER_CURRENT) != 0;
+        return Settings.Secure.getIntForUser(getContentResolver(),
+                Settings.Secure.DEV_FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) != 0;
     }
 
     public static void writeDisableNavkeysOption(Context context, boolean enabled) {
@@ -275,18 +274,19 @@ public class ButtonSettings extends ActionFragment implements
         SharedPreferences.Editor editor = prefs.edit();
 
         if (enabled) {
-            int currentBrightness = Settings.System.getInt(context.getContentResolver(),
-                    Settings.System.BUTTON_BRIGHTNESS, defaultBrightness);
+            int currentBrightness = Settings.Secure.getIntForUser(context.getContentResolver(),
+                    Settings.Secure.BUTTON_BRIGHTNESS, defaultBrightness,
+                    UserHandle.USER_CURRENT);
             if (!prefs.contains("pre_navbar_button_backlight")) {
                 editor.putInt("pre_navbar_button_backlight", currentBrightness);
             }
-            Settings.System.putInt(context.getContentResolver(),
-                    Settings.System.BUTTON_BRIGHTNESS, 0);
+            Settings.Secure.putIntForUser(context.getContentResolver(),
+                    Settings.Secure.BUTTON_BRIGHTNESS, 0, UserHandle.USER_CURRENT);
         } else {
             int oldBright = prefs.getInt("pre_navbar_button_backlight", -1);
             if (oldBright != -1) {
-                Settings.System.putInt(context.getContentResolver(),
-                        Settings.System.BUTTON_BRIGHTNESS, oldBright);
+                Settings.Secure.putIntForUser(context.getContentResolver(),
+                        Settings.Secure.BUTTON_BRIGHTNESS, oldBright, UserHandle.USER_CURRENT);
                 editor.remove("pre_navbar_button_backlight");
             }
         }

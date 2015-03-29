@@ -55,7 +55,7 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
     private PreferenceScreen mSettingsTarget;
     private SwitchPreference mNavigationBarLeftPref;
 
-    private BaseSystemSettingSwitchBar mEnabledSwitch;
+    private SecureSettingCurrentUserSwitchBar mEnabledSwitch;
     private boolean mLastEnabledState;
     private ViewGroup mPrefsContainer;
     private TextView mDisabledText;
@@ -117,8 +117,8 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
         super.onStart();
         final SettingsActivity activity = (SettingsActivity) getActivity();
         if (mHasHardwareKeys) {
-            mEnabledSwitch = new BaseSystemSettingSwitchBar(activity, activity.getSwitchBar(),
-                    Settings.System.DEV_FORCE_SHOW_NAVBAR, true, this);
+            mEnabledSwitch = new SecureSettingCurrentUserSwitchBar(activity, activity.getSwitchBar(),
+                    Settings.Secure.DEV_FORCE_SHOW_NAVBAR, true, this);
         } else {
             mEnabledSwitch = null;
             updateEnabledState();
