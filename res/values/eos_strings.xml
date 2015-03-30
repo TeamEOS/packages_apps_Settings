@@ -175,4 +175,11 @@
     <string name="eos_mod_version">Eos</string>
     <string name="eos_system_update_settings_list_item_title">Eos updates</string>
 
+    <!-- Navbar height -->
+    <string name="navigation_bar_size_title">Bar size</string>
+    <string name="portrait_title">Portrait height</string>
+    <string name="land_vert_title">Landscape width</string>
+    <string name="land_hor_title">Landscape height</string>    
+    <string name="positive_done">Done</string>
+
 </resources>
