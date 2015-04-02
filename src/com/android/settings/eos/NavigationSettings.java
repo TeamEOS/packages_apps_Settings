@@ -85,9 +85,7 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
         if (!ScreenType.isPhone(getActivity())) {
             PreferenceCategory navbarGeneral = (PreferenceCategory) findPreference(KEY_CATEGORY_NAVIGATION_GENERAL);
             navbarGeneral.removePreference(mNavigationBarLeftPref);
-            // temporary handling until more settings are added to this category
             mNavigationBarLeftPref = null;
-            getPreferenceScreen().removePreference(navbarGeneral);
         }
     }
 
