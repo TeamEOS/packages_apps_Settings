@@ -28,8 +28,11 @@
     <string name="eos_navbar_general_title">Advanced</string>
     <string name="navigation_bar_left_title">Left-handed mode</string>
     <string name="navigation_bar_left_summary">Place the navigation bar on the left side of the screen in landscape mode</string>
-    <string name="navigation_disabled_notice">Enable the navigation bar to change settings.</string>
-    <string name="navigation_disabled_extended">Hardware key disable is not supported on this device.</string>
+
+    <!-- Hardware key device force showing navigation bar -->
+    <string name="force_navbar_disabled_notice">Enable the navigation bar to change settings.</string>
+    <string name="force_navbar_key_disable_unsupported">Hardware navigation buttons will continue to function even though the navigation bar is showing.</string>
+    <string name="force_navbar_key_disable_supported">Hardware navigation buttons will not function while the navigation bar is showing.</string>
 
     <string name="actions_system_action">Select system shortcut</string>
 
@@ -155,12 +158,6 @@
     <string name="volbtn_music_controls_summary">When the screen is off, long pressing the volume keys will seek music tracks</string>
     <string name="swap_volume_buttons_title">Reorient</string>
     <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated</string>
-
-    <string name="eos_interface_force_navbar_title">Force navigation bar</string>
-    <string name="eos_interface_force_navbar_summary">Hardware navigation keys will be disabled on supported devices</string>
-    <string name="eos_key_disabler_active">Hardware navigation keys are disabled</string>
-    <string name="eos_key_disabler_off">Hardware navigation keys are enabled</string>
-    <string name="eos_key_disabler_unsupported">Hardware key disabler is unsupported</string>
 
     <!-- statusbar double tap action -->
     <string name="eos_statusbar_doubletap_title">Double tap action</string>

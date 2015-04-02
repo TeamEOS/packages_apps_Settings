@@ -21,11 +21,9 @@ import org.teameos.utils.EosUtils;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.hardware.CmHardwareManager;
 import android.os.Bundle;
 import android.os.UserHandle;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -35,7 +33,6 @@ import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-import android.widget.Editor;
 
 import com.android.internal.util.cm.ScreenType;
 import com.android.settings.R;
@@ -49,9 +46,7 @@ public class ButtonSettings extends ActionFragment implements
     // preference keys
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
     private static final String KEY_VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
-    private static final String KEY_VOLUME_WAKE_DEVICE = "volume_key_wake_device";
     private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
-    private static final String NAVBAR_FORCE = "interface_force_navbar";
     private static final String KEY_POWER_END_CALL = "power_end_call";
     private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
     private static final String KEY_BLUETOOTH_INPUT_SETTINGS = "bluetooth_input_settings";
@@ -220,7 +215,7 @@ public class ButtonSettings extends ActionFragment implements
         // enable / disable navigation hardware key settings
         // if navigation bar is force showing
         if (hasHardKeys) {
-            updateDisableNavkeysOption();
+            updateAvailableButtonPreferences(isForcedNavbarEnabled(getActivity()));
         }
 
         // let super know we can load ActionPreferences
@@ -256,96 +251,6 @@ public class ButtonSettings extends ActionFragment implements
 
     }
 
-    private boolean isForcedNavbar() {
-        return Settings.Secure.getIntForUser(getContentResolver(),
-                Settings.Secure.DEV_FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) != 0;
-    }
-
-    public static void writeDisableNavkeysOption(Context context, boolean enabled) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final int defaultBrightness = context.getResources().getInteger(
-                com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
-
-        CmHardwareManager cmHardwareManager =
-                (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
-        cmHardwareManager.set(CmHardwareManager.FEATURE_KEY_DISABLE, enabled);
-
-        /* Save/restore button timeouts to disable them in softkey mode */
-        SharedPreferences.Editor editor = prefs.edit();
-
-        if (enabled) {
-            int currentBrightness = Settings.Secure.getIntForUser(context.getContentResolver(),
-                    Settings.Secure.BUTTON_BRIGHTNESS, defaultBrightness,
-                    UserHandle.USER_CURRENT);
-            if (!prefs.contains("pre_navbar_button_backlight")) {
-                editor.putInt("pre_navbar_button_backlight", currentBrightness);
-            }
-            Settings.Secure.putIntForUser(context.getContentResolver(),
-                    Settings.Secure.BUTTON_BRIGHTNESS, 0, UserHandle.USER_CURRENT);
-        } else {
-            int oldBright = prefs.getInt("pre_navbar_button_backlight", -1);
-            if (oldBright != -1) {
-                Settings.Secure.putIntForUser(context.getContentResolver(),
-                        Settings.Secure.BUTTON_BRIGHTNESS, oldBright, UserHandle.USER_CURRENT);
-                editor.remove("pre_navbar_button_backlight");
-            }
-        }
-        editor.commit();
-    }
-
-    private void updateDisableNavkeysOption() {
-        boolean enabled = isForcedNavbar();
-
-        final PreferenceScreen prefScreen = getPreferenceScreen();
-
-        /* Disable hw-key options if they're disabled */
-        final PreferenceCategory backCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
-        final PreferenceCategory homeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
-        final PreferenceCategory menuCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
-        final PreferenceCategory assistCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
-        final PreferenceCategory appSwitchCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-        final ButtonBacklightBrightness backlight =
-                (ButtonBacklightBrightness) prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
-
-        /*
-         * Toggle backlight control depending on navbar state, force it to off
-         * if enabling
-         */
-        if (backlight != null) {
-            backlight.setEnabled(!enabled);
-        }
-
-        /* Toggle hardkey control availability depending on navbar state */
-        if (backCategory != null) {
-            backCategory.setEnabled(!enabled);
-        }
-        if (homeCategory != null) {
-            homeCategory.setEnabled(!enabled);
-        }
-        if (menuCategory != null) {
-            menuCategory.setEnabled(!enabled);
-        }
-        if (assistCategory != null) {
-            assistCategory.setEnabled(!enabled);
-        }
-        if (appSwitchCategory != null) {
-            appSwitchCategory.setEnabled(!enabled);
-        }
-    }
-
-    public static void restoreKeyDisabler(Context context) {
-        CmHardwareManager cmHardwareManager =
-                (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
-        if (!cmHardwareManager.isSupported(CmHardwareManager.FEATURE_KEY_DISABLE)) {
-            return;
-        }
-    }
-
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mVolumeKeyCursorControl) {
@@ -373,20 +278,43 @@ public class ButtonSettings extends ActionFragment implements
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    private SwitchPreference initSwitch(String key, boolean checked) {
-        SwitchPreference switchPreference = (SwitchPreference) getPreferenceManager()
-                .findPreference(key);
-        if (switchPreference != null) {
-            switchPreference.setChecked(checked);
-            switchPreference.setOnPreferenceChangeListener(this);
-        }
-        return switchPreference;
-    }
+    // if a hardware key device is force showing navigation bar, hide
+    // the hardware button preferences
+    private void updateAvailableButtonPreferences(boolean barShowing) {
+        final PreferenceScreen prefScreen = getPreferenceScreen();
 
-    private void handleSwitchChange(SwitchPreference pref, Object newValue, String setting) {
-        Boolean value = (Boolean) newValue;
-        int intValue = (value) ? 1 : 0;
-        Settings.System.putInt(getContentResolver(), setting, intValue);
+        final PreferenceCategory backCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
+        final PreferenceCategory homeCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
+        final PreferenceCategory menuCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
+        final PreferenceCategory assistCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
+        final PreferenceCategory appSwitchCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
+        final ButtonBacklightBrightness backlight =
+                (ButtonBacklightBrightness) prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
+
+        if (backlight != null) {
+            backlight.setEnabled(!barShowing);
+        }
+
+        if (backCategory != null) {
+            backCategory.setEnabled(!barShowing);
+        }
+        if (homeCategory != null) {
+            homeCategory.setEnabled(!barShowing);
+        }
+        if (menuCategory != null) {
+            menuCategory.setEnabled(!barShowing);
+        }
+        if (assistCategory != null) {
+            assistCategory.setEnabled(!barShowing);
+        }
+        if (appSwitchCategory != null) {
+            appSwitchCategory.setEnabled(!barShowing);
+        }
     }
 
     private ListPreference initActionList(String key, int value) {
@@ -417,5 +345,61 @@ public class ButtonSettings extends ActionFragment implements
                 Settings.Secure.RING_HOME_BUTTON_BEHAVIOR, (mHomeAnswerCall.isChecked()
                         ? Settings.Secure.RING_HOME_BUTTON_BEHAVIOR_ANSWER
                         : Settings.Secure.RING_HOME_BUTTON_BEHAVIOR_DO_NOTHING));
+    }
+
+    /*
+     * static methods for managing hardware key disabler support
+     */
+
+    // called from boot receiver, UserChangedReceiver, and NavigatonSettings
+    public static void restoreKeyDisabler(Context context) {
+        CmHardwareManager cmHardwareManager =
+                (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
+        if (!cmHardwareManager.isSupported(CmHardwareManager.FEATURE_KEY_DISABLE)) {
+            return;
+        }
+        // key disabler is supported, set or restore state based on navbar showing
+        boolean navbarEnabled = isForcedNavbarEnabled(context);
+        writeDisableNavkeysOption(context, navbarEnabled);
+    }
+
+    // if hardware key disabler is supported, the disabler must only be enabled
+    // while the navigation bar is force shown
+    public static boolean isForcedNavbarEnabled(Context ctx) {
+        return Settings.Secure.getIntForUser(ctx.getContentResolver(),
+                Settings.Secure.DEV_FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) != 0;
+    }
+
+    // toggle key disabler, turn off button backlight when enabled
+    // restore button backlight values when disabled
+    private static void writeDisableNavkeysOption(Context context, boolean enabled) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final int defaultBrightness = context.getResources().getInteger(
+                com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
+
+        CmHardwareManager cmHardwareManager =
+                (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
+        cmHardwareManager.set(CmHardwareManager.FEATURE_KEY_DISABLE, enabled);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if (enabled) {
+            int currentBrightness = Settings.Secure.getIntForUser(context.getContentResolver(),
+                    Settings.Secure.BUTTON_BRIGHTNESS, defaultBrightness,
+                    UserHandle.USER_CURRENT);
+            if (!prefs.contains("pre_navbar_button_backlight")) {
+                editor.putInt("pre_navbar_button_backlight", currentBrightness);
+            }
+            Settings.Secure.putIntForUser(context.getContentResolver(),
+                    Settings.Secure.BUTTON_BRIGHTNESS, 0, UserHandle.USER_CURRENT);
+        } else {
+            int oldBright = prefs.getInt("pre_navbar_button_backlight", -1);
+            if (oldBright != -1) {
+                Settings.Secure.putIntForUser(context.getContentResolver(),
+                        Settings.Secure.BUTTON_BRIGHTNESS, oldBright, UserHandle.USER_CURRENT);
+                editor.remove("pre_navbar_button_backlight");
+            }
+        }
+        editor.commit();
     }
 }

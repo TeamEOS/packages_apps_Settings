@@ -92,17 +92,25 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        // build navigation settings disabled container for hardware key devices
+        // all hardware key devices can force show the navigation bar
+        // if hardware key disabler is supported, the disabler will be activated
+        // while the navigation bar is showing. This container should never show
+        // on devices without hardware keys        
         View v = inflater.inflate(R.layout.hideable_fragment, container, false);
         mPrefsContainer = (ViewGroup) v.findViewById(R.id.prefs_container);
         mDisabledText = (TextView) v.findViewById(R.id.disabled_text);
 
         StringBuilder builder = new StringBuilder();
-        builder.append(getString(R.string.navigation_disabled_notice));
+        builder.append(getString(R.string.force_navbar_disabled_notice));
+
         CmHardwareManager cmHardwareManager =
                 (CmHardwareManager) getSystemService(Context.CMHW_SERVICE);
-        if (!cmHardwareManager.isSupported(CmHardwareManager.FEATURE_KEY_DISABLE)) {
-            builder.append(" ").append(getString(R.string.navigation_disabled_extended));
-        }
+        boolean hasKeyDisabler = cmHardwareManager
+                .isSupported(CmHardwareManager.FEATURE_KEY_DISABLE);
+        builder.append(" ").append(getString(hasKeyDisabler
+                ? R.string.force_navbar_key_disable_supported
+                : R.string.force_navbar_key_disable_unsupported));
         mDisabledText.setText(builder.toString());
 
         View prefs = super.onCreateView(inflater, mPrefsContainer, savedInstanceState);
@@ -116,7 +124,7 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
         final SettingsActivity activity = (SettingsActivity) getActivity();
         if (mHasHardwareKeys) {
             mEnabledSwitch = new SecureSettingCurrentUserSwitchBar(activity, activity.getSwitchBar(),
-                    Settings.Secure.DEV_FORCE_SHOW_NAVBAR, true, this);
+                    Settings.Secure.DEV_FORCE_SHOW_NAVBAR, false, this);
         } else {
             mEnabledSwitch = null;
             updateEnabledState();
@@ -158,6 +166,7 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
     }
 
     private void updateEnabledState() {
+        // container always hidden on devices without hardware keys
         if (!mHasHardwareKeys) {
             mLastEnabledState = true;
         }
