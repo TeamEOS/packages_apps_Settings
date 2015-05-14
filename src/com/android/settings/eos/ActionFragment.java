@@ -26,10 +26,12 @@ import com.android.internal.util.actions.ActionHandler.ActionBundle;
 import com.android.internal.util.cm.QSUtils;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
@@ -128,6 +130,12 @@ public class ActionFragment extends SettingsPreferenceFragment implements
 
         if (!QSUtils.deviceSupportsFlashLight(getActivity())) {
             mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_TORCH);
+        }
+
+        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vib == null || !vib.hasVibrator()) {
+            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_VIBRATOR);
+            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_VIB_SILENT);
         }
 
         // only use for FFC only, i.e. Grouper
