@@ -114,34 +114,9 @@ public class ActionFragment extends SettingsPreferenceFragment implements
             mSystemActions.addAction(b.label, b.action);
         }
 
-        // filter actions based on environment
         if (!usesExtendedActionsList()) {
             mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_HOME);
             mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_BACK);
-        }
-
-        if (!QSUtils.deviceSupportsMobileData(getActivity())) {
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_WIFIAP);
-        }
-
-        if (!QSUtils.deviceSupportsBluetooth()) {
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_BT);
-        }
-
-        if (!QSUtils.deviceSupportsFlashLight(getActivity())) {
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_TORCH);
-        }
-
-        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if (vib == null || !vib.hasVibrator()) {
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_VIBRATOR);
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_VIB_SILENT);
-        }
-
-        // only use for FFC only, i.e. Grouper
-        // all other devices set action from packages
-        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_CAMERA);
         }
     }
 
