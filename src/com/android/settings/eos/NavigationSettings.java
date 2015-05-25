@@ -79,10 +79,7 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
                 R.array.systemui_navbar_mode_values);
         updateSettingsTarget(val);
 
-        // kill this for now
-        Preference barSize = findPreference(KEY_NAVIGATION_BAR_SIZE);
         PreferenceCategory navbarGeneral = (PreferenceCategory) findPreference(KEY_CATEGORY_NAVIGATION_GENERAL);
-        navbarGeneral.removePreference(barSize);
 
         // Navigation bar left
         mNavigationBarLeftPref = (SwitchPreference) findPreference(KEY_NAVIGATION_BAR_LEFT);
