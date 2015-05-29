@@ -23,20 +23,14 @@ import java.util.ArrayList;
 
 import com.android.internal.util.actions.ActionHandler;
 import com.android.internal.util.actions.ActionHandler.ActionBundle;
-import com.android.internal.util.cm.QSUtils;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -45,13 +39,7 @@ import com.android.settings.cyanogenmod.ShortcutPickHelper;
 public class ActionFragment extends SettingsPreferenceFragment implements
         ShortcutPickHelper.OnPickListener {
 
-    private static final String ACTION_DEFAULT = "action_default";
-    private static final String ACTION_APP = "action_app";
-    private static final String ACTION_SYSTEM = "action_system";
-
     private ShortcutPickHelper mPicker;
-    private ActionHolder mActionCategories;
-    private ActionHolder mSystemActions;
     protected ArrayList<ActionPreference> mPrefHolder;
     private String mHolderKey;
 
@@ -60,8 +48,6 @@ public class ActionFragment extends SettingsPreferenceFragment implements
         super.onCreate(icicle);
         mPicker = new ShortcutPickHelper(getActivity(), this);
         mPrefHolder = new ArrayList<ActionPreference>();
-        createActionCategoryList();
-        createSystemActionList();
     }
 
     @Override
@@ -77,7 +63,7 @@ public class ActionFragment extends SettingsPreferenceFragment implements
         if (uri == null) {
             return;
         }
-        findAndUpdatePreference(uri, false);
+        findAndUpdatePreference(new ActionBundle(getActivity(), uri));
     }
 
     @Override
@@ -97,27 +83,6 @@ public class ActionFragment extends SettingsPreferenceFragment implements
             pref.load();
         }
         onActionPolicyEnforced(mPrefHolder);
-    }
-
-    private void createActionCategoryList() {
-        mActionCategories = new ActionHolder();
-        mActionCategories.addAction(getString(R.string.action_entry_default_action), ACTION_DEFAULT);
-        mActionCategories.addAction(getString(R.string.actions_system_action), ACTION_SYSTEM);
-        mActionCategories.addAction(getString(R.string.select_application), ACTION_APP);
-    }
-
-    private void createSystemActionList() {
-        mSystemActions = new ActionHolder();
-
-        ArrayList<ActionBundle> actions = ActionHandler.getSystemActions(getActivity());
-        for (ActionBundle b : actions) {
-            mSystemActions.addAction(b.label, b.action);
-        }
-
-        if (!usesExtendedActionsList()) {
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_HOME);
-            mSystemActions.removeAction(ActionHandler.SYSTEMUI_TASK_BACK);
-        }
     }
 
     // subclass overrides to include back and home actions
@@ -150,23 +115,20 @@ public class ActionFragment extends SettingsPreferenceFragment implements
     private void onTargetChange(String uri) {
         if (uri == null) {
             return;
-        } else if (uri.equals(ACTION_DEFAULT)) {
-            findAndUpdatePreference(ACTION_DEFAULT, true);
-        } else if (uri.equals(ACTION_APP)) {
+        } else if (uri.equals(getString(R.string.action_value_default_action))) {
+            findAndUpdatePreference(null);
+        } else if (uri.equals(getString(R.string.action_value_select_app))) {
             mPicker.pickShortcut(null, null, getId());
-        } else if (uri.equals(ACTION_SYSTEM)) {
+        } else if (uri.equals(getString(R.string.action_value_custom_action))) {
             createAndShowSystemActionDialog();
         }
     }
 
-    private void findAndUpdatePreference(String action, boolean setDefault) {
+    private void findAndUpdatePreference(ActionBundle bundle) {
         for (ActionPreference pref : mPrefHolder) {
             if (pref.getKey().equals(mHolderKey)) {
-                if (setDefault) {
-                    action = pref.getDefaultAction();
-                }
-                ActionBundle b = new ActionBundle(getActivity(), action);
-                pref.updateAction(b);
+                pref.updateAction(bundle == null ? new ActionBundle(getActivity(), pref
+                        .getDefaultAction()) : bundle);
                 onActionPolicyEnforced(mPrefHolder);
                 break;
             }
@@ -177,7 +139,7 @@ public class ActionFragment extends SettingsPreferenceFragment implements
         final DialogInterface.OnClickListener l = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                onTargetChange(mActionCategories.getAction(item));
+                onTargetChange(getResources().getStringArray(R.array.action_dialog_values)[item]);
                 dialog.dismiss();
             }
         };
@@ -191,64 +153,30 @@ public class ActionFragment extends SettingsPreferenceFragment implements
 
         final AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.lockscreen_choose_action_title)
-                .setItems(mActionCategories.getEntries(), l)
+                .setItems(getResources().getStringArray(R.array.action_dialog_entries), l)
                 .setOnCancelListener(cancel)
                 .create();
         dialog.show();
     }
 
     private void createAndShowSystemActionDialog() {
+        final CustomActionListAdapter adapter = new CustomActionListAdapter(getActivity());
+        if (!usesExtendedActionsList()) {
+            adapter.removeAction(ActionHandler.SYSTEMUI_TASK_HOME);
+            adapter.removeAction(ActionHandler.SYSTEMUI_TASK_BACK);
+        }
         final DialogInterface.OnClickListener l = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                findAndUpdatePreference(mSystemActions.getAction(item), false);
+                findAndUpdatePreference(adapter.getItem(item));
                 dialog.dismiss();
             }
         };
 
         final AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                .setTitle("Set action")
-                .setItems(mSystemActions.getEntries(), l)
+                .setTitle(getString(R.string.action_entry_custom_action))
+                .setAdapter(adapter, l)
                 .create();
         dialog.show();
-    }
-
-    private class ActionHolder {
-        private ArrayList<CharSequence> mAvailableEntries = new ArrayList<CharSequence>();
-        private ArrayList<String> mAvailableValues = new ArrayList<String>();
-
-        public void addAction(String entry, String value) {
-            mAvailableEntries.add(entry);
-            mAvailableValues.add(value);
-        }
-
-        public void removeAction(String action) {
-            int index = getActionIndex(action);
-            if (index > -1) {
-                mAvailableEntries.remove(index);
-                mAvailableValues.remove(index);
-            }
-        }
-
-        public int getActionIndex(String action) {
-            int count = mAvailableValues.size();
-            for (int i = 0; i < count; i++) {
-                if (TextUtils.equals(mAvailableValues.get(i), action)) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        public String getAction(int index) {
-            if (index > mAvailableValues.size()) {
-                return null;
-            }
-            return mAvailableValues.get(index);
-        }
-
-        public CharSequence[] getEntries() {
-            return mAvailableEntries.toArray(new CharSequence[mAvailableEntries.size()]);
-        }
     }
 }
