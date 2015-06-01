@@ -220,4 +220,9 @@
     <string name="recents_clear_all_location_top_left">Top left</string>
     <string name="recents_clear_all_location_bottom_right">Bottom right</string>
     <string name="recents_clear_all_location_bottom_left">Bottom left</string>
+    <!-- Double tap gesture anywhere on the lock screen put device to sleep -->
+
+    <string name="double_tap_sleep_anywhere_title">Double-tap to sleep anywhere</string>
+    <string name="double_tap_sleep_anywhere_summary">Double-tap anywhere on the lockscreen to put the device to sleep</string>
+    
 </resources>
