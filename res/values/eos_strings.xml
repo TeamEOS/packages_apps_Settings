@@ -136,8 +136,8 @@
 
     <!-- TEMP: follow up later -->
     <string name="auto_brightness_reset_button">Reset</string>
-    <string name="mod_version">The TeamEos Project</string>
-    <string name="system_update_settings_list_item_title">Eos updates</string>
+    <string name="eos_mod_version">The TeamEos Project</string>
+    <string name="eos_update_settings_list_item_title">Eos updates</string>
 
     <!-- Navbar height -->
     <string name="navigation_bar_size_title">Bar size</string>

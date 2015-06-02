@@ -20,7 +20,7 @@
     <!-- System update settings - launches activity -->
     <PreferenceScreen
         android:key="system_update_settings"
-        android:title="@string/system_update_settings_list_item_title" >
+        android:title="@string/eos_update_settings_list_item_title" >
         <intent
             android:action="android.intent.action.MAIN"
             android:targetClass="@string/system_update_menu"
@@ -114,7 +114,7 @@
         <!-- Mod version -->
         <Preference android:key="mod_version"
                 style="?android:preferenceInformationStyle"
-                android:title="@string/mod_version"
+                android:title="@string/eos_mod_version"
                 android:summary="@string/mod_version_default" />
 
         <!-- Device firmware version -->
