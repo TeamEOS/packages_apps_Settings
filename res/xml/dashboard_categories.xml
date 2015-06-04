@@ -250,7 +250,7 @@
                 android:id="@+id/navigation_bar_settings"
                 android:title="@string/navigationbar_settings_title"
                 android:fragment="com.android.settings.eos.NavigationSettings"
-                android:icon="@drawable/ic_settings_navigation"
+                android:icon="@drawable/ic_settings_navigation_eos"
                 />
 
         <!-- Notification drawer -->
