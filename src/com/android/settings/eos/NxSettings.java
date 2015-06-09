@@ -18,6 +18,8 @@ package com.android.settings.eos;
 
 import java.util.ArrayList;
 
+import com.android.internal.util.actions.ActionConstants;
+import com.android.internal.util.actions.ActionHandler;
 import com.android.settings.R;
 
 import android.app.ActionBar;
@@ -81,7 +83,7 @@ public class NxSettings extends ActionFragment implements
         PreferenceCategory appearance = (PreferenceCategory) findPreference("eos_nx_appearance");
         appearance.removePreference(mNxTrailsEnable); // disable trails for now
 
-        onPreferenceScreenLoaded();
+        onPreferenceScreenLoaded(ActionConstants.getDefaults(ActionConstants.FLING));
     }
 
     @Override
@@ -120,8 +122,8 @@ public class NxSettings extends ActionFragment implements
     }
 
     protected void onActionPolicyEnforced(ArrayList<ActionPreference> prefs) {
-        enforceAction(prefs, "task_back");
-        enforceAction(prefs, "task_home");
+        enforceAction(prefs, ActionHandler.SYSTEMUI_TASK_BACK);
+        enforceAction(prefs, ActionHandler.SYSTEMUI_TASK_HOME);
     }
 
     /*
@@ -130,7 +132,7 @@ public class NxSettings extends ActionFragment implements
     private void enforceAction(ArrayList<ActionPreference> prefs, String action) {
         ArrayList<ActionPreference> actionPrefs = new ArrayList<ActionPreference>();
         for (ActionPreference pref : prefs) {
-            if (pref.getAction().equals(action)) {
+            if (pref.getActionConfig().getAction().equals(action)) {
                 actionPrefs.add(pref);
             }
         }

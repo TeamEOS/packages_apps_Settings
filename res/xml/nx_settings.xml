@@ -31,34 +31,27 @@
         android:title="@string/nx_swipe_actions" >
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_short_swipe_right"
+            android:key="fling_short_right"
             android:title="@string/nx_short_swipe_right"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_short_swipe_right_uri"
-            settings:defaultVal="@string/action_value_recent_apps" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_short_swipe_left"
+            android:key="fling_short_left"
             android:title="@string/nx_short_swipe_left"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_short_swipe_left_uri"
-            settings:defaultVal="@string/action_value_back" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_long_swipe_right"
+            android:key="fling_long_right"
             android:title="@string/nx_long_swipe_right"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_long_swipe_right_uri"
-            settings:defaultVal="@string/action_value_search_assist" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_long_swipe_left"
+            android:key="fling_long_left"
             android:title="@string/nx_long_swipe_left"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_long_swipe_left_uri" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
      </PreferenceCategory>
 
@@ -74,47 +67,39 @@
             android:title="@string/info_pref_note_title" />
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_single_tap"
+            android:key="single_right_tap"
             android:title="@string/nx_single_tap"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_single_tap_uri"
-            settings:defaultVal="@string/action_value_home" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_single_left_tap"
+            android:key="single_left_tap"
             android:title="@string/nx_single_left_tap"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_single_left_tap_uri" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_double_tap"
+            android:key="double_right_tap"
             android:title="@string/nx_double_tap"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_double_tap_uri" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
         
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_double_left_tap"
+            android:key="double_left_tap"
             android:title="@string/nx_double_left_tap"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_double_left_tap_uri" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_long_press"
+            android:key="long_right_press"
             android:title="@string/nx_long_press"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_long_press_uri"
-            settings:defaultVal="@string/action_value_menu" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_nx_long_left_press"
+            android:key="long_left_press"
             android:title="@string/nx_long_left_press"
-            android:summary="@string/nx_def_summary"
-            settings:observedUri="@string/nx_long_left_press_uri" >
+            android:summary="@string/nx_def_summary" >
         </com.android.settings.eos.ActionPreference>
     </PreferenceCategory>
 
