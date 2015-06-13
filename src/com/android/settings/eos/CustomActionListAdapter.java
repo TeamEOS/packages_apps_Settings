@@ -32,8 +32,8 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.internal.util.actions.ActionHandler;
-import com.android.internal.util.actions.Config.ActionConfig;
+import com.android.internal.actions.ActionHandler;
+import com.android.internal.actions.Config.ActionConfig;
 import com.android.settings.R;
 
 public class CustomActionListAdapter extends BaseAdapter {

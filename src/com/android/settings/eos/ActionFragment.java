@@ -21,11 +21,11 @@ package com.android.settings.eos;
 
 import java.util.ArrayList;
 
-import com.android.internal.util.actions.ActionConstants.Defaults;
-import com.android.internal.util.actions.ActionHandler;
-import com.android.internal.util.actions.Config;
-import com.android.internal.util.actions.Config.ActionConfig;
-import com.android.internal.util.actions.Config.ButtonConfig;
+import com.android.internal.actions.ActionConstants.Defaults;
+import com.android.internal.actions.ActionHandler;
+import com.android.internal.actions.Config;
+import com.android.internal.actions.Config.ActionConfig;
+import com.android.internal.actions.Config.ButtonConfig;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

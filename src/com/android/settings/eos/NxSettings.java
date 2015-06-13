@@ -18,8 +18,8 @@ package com.android.settings.eos;
 
 import java.util.ArrayList;
 
-import com.android.internal.util.actions.ActionConstants;
-import com.android.internal.util.actions.ActionHandler;
+import com.android.internal.actions.ActionConstants;
+import com.android.internal.actions.ActionHandler;
 import com.android.settings.R;
 
 import android.app.ActionBar;

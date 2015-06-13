@@ -16,8 +16,8 @@
 
 package com.android.settings.eos;
 
-import com.android.internal.util.actions.ActionConstants;
-import com.android.internal.util.actions.ActionUtils;
+import com.android.internal.actions.ActionConstants;
+import com.android.internal.actions.ActionUtils;
 
 import android.content.ContentResolver;
 import android.content.Context;
