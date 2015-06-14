@@ -16,6 +16,7 @@
 
 package com.android.settings.eos;
 
+import com.android.internal.util.actions.ActionConstants;
 import com.android.internal.util.actions.ActionUtils;
 
 import android.content.ContentResolver;
@@ -219,7 +220,7 @@ public class ButtonSettings extends ActionFragment implements
         }
 
         // let super know we can load ActionPreferences
-        onPreferenceScreenLoaded();
+        onPreferenceScreenLoaded(ActionConstants.getDefaults(ActionConstants.HWKEYS));
 
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
                 getPreferenceScreen(), KEY_BLUETOOTH_INPUT_SETTINGS);

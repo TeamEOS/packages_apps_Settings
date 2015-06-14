@@ -33,13 +33,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.internal.util.actions.ActionHandler;
-import com.android.internal.util.actions.ActionHandler.ActionBundle;
+import com.android.internal.util.actions.Config.ActionConfig;
 import com.android.settings.R;
 
 public class CustomActionListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
-    private List<ActionBundle> mCustomActions = new ArrayList<ActionBundle>();
+    private List<ActionConfig> mCustomActions = new ArrayList<ActionConfig>();
 
     public CustomActionListAdapter(Context context) {
         mContext = context;
@@ -56,7 +56,7 @@ public class CustomActionListAdapter extends BaseAdapter {
     public void removeAction(String action) {
         int index = -1;
         for (int i = 0; i < mCustomActions.size(); i++) {
-            if (TextUtils.equals(mCustomActions.get(i).action, action)) {
+            if (TextUtils.equals(mCustomActions.get(i).getAction(), action)) {
                 index = i;
                 break;
             }
@@ -73,7 +73,7 @@ public class CustomActionListAdapter extends BaseAdapter {
     }
 
     @Override
-    public ActionBundle getItem(int position) {
+    public ActionConfig getItem(int position) {
         return mCustomActions.get(position);
     }
 
@@ -102,12 +102,10 @@ public class CustomActionListAdapter extends BaseAdapter {
             holder.icon.setScaleType(ScaleType.CENTER_INSIDE);
         }
 
-        ActionBundle bundle = getItem(position);
-        holder.title.setText(bundle.label);
-        if (bundle.icon != null) {
-            holder.icon.setBackgroundResource(R.drawable.fab_accent);
-            holder.icon.setImageDrawable(bundle.icon);
-        }
+        ActionConfig config = getItem(position);
+        holder.title.setText(config.getLabel());
+        holder.icon.setBackgroundResource(R.drawable.fab_accent);
+        holder.icon.setImageDrawable(config.getDefaultIcon(mContext));
         holder.summary.setVisibility(View.GONE);
 
         return convertView;

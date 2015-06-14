@@ -23,6 +23,7 @@ import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 
+import com.android.internal.util.actions.ActionConstants;
 import com.android.settings.R;
 
 public class AospNavbarSettings extends ActionFragment implements
@@ -48,7 +49,7 @@ public class AospNavbarSettings extends ActionFragment implements
                     0, UserHandle.USER_CURRENT) == 1);
             mShowMenu.setOnPreferenceChangeListener(this);
         }
-        onPreferenceScreenLoaded();
+        onPreferenceScreenLoaded(ActionConstants.getDefaults(ActionConstants.NAVBAR));
     }
 
     @Override

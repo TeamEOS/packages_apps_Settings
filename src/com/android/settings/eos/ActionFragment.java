@@ -21,8 +21,11 @@ package com.android.settings.eos;
 
 import java.util.ArrayList;
 
+import com.android.internal.util.actions.ActionConstants.Defaults;
 import com.android.internal.util.actions.ActionHandler;
-import com.android.internal.util.actions.ActionHandler.ActionBundle;
+import com.android.internal.util.actions.Config;
+import com.android.internal.util.actions.Config.ActionConfig;
+import com.android.internal.util.actions.Config.ButtonConfig;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -41,7 +44,10 @@ public class ActionFragment extends SettingsPreferenceFragment implements
 
     private ShortcutPickHelper mPicker;
     protected ArrayList<ActionPreference> mPrefHolder;
-    private String mHolderKey;
+    private String mHolderTag;
+    private Defaults mDefaults;
+    private ArrayList<ButtonConfig> mButtons;
+    private ArrayList<ButtonConfig> mDefaultButtons;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -63,13 +69,13 @@ public class ActionFragment extends SettingsPreferenceFragment implements
         if (uri == null) {
             return;
         }
-        findAndUpdatePreference(new ActionBundle(getActivity(), uri));
+        findAndUpdatePreference(new ActionConfig(getActivity(), uri));
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference instanceof ActionPreference) {
-            mHolderKey = preference.getKey();
+            mHolderTag = ((ActionPreference)preference).getTag();
             createAndShowCategoryDialog();
             return true;
         }
@@ -79,10 +85,10 @@ public class ActionFragment extends SettingsPreferenceFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        for (ActionPreference pref : mPrefHolder) {
-            pref.load();
+        if (mDefaults != null) {
+            loadAndSetConfigs();
+            onActionPolicyEnforced(mPrefHolder);
         }
-        onActionPolicyEnforced(mPrefHolder);
     }
 
     // subclass overrides to include back and home actions
@@ -93,8 +99,13 @@ public class ActionFragment extends SettingsPreferenceFragment implements
     protected void onActionPolicyEnforced(ArrayList<ActionPreference> prefs) {
     }
 
-    // populate holder list once everything is added and removed
-    protected void onPreferenceScreenLoaded() {
+    /**
+     * load our button lists and ActionPreferences map button action targets from preference keys
+     * and defaults config maps subclass is required to set desired Defaults interface int
+     * ActionContants
+     */
+    protected void onPreferenceScreenLoaded(Defaults defaults) {
+        mDefaults = defaults;
         final PreferenceScreen prefScreen = getPreferenceScreen();
         for (int i = 0; i < prefScreen.getPreferenceCount(); i++) {
             Preference pref = prefScreen.getPreference(i);
@@ -110,6 +121,21 @@ public class ActionFragment extends SettingsPreferenceFragment implements
                 mPrefHolder.add((ActionPreference) pref);
             }
         }
+        loadAndSetConfigs();
+    }
+
+    private void loadAndSetConfigs() {
+        mButtons = Config.getConfig(getActivity(), mDefaults);
+        mDefaultButtons = Config.getDefaultConfig(getActivity(), mDefaults);
+        for (ActionPreference pref : mPrefHolder) {
+            pref.setDefaults(mDefaults);
+            ButtonConfig button = mButtons.get(pref.getConfigMap().button);
+            ActionConfig action = button.getActionConfig(pref.getConfigMap().action);
+            pref.setActionConfig(action);
+            ButtonConfig defButton = mDefaultButtons.get(pref.getConfigMap().button);
+            ActionConfig defAction = defButton.getActionConfig(pref.getConfigMap().action);
+            pref.setDefaultActionConfig(defAction);
+        }
     }
 
     private void onTargetChange(String uri) {
@@ -124,11 +150,18 @@ public class ActionFragment extends SettingsPreferenceFragment implements
         }
     }
 
-    private void findAndUpdatePreference(ActionBundle bundle) {
+    private void findAndUpdatePreference(ActionConfig action) {
         for (ActionPreference pref : mPrefHolder) {
-            if (pref.getKey().equals(mHolderKey)) {
-                pref.updateAction(bundle == null ? new ActionBundle(getActivity(), pref
-                        .getDefaultAction()) : bundle);
+            if (pref.getTag().equals(mHolderTag)) {
+                if (action == null) {
+                    action = pref.getDefaultActionConfig();
+                }
+                pref.setActionConfig(action);
+                ButtonConfig button = mButtons.get(pref.getConfigMap().button);
+                ActionConfig newAction = pref.getActionConfig();
+                button.setActionConfig(newAction, pref.getConfigMap().action);
+                mButtons = Config.replaceButtonAtPosition(mButtons, button, pref.getConfigMap());
+                Config.setConfig(getActivity(), mDefaults, mButtons);
                 onActionPolicyEnforced(mPrefHolder);
                 break;
             }

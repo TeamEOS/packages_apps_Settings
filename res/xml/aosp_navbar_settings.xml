@@ -24,27 +24,23 @@
         android:title="@string/softkey_doubletap_title" >
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_dt_back"
-            android:title="@string/softkey_back"
-            settings:observedUri="@string/softkey_back_dt_observed_uri" >
+            android:key="navbar_button_back_double_tap"
+            android:title="@string/softkey_back" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_dt_home"
-            android:title="@string/softkey_home"
-            settings:observedUri="@string/softkey_home_dt_observed_uri" >
+            android:key="navbar_button_home_double_tap"
+            android:title="@string/softkey_home" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_dt_recent"
-            android:title="@string/softkey_recent"
-            settings:observedUri="@string/softkey_recent_dt_observed_uri" >
+            android:key="navbar_button_overview_double_tap"
+            android:title="@string/softkey_recent" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_dt_menu"
-            android:title="@string/softkey_menu"
-            settings:observedUri="@string/softkey_menu_dt_observed_uri" >
+            android:key="navbar_button_menu_double_tap"
+            android:title="@string/softkey_menu" >
         </com.android.settings.eos.ActionPreference>
     </PreferenceCategory>
 
@@ -53,31 +49,27 @@
         android:title="@string/softkey_longpress_title" >
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_back"
+            android:key="navbar_button_back_long_press"
             android:title="@string/softkey_back"
-            android:summary="@string/softkey_longpress_summary"
-            settings:observedUri="@string/softkey_back_observed_uri" >
+            android:summary="@string/softkey_longpress_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_home"
+            android:key="navbar_button_home_long_press"
             android:title="@string/softkey_home"
-            android:summary="@string/softkey_longpress_summary"
-            settings:observedUri="@string/softkey_home_observed_uri" >
+            android:summary="@string/softkey_longpress_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_recent"
+            android:key="navbar_button_overview_long_press"
             android:title="@string/softkey_recent"
-            android:summary="@string/softkey_longpress_summary"
-            settings:observedUri="@string/softkey_recent_observed_uri" >
+            android:summary="@string/softkey_longpress_summary" >
         </com.android.settings.eos.ActionPreference>
 
         <com.android.settings.eos.ActionPreference
-            android:key="eos_softkey_menu"
+            android:key="navbar_button_menu_long_press"
             android:title="@string/softkey_menu"
-            android:summary="@string/softkey_longpress_summary"
-            settings:observedUri="@string/softkey_menu_observed_uri" >
+            android:summary="@string/softkey_longpress_summary" >
         </com.android.settings.eos.ActionPreference>
     </PreferenceCategory>
 
