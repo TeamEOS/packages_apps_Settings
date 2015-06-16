@@ -103,6 +103,7 @@
     <string name="nx_show_logo_title">Show NX logo</string>
     <string name="nx_animate_logo_title">Animate logo</string>
     <string name="nx_animate_logo_summary">Logo animates on touch events</string>
+    <string name="nx_logo_color">Logo color</string>
     <string name="nx_show_ripple_title">Show ripple</string>
     <string name="nx_show_ripple_summary">Ripple effect on touch events</string>
     <string name="nx_show_pulse_title">Show Pulse</string>

@@ -117,6 +117,12 @@
             android:title="@string/nx_animate_logo_title"
             android:summary="@string/nx_animate_logo_summary" />
 
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="eos_nx_logo_color"
+            android:title="@string/nx_logo_color"
+            android:defaultValue="0xffffff"
+            android:dependency="eos_nx_show_logo" />
+
          <SwitchPreference
             android:key="eos_nx_show_ripple"
             android:title="@string/nx_show_ripple_title"
