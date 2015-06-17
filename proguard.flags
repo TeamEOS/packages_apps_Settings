@@ -30,3 +30,6 @@
 -keepclassmembers class com.android.settings.inputmethod.UserDictionaryAddWordActivity {
   *** onClick*(...);
 }
+
+# org.teameos.navigation trail-drawaing library fix
+-dontwarn com.google.common.annotations.VisibleForTesting
