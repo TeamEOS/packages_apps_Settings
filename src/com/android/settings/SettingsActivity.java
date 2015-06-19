@@ -45,6 +45,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.preference.Preference;
@@ -718,6 +719,13 @@ public class SettingsActivity extends Activity
         setTitleFromBackStack();
     }
 
+    @Override
+    public boolean onSearchRequested() { // Search key pressed.
+        mSearchMenuItem.expandActionView();
+        switchToSearchResultsFragmentIfNeeded();
+        return true;
+    }
+
     private int setTitleFromBackStack() {
         final int count = getFragmentManager().getBackStackEntryCount();
 
@@ -1216,9 +1224,7 @@ public class SettingsActivity extends Activity
                         removeTile = true;
                     } else if (TelephonyManager.getDefault().getPhoneCount() > 1) {
                         removeTile = true;
-                    }
-                } else if (id == R.id.msim_mobile_networks) {
-                    if (TelephonyManager.getDefault().getPhoneCount() <= 1) {
+                    } else if (SystemProperties.getBoolean("ro.radio.noril", false)) {
                         removeTile = true;
                     }
                 } else if (id == R.id.data_usage_settings) {
@@ -1461,7 +1467,9 @@ public class SettingsActivity extends Activity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_SEARCH:
-                mSearchMenuItem.expandActionView();
+                if (mSearchMenuItem != null) {
+                    mSearchMenuItem.expandActionView();
+                }
                 return true;
         }
         return super.onKeyDown(keyCode, event);

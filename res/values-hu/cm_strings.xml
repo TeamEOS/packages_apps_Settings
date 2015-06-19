@@ -83,6 +83,7 @@
   <string name="profile_choose_app">Válasszon alkalmazást</string>
   <string name="profile_system_settings_title">Rendszer beállítások</string>
   <string name="profile_lockmode_title">Képernyőzár módja</string>
+  <string name="profile_lockmode_policy_disabled_summary">Ez a profil opció le van tiltva az eszköz adminisztrátori házirendből</string>
   <string name="profile_lockmode_insecure_summary">Ne kérje a PIN-kódját vagy a jelszavát</string>
   <string name="profile_lockmode_disabled_summary">Képernyőzár letiltása</string>
   <string name="profile_airplanemode_title">Repülőgép üzemmód</string>
@@ -209,7 +210,9 @@
   <string name="display_rotation_270_title">270 fok</string>
   <string name="app_security_title">Alkalmazásbiztonság</string>
   <string name="sms_security_check_limit_title">Üzenet korlát</string>
-  <string name="sms_security_check_limit_summary">Figyelmeztető ablak megjelenítése a túl gyakori üzenetküldés megakadályozására. Jelenlegi limit: %d üzenet 30 percenként</string>
+  <string name="sms_security_check_limit_summary">Alkalmazások %d üzenetet küldhetnek percenként megerősítés nélkül</string>
+  <string name="sms_security_check_limit_summary_none">Az alkalmazások nem küldhetnek üzeneteket megerősítés nélkül</string>
+  <string name="sms_security_check_limit_none">Nincs</string>
   <string name="spam_added_title">Hozzáadva: %1$s</string>
   <string name="spam_last_blocked_title">Utoljára blokkolva: %1$s</string>
   <string name="block_notifications_title">Értesítések szűrése</string>
@@ -304,9 +307,6 @@
   <string name="status_bar_battery_percentage_default">Rejtett</string>
   <string name="status_bar_battery_percentage_text_inside">Az ikon belsejében</string>
   <string name="status_bar_battery_percentage_text_next">Az ikon mellett</string>
-  <string name="status_bar_show_unused_sims_title">Üres SIM ikonok megjelenítése</string>
-  <string name="status_bar_show_unused_sims_title_summary_off">Használaton kívüli SIM foglalatok elrejtése</string>
-  <string name="status_bar_show_unused_sims_title_summary_on">Használaton kívüli SIM foglalatok megjelenítése</string>
   <string name="edit_light_settings">Jelzés beállítások</string>
   <string name="pulse_speed_title">Impulzus hossza és sebessége</string>
   <string name="default_time">Normál</string>
@@ -573,7 +573,6 @@
   <string name="sim_pin_attempts">\nHátralevő kísérlet száma:</string>
   <string name="sim_pin_enabled">PIN1 engedélyezve</string>
   <string name="sim_pin_disabled">PIN1 letiltva</string>
-  <string name="subs_settings">SIM-kártya állapota</string>
   <string name="storage_usb">USB tárhely</string>
   <string name="storage_uicc">UICC tároló</string>
   <string name="sdcard_eject" product="default">SD kártya leválasztása</string>
@@ -650,6 +649,7 @@
   <string name="usb_charging_summary">Összes adatátvitel letiltása számítógép vagy egyéb USB csatlakoztatás esetén</string>
   <string name="usb_sdcard_title">USB háttértár (UMS)</string>
   <string name="usb_sdcard_summary">Lehetővé teszi fájlok átvitelét az eszköz és az ön számítógépe közt, mintha csak egy pendrive-ot használna</string>
+  <string name="usb_not_connected">USB most leválasztva</string>
   <string name="external_storage_turn_on">Külső tároló bekapcsolva</string>
   <string name="external_storage_turn_off">Külső tároló kikapcsolva</string>
   <string name="stats_collection_title">Statisztika gyűjtése</string>
@@ -735,6 +735,7 @@
   <string name="qs_tile_usb_tether">USB megosztás</string>
   <string name="qs_tile_heads_up">Lebegő értesítés</string>
   <string name="qs_tile_ambient_display">Környezeti kijelző</string>
+  <string name="qs_tile_sync">Szinkronizálás</string>
   <string name="qs_main_tiles_title">Első sor nagyítása</string>
   <string name="qs_main_tiles_summary_on">Az első sorban két fő csempe</string>
   <string name="qs_main_tiles_summary_off">Három csempe minden sorban</string>
@@ -810,14 +811,14 @@
   <string name="category_interface">Felhasználói felület</string>
   <string name="category_calibration">Kalibrálás</string>
   <string name="display_and_lights">Kijelző &amp; Fények</string>
-  <string name="notification_manager">Értesítés kezelő</string>
+  <string name="notification_manager">Értesítések</string>
   <string name="lockscreen_settings">Képernyőzár</string>
   <string name="category_lights">Fények</string>
   <string name="power_usage_history_title">Akkumulátor használat</string>
   <string name="recents_show_searchbar">Keresősáv megjelenítése az előzmények menüben</string>
   <string name="keywords_recents_show_searchbar">előzmény előzmények letiltás engedélyezés megjelenítés elrejtés kereső sáv keresősáv</string>
   <string name="sim_ringtone_title">SIM %d csengőhang</string>
-  <string name="interruptions_ignore_while_media_title">Lehalkítás megelőzésee</string>
+  <string name="interruptions_ignore_while_media_title">Lehalkítás megelőzése</string>
   <string name="interruptions_ignore_while_media_summary">Ne csökkentse a lejátszott média hangerejét értesítés érkezésekor</string>
   <string name="none_is_silent_title">Soha ne némítsa az ébresztést</string>
   <string name="none_is_silent_summary">Csendes módban mindig ébresszen</string>
@@ -862,4 +863,9 @@
   <string name="lock_to_cyanogen_disable_msg">A funkció letiltásával jogosulatlan személyek visszaállíthatják a telefont a gyári beállításokra lopás esetén. Személyes adatai nem lesznek biztonságban. Biztosan letiltja ezt a funkciót?</string>
   <string name="lock_to_cyanogen_master_clear_warning">Eszközvédelem engedélyezve van. Tiltsa le a készülék visszaállításának folytatásához.</string>
   <string name="bluetooth_pan_profile_summary_use_for_error">Csatlakozási hiba; Engedélyezve van a Bluetooth megosztás a készüléken?</string>
+  <string name="sim_card_status_title">SIM %d állapot</string>
+  <string name="sim_card_lock_settings_title">SIM %d zárolási beállítások</string>
+  <string name="sim_card_summary_empty">SIM nincs behelyezve</string>
+  <string name="sim_mobile_network_settings_category_title">Mobilhálózati beállítások</string>
+  <string name="sim_mobile_network_settings_title">SIM %d beállítások</string>
 </resources>

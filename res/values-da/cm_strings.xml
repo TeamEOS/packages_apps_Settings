@@ -209,7 +209,6 @@
   <string name="display_rotation_270_title">270 grader</string>
   <string name="app_security_title">App-sikkerhed</string>
   <string name="sms_security_check_limit_title">SMS-grænse</string>
-  <string name="sms_security_check_limit_summary">Vis en advarselsdialog for at forhindre programmer i at sende SMS-beskeder for ofte. Aktuel grænse: %d beskeder på 30 minutter (kræver genstart)</string>
   <string name="spam_added_title">Tilføjet %1$s</string>
   <string name="spam_last_blocked_title">Sidste blokerede %1$s</string>
   <string name="block_notifications_title">Filtrere meddelelser</string>
@@ -304,9 +303,6 @@
   <string name="status_bar_battery_percentage_default">Skjult</string>
   <string name="status_bar_battery_percentage_text_inside">Inde i ikonet</string>
   <string name="status_bar_battery_percentage_text_next">Ved siden af ikonet</string>
-  <string name="status_bar_show_unused_sims_title">Vis tomme SIM-ikoner</string>
-  <string name="status_bar_show_unused_sims_title_summary_off">Skjul ikoner fra ubrugte SIM-slots</string>
-  <string name="status_bar_show_unused_sims_title_summary_on">Vis ikoner fra ubrugte SIM-slots</string>
   <string name="edit_light_settings">Rediger LED-indstillinger</string>
   <string name="pulse_speed_title">Blinklængde og hastighed</string>
   <string name="default_time">Normal</string>
@@ -573,7 +569,6 @@
   <string name="sim_pin_attempts">\nForsøg tilbage:</string>
   <string name="sim_pin_enabled">PIN1 aktiveret</string>
   <string name="sim_pin_disabled">PIN1 deaktiveret</string>
-  <string name="subs_settings">SIM-kort status</string>
   <string name="storage_usb">USB-hukommelse</string>
   <string name="storage_uicc">UICC-hukommelse</string>
   <string name="sdcard_eject" product="default">Frakoble SD-kort</string>
@@ -809,7 +804,6 @@
   <string name="category_interface">Brugerflade</string>
   <string name="category_calibration">Kalibrering</string>
   <string name="display_and_lights">Skærm &amp; lys</string>
-  <string name="notification_manager">Notifikationsstyring</string>
   <string name="lockscreen_settings">Skærmlås</string>
   <string name="category_lights">Lys</string>
   <string name="power_usage_history_title">Batteriforbrug</string>
