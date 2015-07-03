@@ -108,6 +108,7 @@
     <string name="nx_show_ripple_summary">Ripple effect on touch events</string>
     <string name="nx_show_pulse_title">Show Pulse</string>
     <string name="nx_show_pulse_summary">NX shows bar visualization when music plays</string>
+    <string name="fling_pulse_color">Pulse color</string>
     <string name="nx_longpress_timeout_label_left">Less delay</string>
     <string name="nx_longpress_timeout_label_right">More delay</string>
     <string name="nx_longpress_title">Long press delay</string>

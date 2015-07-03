@@ -48,6 +48,7 @@ public class NxSettings extends ActionFragment implements
     SwitchPreference mShowRipple;
 
     ColorPickerPreference mLogoColor;
+    ColorPickerPreference mPulseColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,10 +77,10 @@ public class NxSettings extends ActionFragment implements
                 Settings.System.NX_LOGO_ANIMATES, 1) == 1);
         mAnimateLogo.setOnPreferenceChangeListener(this);
 
-        int color = Settings.System.getIntForUser(getContentResolver(),
+        int logoColor = Settings.System.getIntForUser(getContentResolver(),
                 Settings.System.NX_LOGO_COLOR, Color.WHITE, UserHandle.USER_CURRENT);
         mLogoColor = (ColorPickerPreference) findPreference("eos_nx_logo_color");
-        mLogoColor.setNewPreviewColor(color);
+        mLogoColor.setNewPreviewColor(logoColor);
         mLogoColor.setOnPreferenceChangeListener(this);
 
         mShowRipple = (SwitchPreference) findPreference("eos_nx_show_ripple");
@@ -91,6 +92,12 @@ public class NxSettings extends ActionFragment implements
         mShowPulse.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NX_PULSE_ENABLED, 0) == 1);
         mShowPulse.setOnPreferenceChangeListener(this);
+
+        int pulseColor = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.FLING_PULSE_COLOR, Color.WHITE, UserHandle.USER_CURRENT);
+        mPulseColor = (ColorPickerPreference) findPreference("eos_fling_pulse_color");
+        mPulseColor.setNewPreviewColor(pulseColor);
+        mPulseColor.setOnPreferenceChangeListener(this);
 
         PreferenceCategory appearance = (PreferenceCategory) findPreference("eos_nx_appearance");
         appearance.removePreference(mNxTrailsEnable); // disable trails for now
@@ -129,6 +136,11 @@ public class NxSettings extends ActionFragment implements
             boolean enabled = ((Boolean) newValue).booleanValue();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.NX_RIPPLE_ENABLED, enabled ? 1 : 0);
+            return true;
+        } else if (preference.equals(mPulseColor)) {
+            int color = ((Integer) newValue).intValue();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.FLING_PULSE_COLOR, color);
             return true;
         }
         return false;

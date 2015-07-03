@@ -136,6 +136,12 @@
             android:key="eos_nx_show_pulse"
             android:title="@string/nx_show_pulse_title"
             android:summary="@string/nx_show_pulse_summary" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="eos_fling_pulse_color"
+            android:title="@string/fling_pulse_color"
+            android:defaultValue="0xffffff"
+            android:dependency="eos_nx_show_pulse" />
      </PreferenceCategory>
 
     <PreferenceCategory
