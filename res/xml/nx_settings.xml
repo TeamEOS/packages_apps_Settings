@@ -129,8 +129,15 @@
             android:summary="@string/nx_show_ripple_summary" />
 
         <SwitchPreference
-            android:key="eos_nx_trails_enable"
-            android:title="@string/nx_trails_enable_title" />
+            android:key="eos_fling_trails_enable"
+            android:title="@string/fling_trails_enable_title"
+            android:summary="@string/fling_trails_enable_summary" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="eos_fling_trails_color"
+            android:title="@string/fling_trails_color_title"
+            android:defaultValue="0xffffff"
+            android:dependency="eos_fling_trails_enable" />
 
          <SwitchPreference
             android:key="eos_nx_show_pulse"
@@ -141,6 +148,12 @@
             android:key="eos_fling_pulse_color"
             android:title="@string/fling_pulse_color"
             android:defaultValue="0xffffff"
+            android:dependency="eos_nx_show_pulse" />
+
+         <SwitchPreference
+            android:key="eos_fling_lavalamp"
+            android:title="@string/eos_fling_lavalamp_title"
+            android:summary="@string/eos_fling_lavalamp_summary"
             android:dependency="eos_nx_show_pulse" />
      </PreferenceCategory>
 

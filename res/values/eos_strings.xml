@@ -98,7 +98,9 @@
     <string name="nx_advanced">Advanced</string>
     <string name="nx_long_swipe_title">Long swipe threshold</string>
     <string name="nx_long_swipe_summary">Fine tune long swipe thresholds based on a percentage of NX interface width or height</string>
-    <string name="nx_trails_enable_title">Enable gesture trails</string>
+    <string name="fling_trails_enable_title">Enable gesture trails</string>
+    <string name="fling_trails_enable_summary">Show a trail on swipe gestures</string>
+    <string name="fling_trails_color_title">Trail color</string>
     <string name="nx_appearance">Appearance</string>
     <string name="nx_show_logo_title">Show NX logo</string>
     <string name="nx_animate_logo_title">Animate logo</string>
@@ -109,6 +111,8 @@
     <string name="nx_show_pulse_title">Show Pulse</string>
     <string name="nx_show_pulse_summary">NX shows bar visualization when music plays</string>
     <string name="fling_pulse_color">Pulse color</string>
+    <string name="eos_fling_lavalamp_title">Turn on Lava Lamp</string>
+    <string name="eos_fling_lavalamp_summary">Pulse animates a smooth lava lamp style color blend</string>
     <string name="nx_longpress_timeout_label_left">Less delay</string>
     <string name="nx_longpress_timeout_label_right">More delay</string>
     <string name="nx_longpress_title">Long press delay</string>

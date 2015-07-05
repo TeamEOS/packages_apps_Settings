@@ -37,18 +37,19 @@ import android.provider.Settings;
 public class NxSettings extends ActionFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = NxSettings.class.getSimpleName();
-    private static final String NX_TRAILS_ENABLE_KEY = "eos_nx_trails_enable";
 
     Context mContext;
 
-    SwitchPreference mNxTrailsEnable;
     SwitchPreference mShowLogo;
     SwitchPreference mAnimateLogo;
     SwitchPreference mShowPulse;
     SwitchPreference mShowRipple;
+    SwitchPreference mLavaLampEnabled;
+    SwitchPreference mTrailsEnabled;
 
     ColorPickerPreference mLogoColor;
     ColorPickerPreference mPulseColor;
+    ColorPickerPreference mTrailsColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,11 +62,6 @@ public class NxSettings extends ActionFragment implements
         }
 
         mContext = (Context) getActivity();
-
-        mNxTrailsEnable = (SwitchPreference) findPreference(NX_TRAILS_ENABLE_KEY);
-        mNxTrailsEnable.setChecked(Settings.System.getInt(getContentResolver(),
-                "eos_nx_trails_enabled", 0) == 1);
-        mNxTrailsEnable.setOnPreferenceChangeListener(this);
 
         mShowLogo = (SwitchPreference) findPreference("eos_nx_show_logo");
         mShowLogo.setChecked(Settings.System.getInt(getContentResolver(),
@@ -88,6 +84,17 @@ public class NxSettings extends ActionFragment implements
                 Settings.System.NX_RIPPLE_ENABLED, 1) == 1);
         mShowRipple.setOnPreferenceChangeListener(this);
 
+        mTrailsEnabled = (SwitchPreference) findPreference("eos_fling_trails_enable");
+        mTrailsEnabled.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.FLING_TRAILS_ENABLED, 0) == 1);
+        mTrailsEnabled.setOnPreferenceChangeListener(this);
+
+        int trailsColor = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.FLING_TRAILS_COLOR, Color.WHITE, UserHandle.USER_CURRENT);
+        mTrailsColor = (ColorPickerPreference) findPreference("eos_fling_trails_color");
+        mTrailsColor.setNewPreviewColor(trailsColor);
+        mTrailsColor.setOnPreferenceChangeListener(this);
+
         mShowPulse = (SwitchPreference) findPreference("eos_nx_show_pulse");
         mShowPulse.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NX_PULSE_ENABLED, 0) == 1);
@@ -99,20 +106,17 @@ public class NxSettings extends ActionFragment implements
         mPulseColor.setNewPreviewColor(pulseColor);
         mPulseColor.setOnPreferenceChangeListener(this);
 
-        PreferenceCategory appearance = (PreferenceCategory) findPreference("eos_nx_appearance");
-        appearance.removePreference(mNxTrailsEnable); // disable trails for now
+        mLavaLampEnabled = (SwitchPreference) findPreference("eos_fling_lavalamp");
+        mLavaLampEnabled.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.FLING_PULSE_LAVALAMP_ENABLED, 0) == 1);
+        mLavaLampEnabled.setOnPreferenceChangeListener(this);
 
         onPreferenceScreenLoaded(ActionConstants.getDefaults(ActionConstants.FLING));
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference.equals(mNxTrailsEnable)) {
-            boolean enabled = ((Boolean) newValue).booleanValue();
-            Settings.System.putInt(getContentResolver(),
-                    "eos_nx_trails_enabled", enabled ? 1 : 0);
-            return true;
-        } else if (preference.equals(mShowLogo)) {
+        if (preference.equals(mShowLogo)) {
             boolean enabled = ((Boolean) newValue).booleanValue();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.NX_LOGO_VISIBLE, enabled ? 1 : 0);
@@ -141,6 +145,21 @@ public class NxSettings extends ActionFragment implements
             int color = ((Integer) newValue).intValue();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.FLING_PULSE_COLOR, color);
+            return true;
+        } else if (preference.equals(mTrailsEnabled)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.FLING_TRAILS_ENABLED, enabled ? 1 : 0);
+            return true;
+        } else if (preference.equals(mTrailsColor)) {
+            int color = ((Integer) newValue).intValue();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.FLING_TRAILS_COLOR, color);
+            return true;
+        } else if (preference.equals(mLavaLampEnabled)) {
+            boolean enabled = ((Boolean) newValue).booleanValue();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.FLING_PULSE_LAVALAMP_ENABLED, enabled ? 1 : 0);
             return true;
         }
         return false;
