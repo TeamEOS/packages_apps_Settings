@@ -22,8 +22,9 @@
     <string name="navbar_interface_title">Interface</string>
     <string name="navbar_size">Bar size</string>
     <string name="navbar_mode">Navigation mode</string>
-    <string name="navigationbar_settings_title">Navigation bar</string>
+    <string name="navigationbar_settings_title">Navigation</string>
     <string name="aosp_navigation_bar">Navigation bar</string>
+    <string name="aosp_navigation_bar_settings">Navigation bar settings</string>
     <string name="navigationbar_settings_summary">Customize navigation style and behavior</string>
     <string name="navbar_general_title">Advanced</string>
     <string name="navigation_bar_left_title">Left-handed mode</string>
@@ -52,12 +53,6 @@
     <string name="action_value_menu">task_menu</string>
 
     <!-- Softkeys -->
-    <string name="interface_navigation">Navigation</string>
-    <string name="interface_navbar">Navigation Bar</string>
-    <string name="interface_navbar_appearance">Navigation Bar Appearance</string>
-    <string name="softkey_settings_title">Softkeys</string>
-    <string name="softkey_settings_summary">Set long press actions</string>
-    <string name="style_navbar_softkey">Navigation bar and Softkeys</string>
     <string name="softkey_longpress_title">Long press actions</string>
     <string name="softkey_longpress_summary">Set long press action</string>
     <string name="softkey_back">Back</string>
@@ -69,12 +64,12 @@
     <string name="softkey_persist_menu_title">Force show menu key</string>
     <string name="softkey_persist_menu_summary">Menu key always shows, except in lockscreen</string>
 
-    <!-- NX -->
-    <string name="nx_interface">NX Gesture Interface</string>
-    <string name="nx_enable_title">Enable NX</string>
-    <string name="nx_disabled_notice">Navigation bar becomes a smart, fast, lightweight, and configurable gesture input interface</string>
-    <string name="nx_back_home_policy">Back and Home are required to be set at all times. To change a Back or Home assignment set the desired assignment first</string>
-    <string name="nx_split_bar_policy">When only a right or left action is assigned the action applies to the full bar</string>
+    <!-- Fling -->
+    <string name="fling_settings">Fling settings</string>
+    <string name="nx_interface">Fling gesture interface</string>
+    <string name="nx_enable_title">Enable Fling</string>
+    <string name="nx_back_home_policy">Back and Home are required to be set at all times. To change a Back or Home assignment, set the desired assignment first</string>
+    <string name="nx_split_bar_policy">When only a right or left action is assigned, the action applies to the full bar</string>
     <string name="nx_def_summary">No action set</string>
     <string name="nx_swipe_actions">Swipe gestures</string>
     <string name="nx_tap_actions">Tap gestures</string>
@@ -97,19 +92,19 @@
     <string name="long_swipe_reset">Reset</string>
     <string name="nx_advanced">Advanced</string>
     <string name="nx_long_swipe_title">Long swipe threshold</string>
-    <string name="nx_long_swipe_summary">Fine tune long swipe thresholds based on a percentage of NX interface width or height</string>
+    <string name="nx_long_swipe_summary">Fine tune long swipe thresholds based on a percentage of Fling interface width or height</string>
     <string name="fling_trails_enable_title">Enable gesture trails</string>
     <string name="fling_trails_enable_summary">Show a trail on swipe gestures</string>
     <string name="fling_trails_color_title">Trail color</string>
     <string name="nx_appearance">Appearance</string>
-    <string name="nx_show_logo_title">Show NX logo</string>
+    <string name="nx_show_logo_title">Show Fling logo</string>
     <string name="nx_animate_logo_title">Animate logo</string>
     <string name="nx_animate_logo_summary">Logo animates on touch events</string>
     <string name="nx_logo_color">Logo color</string>
     <string name="nx_show_ripple_title">Show ripple</string>
     <string name="nx_show_ripple_summary">Ripple effect on touch events</string>
     <string name="nx_show_pulse_title">Show Pulse</string>
-    <string name="nx_show_pulse_summary">NX shows bar visualization when music plays</string>
+    <string name="nx_show_pulse_summary">Fling shows bar visualization when music plays</string>
     <string name="fling_pulse_color">Pulse color</string>
     <string name="eos_fling_lavalamp_title">Turn on Lava Lamp</string>
     <string name="eos_fling_lavalamp_summary">Pulse animates a smooth lava lamp style color blend</string>

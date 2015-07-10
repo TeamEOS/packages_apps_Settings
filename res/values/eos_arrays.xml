@@ -31,8 +31,8 @@
 
 
     <string-array name="systemui_navbar_mode_entries">
-        <item>Navigation bar</item>
-        <item>NX Gesture Interface</item>
+        <item>@string/aosp_navigation_bar</item>
+        <item>@string/nx_interface</item>
     </string-array>
 
     <string-array name="systemui_navbar_mode_values">
@@ -46,8 +46,8 @@
     </string-array>
 
     <string-array name="systemui_navbar_mode_settings">
-        <item>Navigation bar settings</item>
-        <item>NX settings</item>
+        <item>@string/aosp_navigation_bar_settings</item>
+        <item>@string/fling_settings</item>
     </string-array>
 
     <!-- Volume step options. -->

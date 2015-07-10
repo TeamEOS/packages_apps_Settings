@@ -39,7 +39,7 @@ public class AospNavbarSettings extends ActionFragment implements
 
         ActionBar bar = getActivity().getActionBar();
         if (bar != null) {
-            bar.setTitle(R.string.interface_navbar);
+            bar.setTitle(R.string.aosp_navigation_bar);
         }
 
         mShowMenu = (SwitchPreference) findPreference(KEY_FORCE_SHOW_MENU);
