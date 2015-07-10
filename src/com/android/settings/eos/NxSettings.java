@@ -48,6 +48,7 @@ public class NxSettings extends ActionFragment implements
     SwitchPreference mTrailsEnabled;
 
     ColorPickerPreference mLogoColor;
+    ColorPickerPreference mRippleColor;
     ColorPickerPreference mPulseColor;
     ColorPickerPreference mTrailsColor;
 
@@ -83,6 +84,12 @@ public class NxSettings extends ActionFragment implements
         mShowRipple.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NX_RIPPLE_ENABLED, 1) == 1);
         mShowRipple.setOnPreferenceChangeListener(this);
+
+        int rippleColor = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.FLING_RIPPLE_COLOR, Color.WHITE, UserHandle.USER_CURRENT);
+        mRippleColor = (ColorPickerPreference) findPreference("eos_fling_ripple_color");
+        mRippleColor.setNewPreviewColor(rippleColor);
+        mRippleColor.setOnPreferenceChangeListener(this);
 
         mTrailsEnabled = (SwitchPreference) findPreference("eos_fling_trails_enable");
         mTrailsEnabled.setChecked(Settings.System.getInt(getContentResolver(),
@@ -140,6 +147,11 @@ public class NxSettings extends ActionFragment implements
             boolean enabled = ((Boolean) newValue).booleanValue();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.NX_RIPPLE_ENABLED, enabled ? 1 : 0);
+            return true;
+        } else if (preference.equals(mRippleColor)) {
+            int color = ((Integer) newValue).intValue();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.FLING_RIPPLE_COLOR, color);
             return true;
         } else if (preference.equals(mPulseColor)) {
             int color = ((Integer) newValue).intValue();

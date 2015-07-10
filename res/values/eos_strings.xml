@@ -103,6 +103,7 @@
     <string name="nx_logo_color">Logo color</string>
     <string name="nx_show_ripple_title">Show ripple</string>
     <string name="nx_show_ripple_summary">Ripple effect on touch events</string>
+    <string name="fling_ripple_color">Ripple color</string>
     <string name="nx_show_pulse_title">Show Pulse</string>
     <string name="nx_show_pulse_summary">Fling shows bar visualization when music plays</string>
     <string name="fling_pulse_color">Pulse color</string>
