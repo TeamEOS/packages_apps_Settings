@@ -192,6 +192,11 @@ public class InstalledAppDetails extends Fragment
     private static final int DLG_DISABLE_NOTIFICATIONS = DLG_BASE + 8;
     private static final int DLG_SPECIAL_DISABLE = DLG_BASE + 9;
 
+    private static final String SYSTEM_CAMERA = "com.android.camera2";
+    private static final String[] SYSTEM_WHITELIST = new String[] {
+        SYSTEM_CAMERA
+    };
+
     // Menu identifiers
     public static final int UNINSTALL_ALL_USERS_MENU = 1;
     public static final int OPEN_PROTECTED_APPS = 2;
@@ -349,13 +354,32 @@ public class InstalledAppDetails extends Fragment
         }
     }
 
+    private boolean isWhiteListedSystemPackage(String packageName) {
+        boolean isWhiteListed = false;
+        if (!TextUtils.isEmpty(packageName)) {
+            for (int i = 0; i < SYSTEM_WHITELIST.length; i++) {
+                if (TextUtils.equals(packageName, SYSTEM_WHITELIST[i])) {
+                    if (TextUtils.equals(packageName, SYSTEM_CAMERA)) {
+                        isWhiteListed = Utils.hasCamera();
+                    } else {
+                        isWhiteListed = true;
+                    }
+                    break;
+                }
+            }
+        }
+        return isWhiteListed;
+    }
+
     private boolean handleDisableable(Button button) {
         boolean disableable = false;
         // Try to prevent the user from bricking their phone
         // by not allowing disabling of apps signed with the
         // system cert and any launcher app in the system.
-        if (mHomePackages.contains(mAppEntry.info.packageName)
-                || Utils.isSystemPackage(mPm, mPackageInfo)) {
+        // Do allow carefully selected whitelisted packages
+        if ((mHomePackages.contains(mAppEntry.info.packageName)
+                || Utils.isSystemPackage(mPm, mPackageInfo))
+                && !isWhiteListedSystemPackage(mAppEntry.info.packageName)) {
             // Disable button for core system applications.
             button.setText(R.string.disable_text);
         } else if (mAppEntry.info.enabled) {

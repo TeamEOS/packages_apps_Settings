@@ -377,6 +377,16 @@ public final class Utils {
     }
 
     /**
+     * 
+     * @return true is device has at least one camera, false if no camera at all
+     */
+    public static boolean hasCamera() {
+        int n = android.hardware.Camera.getNumberOfCameras();
+        Log.i(TAG, "number of camera: " + n);
+        return (n > 0);
+    }
+
+    /**
      * Returns the WIFI IP Addresses, if any, taking into account IPv4 and IPv6 style addresses.
      * @param context the application context
      * @return the formatted and newline-separated IP addresses, or null if none.
