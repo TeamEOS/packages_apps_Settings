@@ -208,4 +208,8 @@
     <string name="status_bar_temperature_hidden">Hidden</string>
     <string name="status_bar_temperature_show_scale">Scale showing</string>
     <string name="status_bar_temperature_hide_scale">Scale hidden</string>
+
+    <!-- QS Tiles Columns -->
+    <string name="qs_num_columns_title">Number of tiles per row</string>
+    <string name="qs_num_columns_showing">%1$s tiles per row showing</string>
 </resources>
