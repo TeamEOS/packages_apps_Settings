@@ -45,7 +45,6 @@ public class SetupEnrollFingerprint extends EnrollFingerprint
     private static final int SET_FALLBACK = 99;
     private static final int CONFIRM_EXISTING_REQUEST = 100;
 
-    private LockPatternUtils mLockPatternUtils;
     private boolean mPasswordConfirmed = false;
     private boolean mWaitingForConfirmation = false;
 
@@ -116,13 +115,8 @@ public class SetupEnrollFingerprint extends EnrollFingerprint
             mWaitingForConfirmation = false;
             mPasswordConfirmed = true;
         } else if (requestCode == SET_FALLBACK &&
-                (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_FIRST_USER)) {
-            Log.d("TAG", "fallback password set");
-            mLockPatternUtils = new LockPatternUtils(this);
-            mLockPatternUtils.setUseFingerprint();
-        } else {
+                !(resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_FIRST_USER)) {
             finish();
-            Log.d("TAG", "fallback password NOT set");
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -143,7 +137,12 @@ public class SetupEnrollFingerprint extends EnrollFingerprint
         @Override
         protected void updateStage(Stage stage) {
             super.updateStage(stage);
-            final SetupWizardNavBar setupBar = getEnrollmentActivity().getSetupBar();
+            final EnrollFingerprint enrollmentActivity = getEnrollmentActivity();
+            if (enrollmentActivity == null) {
+                // no activity so nothing to do here.
+                return;
+            }
+            final SetupWizardNavBar setupBar = enrollmentActivity.getSetupBar();
             if (stage != Stage.EnrollmentFinished) {
                 setupBar.getBackButton().setVisibility(View.VISIBLE);
             } else {
@@ -172,6 +171,8 @@ public class SetupEnrollFingerprint extends EnrollFingerprint
         public void onNavigateNext() {
             switch (mUiStage) {
                 case EnrollmentFinished:
+                    LockPatternUtils lockPatternUtils = new LockPatternUtils(getActivity());
+                    lockPatternUtils.setUseFingerprint();
                     getActivity().setResult(Activity.RESULT_OK);
                     getActivity().finish();
                     break;
