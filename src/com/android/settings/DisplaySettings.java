@@ -97,6 +97,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_LIFT_TO_WAKE = "lift_to_wake";
     private static final String KEY_DOZE = "doze";
+    private static final String KEY_DOZE_INVERT = "doze_notification_invert_enabled";
     private static final String KEY_AUTO_BRIGHTNESS = "auto_brightness";
     private static final String KEY_TAP_TO_WAKE = "double_tap_wake_gesture";
     private static final String KEY_PROXIMITY_WAKE = "proximity_on_wake";
@@ -252,6 +253,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mDozePreference.setOnPreferenceChangeListener(this);
         } else {
             if (displayPrefs != null && mDozePreference != null) {
+                Preference dozeInvert = displayPrefs.findPreference(KEY_DOZE_INVERT);
+                if (dozeInvert != null) {
+                    displayPrefs.removePreference(dozeInvert);
+                }
                 displayPrefs.removePreference(mDozePreference);
             }
         }
