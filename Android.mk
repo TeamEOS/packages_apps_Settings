@@ -1,13 +1,13 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_JAVA_LIBRARIES := bouncycastle conscrypt telephony-common ims-common org.teameos.navigation
+LOCAL_JAVA_LIBRARIES := bouncycastle conscrypt telephony-common ims-common
 LOCAL_STATIC_JAVA_LIBRARIES := \
 	android-support-v4 \
 	android-support-v7-cardview \
 	android-support-v13 \
 	jsr305 \
-    org.teameos.navigation-static \
+        org.teameos.navigation-static \
 	org.cyanogenmod.platform.sdk
 
 LOCAL_MODULE_TAGS := optional
