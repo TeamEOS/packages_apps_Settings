@@ -229,4 +229,8 @@
     <string name="doze_notification_color_invert_title">Color inversion</string>
     <string name="doze_notification_color_invert_summary_off">Ambient display notifications will not be inverted. Use for dark themes.</string>
     <string name="doze_notification_color_invert_summary_on">Ambient display notifications will show as inverted. Use for light/default theme.</string>
+
+    <!-- Task Manager in Notification Panel -->
+    <string name="status_bar_show_task_manager_title">Show Task Manager</string>
+    <string name="status_bar_show_task_manager_summary">Switch between Quick Settings and Task Manager views</string>
 </resources>
