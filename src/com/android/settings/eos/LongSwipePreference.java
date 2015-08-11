@@ -16,6 +16,8 @@
 
 package com.android.settings.eos;
 
+import com.android.internal.actions.ActionConstants;
+import com.android.internal.actions.ActionConstants.Fling;
 import com.android.internal.actions.ActionUtils;
 
 import com.android.settings.R;
@@ -51,10 +53,6 @@ public class LongSwipePreference extends DialogPreference implements
 	// normal screens - bar goes vertical
 	private static final String LONG_SWIPE_URI_UP = "eos_nx_long_swipe_up_threshold";
 	private static final String LONG_SWIPE_URI_DOWN = "eos_nx_long_swipe_down_threshold";
-
-	private static final int DEVICE_NORMAL_SCREEN = 1;
-	private static final int DEVICE_LARGE_SCREEN = 2;
-	private static final int DEVICE_XLARGE_SCREEN = 3;
 
 	// same for all devices
 	private SeekBar mRightPort;
@@ -101,81 +99,52 @@ public class LongSwipePreference extends DialogPreference implements
 	private Context mContext;
 	private ContentResolver mResolver;
 
-	private int mScreenSize;
-
 	public LongSwipePreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
 		mResolver = context.getContentResolver();
-
-		if (ActionUtils.isNormalScreen()) {
-			mScreenSize = DEVICE_NORMAL_SCREEN;
-		} else if (ActionUtils.isLargeScreen()) {
-			mScreenSize = DEVICE_LARGE_SCREEN;
-		} else if (ActionUtils.isXLargeScreen()) {
-			mScreenSize = DEVICE_XLARGE_SCREEN;
-		} else {
-			mScreenSize = DEVICE_NORMAL_SCREEN;
-		}
-
-		// sane default values to match framework
-		// expressed as int for seekbars
-		if (DEVICE_NORMAL_SCREEN == mScreenSize) {
-			leftLandDef = 40;
-			rightLandDef = 40;
-			leftPortDef = 35;
-			rightPortDef = 35;
-			leftLandMax = 65;
-			rightLandMax = 65;
-			leftPortMax = 65;
-			rightPortMax = 65;
-			leftLandMin = 25;
-			rightLandMin = 25;
-			leftPortMin = 25;
-			rightPortMin = 25;
-		} else if (DEVICE_LARGE_SCREEN == mScreenSize) {
-			leftLandDef = 30;
-			rightLandDef = 30;
-			leftPortDef = 40;
-			rightPortDef = 40;
-			leftLandMax = 75;
-			rightLandMax = 75;
-			leftPortMax = 85;
-			rightPortMax = 85;
-			leftLandMin = 20;
-			rightLandMin = 20;
-			leftPortMin = 25;
-			rightPortMin = 25;
-		} else if (DEVICE_XLARGE_SCREEN == mScreenSize) {
-			leftLandDef = 25;
-			rightLandDef = 25;
-			leftPortDef = 30;
-			rightPortDef = 30;
-			leftLandMax = 50;
-			rightLandMax = 50;
-			leftPortMax = 55;
-			rightPortMax = 55;
-			leftLandMin = 15;
-			rightLandMin = 15;
-			leftPortMin = 20;
-			rightPortMin = 20;
-		} else {
-			leftLandDef = 40;
-			rightLandDef = 40;
-			leftPortDef = 40;
-			rightPortDef = 40;
-			leftLandMax = 65;
-			rightLandMax = 65;
-			leftPortMax = 65;
-			rightPortMax = 65;
-			leftLandMin = 25;
-			rightLandMin = 25;
-			leftPortMin = 25;
-			rightPortMin = 25;
-		}
+		loadDefaults(getConfigs(context));
 		updateValues();
 		setDialogLayoutResource(R.layout.long_swipe_threshold);
 	}
+
+    private void loadDefaults(Bundle b) {
+        leftLandDef = Math.round(b.getFloat(ActionUtils.isNormalScreen() ? Fling.CONFIG_FlingLongSwipeVerticalDown
+                        : Fling.CONFIG_FlingLongSwipeLandscapeLeft) * 100);
+        rightLandDef = Math.round(b.getFloat(ActionUtils.isNormalScreen() ? Fling.CONFIG_FlingLongSwipeVerticalUp
+                        : Fling.CONFIG_FlingLongSwipeLandscapeRight) * 100);
+        leftPortDef = Math.round(b.getFloat(Fling.CONFIG_FlingLongSwipePortraitLeft) * 100);
+        rightPortDef = Math.round(b.getFloat(Fling.CONFIG_FlingLongSwipePortraitRight) * 100);
+
+        String pkg = mContext.getPackageName();
+        int min = Math.round((Float) ActionUtils.getValue(mContext, "config_flingMinLongSwipeThreshold",
+                ActionUtils.DIMEN, ActionUtils.FORMAT_FLOAT, pkg) * 100);
+        int max = Math.round((Float) ActionUtils.getValue(mContext, "config_flingMaxLongSwipeThreshold",
+                ActionUtils.DIMEN, ActionUtils.FORMAT_FLOAT, pkg) * 100);
+
+        Log.i(TAG,
+                "Min/Max Fling swipe thresholds min/max: " + String.valueOf(min) + "/"
+                        + String.valueOf(max));
+
+        leftLandMax = max;
+        rightLandMax = max;
+        leftPortMax = max;
+        rightPortMax = max;
+        leftLandMin = min;
+        rightLandMin = min;
+        leftPortMin = min;
+        rightPortMin = min;
+    }
+
+    private Bundle getConfigs(Context ctx) {
+        try {
+            Bundle b = ActionConstants.getDefaults(ActionConstants.FLING).getConfigs(ctx);
+            Log.i(TAG, "Got config bundle! dump: " + b.toString());
+            return b;
+        } catch (Exception e) {
+            return null; // it's all over anyways
+        }
+    }
 
 	@Override
 	protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
@@ -211,7 +180,7 @@ public class LongSwipePreference extends DialogPreference implements
 		ViewGroup landRight = (ViewGroup) view
 				.findViewById(R.id.right_swipe_land_container);
 		TextView labelRight = (TextView) landRight.findViewById(R.id.text);
-		if (DEVICE_NORMAL_SCREEN == mScreenSize) {
+		if (ActionUtils.isNormalScreen()) {
 			labelRight.setText(mContext.getString(R.string.up_swipe_title));
 		}
 		mRightLandVal = (TextView) landRight.findViewById(R.id.value);
@@ -224,7 +193,7 @@ public class LongSwipePreference extends DialogPreference implements
 		ViewGroup landLeft = (ViewGroup) view
 				.findViewById(R.id.left_swipe_land_container);
 		TextView labelLeft = (TextView) landLeft.findViewById(R.id.text);
-		if (DEVICE_NORMAL_SCREEN == mScreenSize) {
+		if (ActionUtils.isNormalScreen()) {
 			labelLeft.setText(mContext.getString(R.string.down_swipe_title));
 		}
 		mLeftLandVal = (TextView) landLeft.findViewById(R.id.value);
@@ -297,7 +266,7 @@ public class LongSwipePreference extends DialogPreference implements
 		String rightUri;
 		String leftUri;
 
-		if (mScreenSize == DEVICE_NORMAL_SCREEN) {
+		if (ActionUtils.isNormalScreen()) {
 			rightUri = LONG_SWIPE_URI_UP;
 			leftUri = LONG_SWIPE_URI_DOWN;
 		} else {
@@ -355,7 +324,7 @@ public class LongSwipePreference extends DialogPreference implements
 		String rightUri;
 		String leftUri;
 
-		if (mScreenSize == DEVICE_NORMAL_SCREEN) {
+		if (ActionUtils.isNormalScreen()) {
 			rightUri = LONG_SWIPE_URI_UP;
 			leftUri = LONG_SWIPE_URI_DOWN;
 		} else {
