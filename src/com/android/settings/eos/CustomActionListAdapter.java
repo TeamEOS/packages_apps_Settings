@@ -85,6 +85,7 @@ public class CustomActionListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        final Context ctx = mContext;
         if (convertView != null) {
             holder = (ViewHolder) convertView.getTag();
         } else {
@@ -99,13 +100,14 @@ public class CustomActionListAdapter extends BaseAdapter {
             params.width = holder.icon.getMaxWidth();
             params.height = holder.icon.getMaxHeight();
             holder.icon.setLayoutParams(params);
-            holder.icon.setScaleType(ScaleType.CENTER_INSIDE);
+            holder.icon.setScaleType(ScaleType.CENTER);
+            holder.icon.setCropToPadding(true);
         }
 
         ActionConfig config = getItem(position);
         holder.title.setText(config.getLabel());
         holder.icon.setBackgroundResource(R.drawable.fab_accent);
-        holder.icon.setImageDrawable(config.getDefaultIcon(mContext));
+        holder.icon.setImageDrawable(config.getDefaultIcon(ctx));
         holder.summary.setVisibility(View.GONE);
 
         return convertView;
