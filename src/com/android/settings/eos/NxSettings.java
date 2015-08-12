@@ -93,7 +93,7 @@ public class NxSettings extends ActionFragment implements
 
         mTrailsEnabled = (SwitchPreference) findPreference("eos_fling_trails_enable");
         mTrailsEnabled.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.FLING_TRAILS_ENABLED, 0) == 1);
+                Settings.System.FLING_TRAILS_ENABLED, 1) == 1);
         mTrailsEnabled.setOnPreferenceChangeListener(this);
 
         int trailsColor = Settings.System.getIntForUser(getContentResolver(),
@@ -104,7 +104,7 @@ public class NxSettings extends ActionFragment implements
 
         mShowPulse = (SwitchPreference) findPreference("eos_nx_show_pulse");
         mShowPulse.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.NX_PULSE_ENABLED, 0) == 1);
+                Settings.System.NX_PULSE_ENABLED, 1) == 1);
         mShowPulse.setOnPreferenceChangeListener(this);
 
         int pulseColor = Settings.System.getIntForUser(getContentResolver(),
@@ -115,7 +115,7 @@ public class NxSettings extends ActionFragment implements
 
         mLavaLampEnabled = (SwitchPreference) findPreference("eos_fling_lavalamp");
         mLavaLampEnabled.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.FLING_PULSE_LAVALAMP_ENABLED, 0) == 1);
+                Settings.System.FLING_PULSE_LAVALAMP_ENABLED, 1) == 1);
         mLavaLampEnabled.setOnPreferenceChangeListener(this);
 
         onPreferenceScreenLoaded(ActionConstants.getDefaults(ActionConstants.FLING));
