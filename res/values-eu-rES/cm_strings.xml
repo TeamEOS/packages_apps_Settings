@@ -517,9 +517,9 @@
   <string name="profile_setup_setup_triggers_description">Hautatu profil hau abiaraziko duten duten eragileak</string>
   <string name="profile_setup_actions_description">Orain hautatu zer gertatuko den profil hau gaitzean</string>
   <string name="app_ops_entry_summary"><xliff:g id="op">%1$s</xliff:g> (<xliff:g id="count">%2$s</xliff:g> erabilita)</string>
-  <string name="app_ops_allowed_count"><xliff:g id="count" example="2 times">%s</xliff:g> alditan baimenduta</string>
-  <string name="app_ops_ignored_count"><xliff:g id="count" example="2 times">%s</xliff:g> alditan ukatuta</string>
-  <string name="app_ops_both_count"><xliff:g id="count">%1$s</xliff:g> alditan baimendua, <xliff:g id="count">%2$s</xliff:g> alditan ukatua</string>
+  <string name="app_ops_allowed_count"><xliff:g id="count" example="2 times">%s</xliff:g> baimenduta</string>
+  <string name="app_ops_ignored_count"><xliff:g id="count" example="2 times">%s</xliff:g> ukatuta</string>
+  <string name="app_ops_both_count"><xliff:g id="count">%1$s</xliff:g> baimenduta, <xliff:g id="count">%2$s</xliff:g> ukatuta</string>
   <string name="app_ops_show_user_apps">Erakutsi erabiltzailearen aplikazioak</string>
   <string name="app_ops_show_system_apps">Erakutsi sistemaren aplikazioak</string>
   <string name="app_ops_reset_counters">Zenbatzaileak berrezarri</string>
@@ -933,6 +933,7 @@
   <string name="fingerprint_enrollment_error_title_3">Zera, zerbait ez behar bezala atera</string>
   <string name="fingerprint_enrollment_error_title_4">Tira, saiatu berriro</string>
   <string name="fingerprint_enrollment_error_title_5">Epa, errore bat gertatu da</string>
+  <string name="lockscreen_settings_and_fingerprint">Blokeo pantaila eta hatz-marka</string>
   <string name="menu_stats_reset">Leheneratu estatistikak</string>
   <string name="reset_stats_msg">Bateriaren historia estatistikak leheneratuko dira</string>
   <string name="dock_battery_not_present">Oinarriaren bateria falta da</string>
@@ -940,4 +941,6 @@
   <string name="battery_info_status_charging_dock_usb">Oinarriaren USBaren bitartez kargatzen</string>
   <string name="setup_lock_pattern_size_title">Ereduaren konplexutasuna</string>
   <string name="setup_lock_pattern_size_details">Zenbat puntu erabili nahi dituzu zure ereduan? Zenbat eta puntu gehiago, konplexuagoa izan daiteke eredua.</string>
+  <string name="lto_download_data_wifi_only_on">Edozein sare bidez</string>
+  <string name="lto_download_data_wifi_only_off">Soilik Wi\u2011Fi sare bidez</string>
 </resources>

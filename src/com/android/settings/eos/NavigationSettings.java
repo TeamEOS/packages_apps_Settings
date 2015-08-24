@@ -27,7 +27,7 @@ import com.android.settings.cyanogenmod.BaseSystemSettingSwitchBar;
 import com.android.settings.widget.SwitchBar;
 
 import android.content.Context;
-import android.hardware.CmHardwareManager;
+import cyanogenmod.hardware.CMHardwareManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -104,10 +104,9 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
         StringBuilder builder = new StringBuilder();
         builder.append(getString(R.string.force_navbar_disabled_notice));
 
-        CmHardwareManager cmHardwareManager =
-                (CmHardwareManager) getSystemService(Context.CMHW_SERVICE);
-        boolean hasKeyDisabler = cmHardwareManager
-                .isSupported(CmHardwareManager.FEATURE_KEY_DISABLE);
+        final Context context = (Context) getActivity();
+        final CMHardwareManager hardware = CMHardwareManager.getInstance(context);
+        boolean hasKeyDisabler = hardware.isSupported(CMHardwareManager.FEATURE_KEY_DISABLE);
         builder.append(" ").append(getString(hasKeyDisabler
                 ? R.string.force_navbar_key_disable_supported
                 : R.string.force_navbar_key_disable_unsupported));

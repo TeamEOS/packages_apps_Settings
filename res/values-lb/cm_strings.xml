@@ -482,6 +482,7 @@
   <string name="ok">OK</string>
   <string name="profile_menu_delete_title">Läschen</string>
   <string name="profile_action_none">Onverännert loossen</string>
+  <string name="profile_action_system">Systemstandard</string>
   <string name="profile_action_disable">Ausschalten</string>
   <string name="profile_action_enable">Uschalten</string>
   <string name="profile_trigger_a2dp_connect">Bei A2DP-Connectioun</string>
@@ -933,6 +934,7 @@
   <string name="fingerprint_enrollment_error_title_3">Hmm, eppes ass schifgaangen</string>
   <string name="fingerprint_enrollment_error_title_4">Oh oh, probéier nees</string>
   <string name="fingerprint_enrollment_error_title_5">Upps, et ass e Feeler opgetrueden</string>
+  <string name="lockscreen_settings_and_fingerprint">Schiermspär a Fangerofdrock</string>
   <string name="menu_stats_reset">Statistiken zrécksetzen</string>
   <string name="reset_stats_msg">Statistiken iwwer den Akkuverlaf ginn zréckgesat</string>
   <string name="dock_battery_not_present">Dock-Akku net disponibel</string>
