@@ -80,7 +80,6 @@ import com.android.settings.applications.ExpandedDesktopPreferenceFragment;
 import com.android.settings.applications.InstalledAppDetails;
 import com.android.settings.applications.ManageApplications;
 import com.android.settings.applications.ProcessStatsUi;
-import com.android.settings.blacklist.BlacklistSettings;
 import com.android.settings.bluetooth.BluetoothSettings;
 import com.android.settings.cyanogenmod.DisplayRotation;
 import com.android.settings.dashboard.DashboardCategory;
@@ -322,7 +321,6 @@ public class SettingsActivity extends Activity
             OtherSoundSettings.class.getName(),
             QuickLaunchSettings.class.getName(),
             ApnSettings.class.getName(),
-            BlacklistSettings.class.getName(),
             com.android.settings.eos.ButtonSettings.class.getName(),
             com.android.settings.eos.AospNavbarSettings.class.getName(),
             com.android.settings.eos.NxSettings.class.getName(),

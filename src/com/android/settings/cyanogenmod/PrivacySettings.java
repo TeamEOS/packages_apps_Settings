@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.SearchIndexableResource;
-import com.android.internal.telephony.util.BlacklistUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
@@ -123,16 +122,16 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
     @Override
     public void onResume() {
         super.onResume();
-        updateBlacklistSummary();
+//        updateBlacklistSummary();
     }
 
-    private void updateBlacklistSummary() {
-        if (BlacklistUtils.isBlacklistEnabled(getActivity())) {
-            mBlacklist.setSummary(R.string.blacklist_summary);
-        } else {
-            mBlacklist.setSummary(R.string.blacklist_summary_disabled);
-        }
-    }
+//    private void updateBlacklistSummary() {
+//        if (BlacklistUtils.isBlacklistEnabled(getActivity())) {
+//            mBlacklist.setSummary(R.string.blacklist_summary);
+//        } else {
+//            mBlacklist.setSummary(R.string.blacklist_summary_disabled);
+//        }
+//    }
 
     public static final Indexable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider() {
@@ -156,7 +155,7 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
 
                     // Determine options based on device telephony support
                     if (!pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
-                        result.add(KEY_BLACKLIST);
+//                        result.add(KEY_BLACKLIST);
                         result.add(KEY_WHISPERPUSH);
                     } else if (!(isWhisperPushOriginalOK(pm) ||
                                  isWhisperPushUpdated(pm, context))) {

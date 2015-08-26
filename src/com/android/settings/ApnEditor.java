@@ -32,6 +32,7 @@ import android.preference.ListPreference;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.SwitchPreference;
 import android.provider.Telephony;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -82,20 +83,19 @@ public class ApnEditor extends PreferenceActivity
     private EditTextPreference mApnType;
     private ListPreference mProtocol;
     private ListPreference mRoamingProtocol;
-    private CheckBoxPreference mCarrierEnabled;
+    private SwitchPreference mCarrierEnabled;
     private ListPreference mBearer;
     private ListPreference mMvnoType;
     private EditTextPreference mMvnoMatchData;
 
     private String mCurMnc;
     private String mCurMcc;
-    private int mSubId;
-    private boolean mDisableEditor = false;
 
     private Uri mUri;
     private Cursor mCursor;
     private boolean mNewApn;
     private boolean mFirstTime;
+    private int mSubId;
     private Resources mRes;
     private TelephonyManager mTelephonyManager;
 
@@ -180,7 +180,7 @@ public class ApnEditor extends PreferenceActivity
         mRoamingProtocol = (ListPreference) findPreference(KEY_ROAMING_PROTOCOL);
         mRoamingProtocol.setOnPreferenceChangeListener(this);
 
-        mCarrierEnabled = (CheckBoxPreference) findPreference(KEY_CARRIER_ENABLED);
+        mCarrierEnabled = (SwitchPreference) findPreference(KEY_CARRIER_ENABLED);
 
         mBearer = (ListPreference) findPreference(KEY_BEARER);
         mBearer.setOnPreferenceChangeListener(this);
@@ -193,14 +193,7 @@ public class ApnEditor extends PreferenceActivity
 
         final Intent intent = getIntent();
         final String action = intent.getAction();
-        // Read the subscription received from Phone settings.
-        mSubId = intent.getIntExtra("subscription", SubscriptionManager.getDefaultSubId());
-        Log.d(TAG,"ApnEditor onCreate received sub: " + mSubId);
-        mDisableEditor = intent.getBooleanExtra("DISABLE_EDITOR",false);
-        if (mDisableEditor) {
-            getPreferenceScreen().setEnabled(false);
-            Log.d(TAG, "ApnEditor form is disabled.");
-        }
+        mSubId = intent.getIntExtra("sub_id", SubscriptionManager.INVALID_SUBSCRIPTION_ID);
 
         mFirstTime = icicle == null;
 
@@ -238,7 +231,7 @@ public class ApnEditor extends PreferenceActivity
 
         mTelephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 
-        fillUi(intent.getStringExtra(ApnSettings.OPERATOR_NUMERIC_EXTRA));
+        fillUi();
     }
 
     @Override
@@ -255,7 +248,7 @@ public class ApnEditor extends PreferenceActivity
         super.onPause();
     }
 
-    private void fillUi(String defaultOperatorNumeric) {
+    private void fillUi() {
         if (mFirstTime) {
             mFirstTime = false;
             // Fill in all the values from the db in both text editor and summary
@@ -273,12 +266,13 @@ public class ApnEditor extends PreferenceActivity
             mMnc.setText(mCursor.getString(MNC_INDEX));
             mApnType.setText(mCursor.getString(TYPE_INDEX));
             if (mNewApn) {
+                String numeric = mTelephonyManager.getSimOperator(mSubId);
                 // MCC is first 3 chars and then in 2 - 3 chars of MNC
-                if (defaultOperatorNumeric != null && defaultOperatorNumeric.length() > 4) {
+                if (numeric != null && numeric.length() > 4) {
                     // Country code
-                    String mcc = defaultOperatorNumeric.substring(0, 3);
+                    String mcc = numeric.substring(0, 3);
                     // Network code
-                    String mnc = defaultOperatorNumeric.substring(3);
+                    String mnc = numeric.substring(3);
                     // Auto populate MNC and MCC for new entries, based on what SIM reports
                     mMcc.setText(mcc);
                     mMnc.setText(mnc);
@@ -393,13 +387,12 @@ public class ApnEditor extends PreferenceActivity
             }
             if (newValue != null && newValue.equals(oldValue) == false) {
                 if (values[mvnoIndex].equals("SPN")) {
-                    mMvnoMatchData.setText(
-                            mTelephonyManager.getSimOperatorNameForSubscription(mSubId));
+                    mMvnoMatchData.setText(mTelephonyManager.getSimOperatorName());
                 } else if (values[mvnoIndex].equals("IMSI")) {
                     String numeric = mTelephonyManager.getSimOperator(mSubId);
                     mMvnoMatchData.setText(numeric + "x");
                 } else if (values[mvnoIndex].equals("GID")) {
-                    mMvnoMatchData.setText(mTelephonyManager.getGroupIdLevel1(mSubId));
+                    mMvnoMatchData.setText(mTelephonyManager.getGroupIdLevel1());
                 }
             }
 
@@ -459,10 +452,6 @@ public class ApnEditor extends PreferenceActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if (mDisableEditor) {
-            Log.d(TAG, "Form is disabled. Do not create the options menu.");
-            return true;
-        }
         // If it's a new APN, then cancel will delete the new entry in onPause
         if (!mNewApn) {
             menu.add(0, MENU_DELETE, 0, R.string.menu_delete)
@@ -529,12 +518,6 @@ public class ApnEditor extends PreferenceActivity
         String mcc = checkNotSet(mMcc.getText());
         String mnc = checkNotSet(mMnc.getText());
 
-        // If the form is not editable, do nothing and return.
-        if(mDisableEditor){
-            Log.d(TAG, "Form is disabled. Nothing to save.");
-            return true;
-        }
-
         if (getErrorMsg() != null && !force) {
             showDialog(ERROR_DIALOG_ID);
             return false;
@@ -584,8 +567,7 @@ public class ApnEditor extends PreferenceActivity
         values.put(Telephony.Carriers.NUMERIC, mcc + mnc);
 
         if (mCurMnc != null && mCurMcc != null) {
-            if (mCurMnc.equals(mnc) && mCurMcc.equals(mcc) &&
-                    mSubId == SubscriptionManager.getDefaultDataSubId()) {
+            if (mCurMnc.equals(mnc) && mCurMcc.equals(mcc)) {
                 values.put(Telephony.Carriers.CURRENT, 1);
             }
         }

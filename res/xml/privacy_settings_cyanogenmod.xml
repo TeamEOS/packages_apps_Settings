@@ -22,13 +22,13 @@
             android:title="@string/privacy_guard_manager_title"
             android:summary="@string/privacy_guard_manager_summary"
             android:fragment="com.android.settings.privacyguard.PrivacyGuardManager" />
-
+<!--
         <PreferenceScreen
             android:key="blacklist"
             android:title="@string/blacklist_title"
             android:summary="@string/blacklist_summary"
             android:fragment="com.android.settings.blacklist.BlacklistSettings" />
-
+-->
         <Preference
             android:key="whisperpush"
             android:title="@string/whisperpush_title"

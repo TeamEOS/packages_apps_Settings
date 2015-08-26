@@ -980,19 +980,19 @@ public class DataUsageSummary extends HighlightingFragment implements Indexable 
     private void setMobileDataEnabled(boolean enabled) {
         if (LOGD) Log.d(TAG, "setMobileDataEnabled()");
         // How about exposing sub based API like TelephonyManager.setDataEnabled(long subId);
-        if (mCurrentTab.startsWith(TAB_SIM)) {
-            int phoneId = multiSimGetCurrentSub();
+//        if (mCurrentTab.startsWith(TAB_SIM)) {
+//            int phoneId = multiSimGetCurrentSub();
 
             // as per phone, set the individual flag
-            android.provider.Settings.Global.putInt(getActivity().getContentResolver(),
-                    android.provider.Settings.Global.MOBILE_DATA + phoneId, enabled ? 1 : 0);
+//            android.provider.Settings.Global.putInt(getActivity().getContentResolver(),
+//                    android.provider.Settings.Global.MOBILE_DATA + phoneId, enabled ? 1 : 0);
 
-            int[] subId = SubscriptionManager.getSubId(phoneId);
-            mTelephonyManager.setDataEnabledUsingSubId(subId[0], enabled);
-        } else {
+//            int[] subId = SubscriptionManager.getSubId(phoneId);
+//            mTelephonyManager.setDataEnabledUsingSubId(subId[0], enabled);
+//        } else {
             mTelephonyManager.setDataEnabled(enabled);
             mMobileDataEnabled = enabled;
-        }
+//        }
         updatePolicy(false);
     }
 

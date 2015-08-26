@@ -33,17 +33,14 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.os.SystemProperties;
 import android.os.UserManager;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.Telephony;
-import android.telephony.ServiceState;
+import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,6 +54,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
+import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
 
@@ -69,7 +67,6 @@ public class ApnSettings extends SettingsPreferenceFragment implements
         "content://telephony/carriers/restore";
     public static final String PREFERRED_APN_URI =
         "content://telephony/carriers/preferapn";
-    public static final String OPERATOR_NUMERIC_EXTRA = "operator";
 
     public static final String APN_ID = "apn_id";
 
@@ -77,9 +74,6 @@ public class ApnSettings extends SettingsPreferenceFragment implements
     private static final int NAME_INDEX = 1;
     private static final int APN_INDEX = 2;
     private static final int TYPES_INDEX = 3;
-    private static final int RO_INDEX = 4;
-    private static final int MVNOTYPE_INDEX = 5;
-    private static final int MVNODATA_INDEX = 6;
 
     private static final int MENU_NEW = Menu.FIRST;
     private static final int MENU_RESTORE = Menu.FIRST + 1;
@@ -97,14 +91,11 @@ public class ApnSettings extends SettingsPreferenceFragment implements
     private RestoreApnUiHandler mRestoreApnUiHandler;
     private RestoreApnProcessHandler mRestoreApnProcessHandler;
     private HandlerThread mRestoreDefaultApnThread;
+    private SubscriptionInfo mSubscriptionInfo;
 
     private UserManager mUm;
-    private int mSubId;
 
     private String mSelectedKey;
-
-    private boolean mUseNvOperatorForEhrpd = SystemProperties.getBoolean(
-            "persist.radio.use_nv_for_ehrpd", false);
 
     private IntentFilter mMobileStateFilter;
 
@@ -141,6 +132,9 @@ public class ApnSettings extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        final Activity activity = getActivity();
+        final int subId = activity.getIntent().getIntExtra("sub_id",
+                SubscriptionManager.INVALID_SUBSCRIPTION_ID);
 
         mUm = (UserManager) getSystemService(Context.USER_SERVICE);
 
@@ -150,6 +144,8 @@ public class ApnSettings extends SettingsPreferenceFragment implements
         if (!mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {
             setHasOptionsMenu(true);
         }
+
+        mSubscriptionInfo = Utils.findRecordBySubId(activity, subId);
     }
 
     @Override
@@ -169,12 +165,8 @@ public class ApnSettings extends SettingsPreferenceFragment implements
         }
 
         addPreferencesFromResource(R.xml.apn_settings);
+
         getListView().setItemsCanFocus(true);
-        mSubId = getActivity().getIntent().getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
-                SubscriptionManager.getDefaultDataSubId());
-        Log.d(TAG, "onCreate received subId :" + mSubId);
-        mMobileStateFilter = new IntentFilter(
-                TelephonyIntents.ACTION_ANY_DATA_CONNECTION_STATE_CHANGED);
     }
 
     @Override
@@ -191,11 +183,6 @@ public class ApnSettings extends SettingsPreferenceFragment implements
             fillList();
         }
     }
-
-    private Uri getUri(Uri uri) {
-        return Uri.withAppendedPath(uri, "/subId/" + mSubId);
-    }
-
 
     @Override
     public void onPause() {
@@ -218,11 +205,17 @@ public class ApnSettings extends SettingsPreferenceFragment implements
     }
 
     private void fillList() {
-        String where = getOperatorNumericSelection();
-        Cursor cursor = getContentResolver().query(getUri(Telephony.Carriers.CONTENT_URI),
-                new String[] {"_id", "name", "apn", "type", "read_only", "mvno_type", "mvno_match_data" }, where, null,
+        final TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        final String mccmnc = mSubscriptionInfo == null ? ""
+            : tm.getSimOperator(mSubscriptionInfo.getSubscriptionId());
+        Log.d(TAG, "mccmnc = " + mccmnc);
+        final String where = "numeric=\""
+            + mccmnc
+            + "\" AND NOT (type='ia' AND (apn=\"\" OR apn IS NULL))";
+
+        Cursor cursor = getContentResolver().query(Telephony.Carriers.CONTENT_URI, new String[] {
+                "_id", "name", "apn", "type"}, where, null,
                 Telephony.Carriers.DEFAULT_SORT_ORDER);
-        String simOperatorName = TelephonyManager.getDefault().getSimOperatorNameForSubscription(mSubId);
 
         if (cursor != null) {
             PreferenceGroup apnList = (PreferenceGroup) findPreference("apn_list");
@@ -237,24 +230,9 @@ public class ApnSettings extends SettingsPreferenceFragment implements
                 String apn = cursor.getString(APN_INDEX);
                 String key = cursor.getString(ID_INDEX);
                 String type = cursor.getString(TYPES_INDEX);
-                boolean readOnly = (cursor.getInt(RO_INDEX) == 1);
-                String mvnoType = cursor.getString(MVNOTYPE_INDEX);
-                String mvnoData = cursor.getString(MVNODATA_INDEX);
-                boolean isMvno = !TextUtils.isEmpty(mvnoType) && !TextUtils.isEmpty(mvnoData);
-
-                // Incomplete set of skip rules for MVNOs. We still need
-                // something for IMSI and GID mismatches, but those rules
-                // are a bit more complex. Still... spn-type is 93% of what
-                // we support...
-                if (isMvno &&
-                  (mvnoType.equalsIgnoreCase("spn") && !mvnoData.equalsIgnoreCase(simOperatorName))) {
-                    cursor.moveToNext();
-                    continue;
-                }
 
                 ApnPreference pref = new ApnPreference(getActivity());
 
-                pref.setApnReadOnly(readOnly);
                 pref.setKey(key);
                 pref.setTitle(name);
                 pref.setSummary(apn);
@@ -266,7 +244,6 @@ public class ApnSettings extends SettingsPreferenceFragment implements
                 if (selectable) {
                     if ((mSelectedKey != null) && mSelectedKey.equals(key)) {
                         pref.setChecked();
-                        Log.d(TAG, "find select key = " + mSelectedKey);
                     }
                     apnList.addPreference(pref);
                 } else {
@@ -287,7 +264,7 @@ public class ApnSettings extends SettingsPreferenceFragment implements
         if (!mUnavailable) {
             menu.add(0, MENU_NEW, 0,
                     getResources().getString(R.string.menu_new))
-                    .setIcon(R.drawable.ic_menu_add_white)
+                    .setIcon(android.R.drawable.ic_menu_add)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
             menu.add(0, MENU_RESTORE, 0,
                     getResources().getString(R.string.menu_restore))
@@ -312,15 +289,17 @@ public class ApnSettings extends SettingsPreferenceFragment implements
     }
 
     private void addNewApn() {
-        Intent intent = new Intent(Intent.ACTION_INSERT, getUri(Telephony.Carriers.CONTENT_URI));
-        intent.putExtra(OPERATOR_NUMERIC_EXTRA, getOperatorNumeric()[0]);
+        Intent intent = new Intent(Intent.ACTION_INSERT, Telephony.Carriers.CONTENT_URI);
+        int subId = mSubscriptionInfo != null ? mSubscriptionInfo.getSubscriptionId()
+                : SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+        intent.putExtra("sub_id", subId);
         startActivity(intent);
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         int pos = Integer.parseInt(preference.getKey());
-        Uri url = ContentUris.withAppendedId(getUri(Telephony.Carriers.CONTENT_URI), pos);
+        Uri url = ContentUris.withAppendedId(Telephony.Carriers.CONTENT_URI, pos);
         startActivity(new Intent(Intent.ACTION_EDIT, url));
         return true;
     }
@@ -342,13 +321,13 @@ public class ApnSettings extends SettingsPreferenceFragment implements
 
         ContentValues values = new ContentValues();
         values.put(APN_ID, mSelectedKey);
-        resolver.update(getUri(PREFERAPN_URI), values, null, null);
+        resolver.update(PREFERAPN_URI, values, null, null);
     }
 
     private String getSelectedApnKey() {
         String key = null;
 
-        Cursor cursor = getContentResolver().query(getUri(PREFERAPN_URI), new String[] {"_id"},
+        Cursor cursor = getContentResolver().query(PREFERAPN_URI, new String[] {"_id"},
                 null, null, Telephony.Carriers.DEFAULT_SORT_ORDER);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -417,7 +396,7 @@ public class ApnSettings extends SettingsPreferenceFragment implements
             switch (msg.what) {
                 case EVENT_RESTORE_DEFAULTAPN_START:
                     ContentResolver resolver = getContentResolver();
-                    resolver.delete(getUri(DEFAULTAPN_URI), null, null);
+                    resolver.delete(DEFAULTAPN_URI, null, null);
                     mRestoreApnUiHandler
                         .sendEmptyMessage(EVENT_RESTORE_DEFAULTAPN_COMPLETE);
                     break;
@@ -434,32 +413,5 @@ public class ApnSettings extends SettingsPreferenceFragment implements
             return dialog;
         }
         return null;
-    }
-
-    private String getOperatorNumericSelection() {
-        String[] mccmncs = getOperatorNumeric();
-        String where;
-        where = (mccmncs[0] != null) ? "numeric=\"" + mccmncs[0] + "\"" : "";
-        where += (mccmncs[1] != null) ? " or numeric=\"" + mccmncs[1] + "\"" : "";
-        Log.d(TAG, "getOperatorNumericSelection: " + where);
-        return where;
-    }
-
-    private String[] getOperatorNumeric() {
-        ArrayList<String> result = new ArrayList<String>();
-        if (mUseNvOperatorForEhrpd) {
-            String mccMncForEhrpd = SystemProperties.get("ro.cdma.home.operator.numeric", null);
-            if (mccMncForEhrpd != null && mccMncForEhrpd.length() > 0) {
-                result.add(mccMncForEhrpd);
-            }
-        }
-
-        String mccMncFromSim = TelephonyManager.getDefault().getIccOperatorNumeric(mSubId);
-        Log.d(TAG, "getOperatorNumeric: sub= " + mSubId +
-                    " mcc-mnc= " + mccMncFromSim);
-        if (mccMncFromSim != null && mccMncFromSim.length() > 0) {
-            result.add(mccMncFromSim);
-        }
-        return result.toArray(new String[2]);
     }
 }
