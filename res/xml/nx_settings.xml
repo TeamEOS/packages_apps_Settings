@@ -121,7 +121,8 @@
             android:key="eos_nx_logo_color"
             android:title="@string/nx_logo_color"
             android:defaultValue="0xffffff"
-            android:dependency="eos_nx_show_logo" />
+            android:dependency="eos_nx_show_logo"
+            settings:defaultColorValue="-1" />
 
          <SwitchPreference
             android:key="eos_nx_show_ripple"
