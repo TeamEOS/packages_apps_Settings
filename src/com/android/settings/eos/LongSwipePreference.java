@@ -16,9 +16,9 @@
 
 package com.android.settings.eos;
 
-import com.android.internal.actions.ActionConstants;
-import com.android.internal.actions.ActionConstants.Fling;
-import com.android.internal.actions.ActionUtils;
+import com.android.internal.utils.eos.ActionConstants;
+import com.android.internal.utils.eos.ActionConstants.Fling;
+import com.android.internal.utils.eos.ActionUtils;
 
 import com.android.settings.R;
 

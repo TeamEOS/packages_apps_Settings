@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-import com.android.internal.actions.ActionConstants;
-import com.android.internal.actions.ActionHandler;
+import com.android.internal.utils.eos.ActionConstants;
+import com.android.internal.utils.eos.ActionHandler;
 import com.android.settings.R;
 
 import android.app.ActionBar;

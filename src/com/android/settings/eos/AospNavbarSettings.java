@@ -23,7 +23,7 @@ import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 
-import com.android.internal.actions.ActionConstants;
+import com.android.internal.utils.eos.ActionConstants;
 import com.android.settings.R;
 
 public class AospNavbarSettings extends ActionFragment implements

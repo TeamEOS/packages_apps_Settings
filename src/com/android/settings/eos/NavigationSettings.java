@@ -16,7 +16,7 @@
 
 package com.android.settings.eos;
 
-import com.android.internal.actions.ActionUtils;
+import com.android.internal.utils.eos.ActionUtils;
 
 import com.android.internal.util.cm.ScreenType;
 import com.android.settings.R;
