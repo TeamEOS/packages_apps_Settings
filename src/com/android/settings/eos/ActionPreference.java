@@ -22,11 +22,11 @@ package com.android.settings.eos;
 
 import java.util.Map;
 
-import com.android.internal.actions.ActionConstants.ConfigMap;
-import com.android.internal.actions.ActionConstants.Defaults;
-import com.android.internal.actions.ActionHolder;
-import com.android.internal.actions.Config.ActionConfig;
-import com.android.internal.actions.Config.ButtonConfig;
+import com.android.internal.utils.eos.ActionConstants.ConfigMap;
+import com.android.internal.utils.eos.ActionConstants.Defaults;
+import com.android.internal.utils.eos.ActionHolder;
+import com.android.internal.utils.eos.Config.ActionConfig;
+import com.android.internal.utils.eos.Config.ButtonConfig;
 
 import android.content.Context;
 import android.preference.Preference;

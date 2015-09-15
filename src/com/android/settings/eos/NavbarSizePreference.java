@@ -16,7 +16,7 @@
 
 package com.android.settings.eos;
 
-import com.android.internal.actions.ActionUtils;
+import com.android.internal.utils.eos.ActionUtils;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
