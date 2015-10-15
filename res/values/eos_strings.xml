@@ -59,4 +59,7 @@
 
     <!-- Font size sample text -->
     <string name="font_size_sample">Font Size</string>
+
+    <!-- Status bar -->
+    <string name="statusbar_settings_title">Status bar</string>
 </resources>

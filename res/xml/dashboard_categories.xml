@@ -94,6 +94,14 @@
                 android:icon="@drawable/ic_settings_display"
                 />
 
+        <!-- Statusbar -->
+        <dashboard-tile
+            android:id="@+id/statusbar_settings"
+            android:fragment="com.android.settings.eos.StatusbarSettings"
+            android:title="@string/statusbar_settings_title"
+            android:icon="@drawable/ic_settings_statusbar"
+            />
+
         <!-- Buttons -->
         <dashboard-tile
                 android:id="@+id/button_settings"
