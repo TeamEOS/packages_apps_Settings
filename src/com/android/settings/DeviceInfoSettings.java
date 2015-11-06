@@ -65,6 +65,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
     private static final String FILENAME_PROC_VERSION = "/proc/version";
     private static final String FILENAME_MSV = "/sys/board_properties/soc/msv";
 
+    private static final String KEY_MANUAL = "manual";
     private static final String KEY_SYSTEM_UPDATE_SETTINGS = "system_update_settings";
     private static final String PROPERTY_SELINUX_STATUS = "ro.build.selinux";
     private static final String KEY_KERNEL_VERSION = "kernel_version";
@@ -172,6 +173,9 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
             // Remove for secondary users
             removePreference(KEY_SYSTEM_UPDATE_SETTINGS);
         }
+
+        // Remove manual entry if none present.
+        removePreferenceIfBoolFalse(KEY_MANUAL, R.bool.config_show_manual);
     }
 
     @Override
