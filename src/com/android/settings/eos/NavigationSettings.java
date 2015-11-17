@@ -128,7 +128,7 @@ public class NavigationSettings extends SettingsPreferenceFragment implements
             updateSettingsTarget(val);
             return ret;
         } else if (preference.equals(mDisableNavigationKeys)) {
-            int val = Integer.parseInt(((String) newValue).toString());
+            int val = ((Boolean) newValue) ? 1 : 0;
             Settings.Secure.putInt(getContentResolver(), Settings.Secure.DEV_FORCE_SHOW_NAVBAR, val);
             updateDisableNavkeysOption();
             mNavInterface.setEnabled(mDisableNavigationKeys.isChecked());
